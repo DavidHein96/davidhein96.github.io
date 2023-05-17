@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+  execute-dir: project
+
+website:
+  title: "Dave's Site"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: linkdin
+        href: https://linkdin.com/
+  sidebar:
+    contents: auto
+    style: floating
+    
+format:
+  html:
+    theme: minty
+    fontsize: 1.4em
+    css: styles.css
+    page-layout: full
+    grid: 
+     sidebar-width: 250px
+     body-width: 1200px
+     margin-width: 350px
+     gutter-width: 1.5rem
+    code-block-border-left: "#31BAE9"
+    code-block-bg: true
+    highlight-style: kate
+
+editor: visual
+
