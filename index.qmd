@@ -1,12 +1,58 @@
 ---
-title: "daves_site"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: true
+title: "About Me"
+image: headshot.jpeg
+about:
+  template: solana
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/david-h-a37220179
+    - icon: github
+      text: Github
+      href: https://github.
 ---
+
+Welcome to my site! I just graduated with my Master's degree in data science and I have a background in academic medical research. My projects at the radiation oncology department at the University of Texas Southwestern Medical Center involve a wide array of techniques in statistics, machine learning, and bioinformatics. I have a strong foundation in statistical analysis and programming an am seeking to leverage these skills to advance ambitious projects in a dynamic, data-driven role.
+
+# Technical Skills & Projects
+
+Check out [my projects](projects.qmd), which are tagged with technical skill categories
+
+# Education
+
+**University of Texas at Austin**
+
+*Master of Science in Data Science* \| 2021-2023
+
+*Bachelor of Science in Chemistry* \| 2015-2019
+
+-   McCombs Business Foundations Certificate
+-   High Honors
+
+# Experience
+
+**University of Texas Southwestern Medical Center**
+
+*Research Assistant* \| 2020 - Present
+
+-   Conduct
+
+-   Lead
+
+-   Collaborate
+
+-   Consult
+
+-   Manage
+
+# Publications
+
+hein
+
+hein
+
+hein
+
+hein
+
+# Extra fun stuff

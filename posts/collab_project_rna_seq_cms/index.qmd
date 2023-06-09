@@ -1,0 +1,22 @@
+---
+title: "ASCO Poster"
+author: "Dave Hein"
+date: "2023-05-11"
+categories: [R, python, regression, synthetic data, oncology, data cleaning]
+image: "headshot.jpeg"
+format:
+  html: 
+    toc: true
+    code-fold: show
+    code-tools: true
+---
+<style type="text/css">
+
+code.r{
+  font-size: 14px;
+}
+td {
+  font-size: 12px;
+}
+
+</style>

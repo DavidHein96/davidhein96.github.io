@@ -7,27 +7,31 @@ website:
   title: "Dave's Site"
   navbar:
     right:
-      - about.qmd
+      - projects.qmd
+      - index.qmd
       - icon: github
         href: https://github.com/
-      - icon: linkdin
-        href: https://linkdin.com/
-  sidebar:
-    contents: auto
-    style: floating
+      - icon: linkedin 
+        href: https://linkedin.com/in/david-h-a37220179
+#- icon: linkedin
+#      text: LinkedIn
+#      href: https://linkedin.com
+  #sidebar:
+  #  contents: auto
+  #  style: floating
     
 format:
   html:
     theme: minty
     fontsize: 1.4em
     css: styles.css
-    page-layout: full
+    #page-layout: full
     grid: 
-     sidebar-width: 250px
-     body-width: 1200px
-     margin-width: 350px
+     sidebar-width: 340px
+     body-width: 1400px
+     margin-width: 450px
      gutter-width: 1.5rem
-    code-block-border-left: "#31BAE9"
+    code-block-border-left: "#78c2ad"
     code-block-bg: true
     highlight-style: kate
 

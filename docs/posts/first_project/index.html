@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Harlow Malloc">
+<meta name="author" content="Dave Hein">
 <meta name="dcterms.date" content="2023-05-11">
 
-<title>Dave’s Site - tewst post</title>
+<title>Dave’s Site - Adoption of a new Colorectal Cancer Treatment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -95,11 +95,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -117,8 +120,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../../about.html" rel="" target="" aria-current="page">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../projects.html" rel="" target="">
+ <span class="menu-text">My Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
@@ -126,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkdin.com/" rel="" target=""><i class="bi bi-linkdin" role="img">
+    <a class="nav-link" href="https://linkedin.com/in/david-h-a37220179" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -136,26 +143,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/post-with-code/index.html">Posts</a></li><li class="breadcrumb-item"><a href="../../posts/first_project/index.html">tewst post</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">tewst post</h1>
+      <div class="quarto-title-block"><div><h1 class="title">Adoption of a new Colorectal Cancer Treatment</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">regression</div>
+                <div class="quarto-category">synthetic data</div>
+                <div class="quarto-category">oncology</div>
+                <div class="quarto-category">data cleaning</div>
               </div>
                   </div>
   </div>
@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Harlow Malloc </p>
+               <p>Dave Hein </p>
             </div>
     </div>
       
@@ -181,330 +181,282 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Posts</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../posts/post-with-code/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Post With Code</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../posts/first_project/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">tewst post</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../posts/welcome/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome To My Blog</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#selecting-variables-from-ncdb-data-base-that-are-useful" id="toc-selecting-variables-from-ncdb-data-base-that-are-useful" class="nav-link active" data-scroll-target="#selecting-variables-from-ncdb-data-base-that-are-useful">Selecting variables from NCDB data base that are useful</a></li>
-  <li><a href="#cleaning-up-data" id="toc-cleaning-up-data" class="nav-link" data-scroll-target="#cleaning-up-data">Cleaning up data</a></li>
-  <li><a href="#assigning-new-variables" id="toc-assigning-new-variables" class="nav-link" data-scroll-target="#assigning-new-variables">Assigning new variables</a></li>
-  <li><a href="#logistic-regression-for-odds-of-upfront-surgery" id="toc-logistic-regression-for-odds-of-upfront-surgery" class="nav-link" data-scroll-target="#logistic-regression-for-odds-of-upfront-surgery">Logistic regression for odds of upfront surgery</a></li>
+  <li><a href="#creating-synthetic-data" id="toc-creating-synthetic-data" class="nav-link active" data-scroll-target="#creating-synthetic-data">Creating Synthetic Data</a>
+  <ul class="collapse">
+  <li><a href="#data-cleaning-and-prep-with-r" id="toc-data-cleaning-and-prep-with-r" class="nav-link" data-scroll-target="#data-cleaning-and-prep-with-r">Data cleaning and prep with R</a></li>
+  <li><a href="#data-cleaning-and-prep-with-python" id="toc-data-cleaning-and-prep-with-python" class="nav-link" data-scroll-target="#data-cleaning-and-prep-with-python">Data cleaning and prep with Python</a></li>
+  <li><a href="#generating-and-inspecting-synthetic-data" id="toc-generating-and-inspecting-synthetic-data" class="nav-link" data-scroll-target="#generating-and-inspecting-synthetic-data">Generating and inspecting synthetic data</a></li>
+  </ul></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
+  <ul class="collapse">
+  <li><a href="#logistic-regression-for-odds-of-upfront-surgery-r" id="toc-logistic-regression-for-odds-of-upfront-surgery-r" class="nav-link" data-scroll-target="#logistic-regression-for-odds-of-upfront-surgery-r">Logistic regression for odds of upfront surgery (R)</a></li>
   <li><a href="#graphing-proportion-receiving-upfront-surg-at-different-facility-types-over-time" id="toc-graphing-proportion-receiving-upfront-surg-at-different-facility-types-over-time" class="nav-link" data-scroll-target="#graphing-proportion-receiving-upfront-surg-at-different-facility-types-over-time">Graphing proportion receiving upfront surg at different facility types over time</a></li>
   <li><a href="#looking-at-how-delays-in-surgery-and-facility-switching-are-linked" id="toc-looking-at-how-delays-in-surgery-and-facility-switching-are-linked" class="nav-link" data-scroll-target="#looking-at-how-delays-in-surgery-and-facility-switching-are-linked">Looking at how delays in surgery and facility switching are linked</a></li>
-  <li><a href="#multinomial-logistic-regression" id="toc-multinomial-logistic-regression" class="nav-link" data-scroll-target="#multinomial-logistic-regression">Multinomial logistic regression</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-body" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
+<style type="text/css">
+
+code.r{
+  font-size: 14px;
+}
+td {
+  font-size: 12px;
+}
+
+</style>
 <div class="cell">
+<details open="">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">fig.width=</span><span class="dv">12</span>, <span class="at">fig.height=</span><span class="dv">8</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#py_discover_config()</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#use_condaenv("website_env")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: zoo
-
-Attaching package: 'zoo'
-
-The following objects are masked from 'package:base':
-
-    as.Date, as.Date.numeric</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Matrix
-
-Attaching package: 'Matrix'
-
-The following objects are masked from 'package:tidyr':
-
-    expand, pack, unpack
-
-Loaded glmnet 4.1-6</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="selecting-variables-from-ncdb-data-base-that-are-useful" class="level3">
-<h3 class="anchored" data-anchor-id="selecting-variables-from-ncdb-data-base-that-are-useful">Selecting variables from NCDB data base that are useful</h3>
+<section id="creating-synthetic-data" class="level2">
+<h2 class="anchored" data-anchor-id="creating-synthetic-data">Creating Synthetic Data</h2>
+<section id="data-cleaning-and-prep-with-r" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-and-prep-with-r">Data cleaning and prep with R</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Reading in data</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>RectalData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data_sets/ncdb_project_data.dta"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> RectalData <span class="sc">%&gt;%</span> <span class="fu">select</span>(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                           RX_SUMM_SYSTEMIC_SUR_SEQ,RX_SUMM_RADIATION, RX_SUMM_SURGRAD_SEQ,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                           RX_SUMM_CHEMO,  SEX,MED_INC_QUAR_12, AGE,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                           PUF_CASE_ID, raceb, TNM_CLIN_STAGE_GROUP,TNM_PATH_STAGE_GROUP,SEQUENCE_NUMBER, HISTOLOGY, </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                           RX_SUMM_SURG_PRIM_SITE, YEAR_OF_DIAGNOSIS, FACILITY_TYPE_CD, INSURANCE_STATUS, CDCC_TOTAL_BEST, </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                                           DX_DEFSURG_STARTED_DAYS, CLASS_OF_CASE</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#getting rid of NAs and Nulls</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> dataset</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We will use synthpop to generate a synthetic data set</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(synthpop)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in original data from the NCDB</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>RectalData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data_sets/ncdb_project_data.dta"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> RectalData <span class="sc">%&gt;%</span> <span class="fu">select</span>(RX_SUMM_SYSTEMIC_SUR_SEQ,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_RADIATION, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURGRAD_SEQ,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_CHEMO,  </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                 SEX,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                 MED_INC_QUAR_12, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                 AGE,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                 raceb, </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                 TNM_CLIN_STAGE_GROUP,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                 TNM_PATH_STAGE_GROUP,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                                 SEQUENCE_NUMBER, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                                 HISTOLOGY, </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURG_PRIM_SITE, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                                 YEAR_OF_DIAGNOSIS, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                                 FACILITY_TYPE_CD, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                                 INSURANCE_STATUS, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                                 CDCC_TOTAL_BEST, </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                                 DX_DEFSURG_STARTED_DAYS,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                                 CLASS_OF_CASE</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">9</span>), <span class="co"># unknown sequence  </span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>RX_SUMM_RADIATION <span class="sc">==</span> <span class="dv">9</span>, <span class="co"># unknown if rad recommended, death cert only</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>), <span class="co"># unknown sequence</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">99</span>,<span class="dv">88</span>), <span class="co"># unknown chemo</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>          SEQUENCE_NUMBER <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"00"</span>,<span class="st">"01"</span>), <span class="co"># Primary cancer</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>          HISTOLOGY <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8140</span>, <span class="dv">8210</span>, <span class="dv">8260</span>, <span class="dv">8261</span>, <span class="dv">8262</span>, <span class="dv">8263</span>, <span class="dv">8470</span>, <span class="dv">8480</span>, <span class="dv">8481</span>), <span class="co"># Proper histology codes</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>          RX_SUMM_SURG_PRIM_SITE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>)) <span class="co"># primary surgery</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a simple stage variable and filter to only stage 2 and 3</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(TNM_CLIN_STAGE_GROUP, <span class="at">stage3 =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(TNM_CLIN_STAGE_GROUP,<span class="st">"2"</span>),<span class="st">"2"</span>,<span class="st">"0"</span>)) </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3[<span class="fu">str_detect</span>(df1<span class="sc">$</span>TNM_CLIN_STAGE_GROUP,<span class="st">"3"</span>) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>stage3 <span class="sc">==</span><span class="st">"0"</span>),]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Define neoadjuvant, rad or chemo before surgery </span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="dv">3</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">case_when</span>(RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>                                              )) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">!=</span> <span class="dv">3</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co"># age group under 45, 45-65, 65 and up AGE</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">agegroup=</span> <span class="fu">case_when</span>(AGE<span class="sc">&lt;=</span><span class="dv">45</span> <span class="sc">~</span><span class="dv">0</span>, AGE <span class="sc">&gt;</span><span class="dv">45</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;</span><span class="dv">65</span> <span class="sc">~</span><span class="dv">1</span>, AGE <span class="sc">&gt;=</span> <span class="dv">65</span> <span class="sc">~</span><span class="dv">2</span>))</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># create a var for switching facility and add the unknown gov insurance to unknown insurance </span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(CLASS_OF_CASE, <span class="at">treatnotatdiag =</span> <span class="fu">ifelse</span>(CLASS_OF_CASE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>),<span class="st">"Switched"</span>,<span class="st">"Stayed"</span>),</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>                      <span class="at">INSURANCE_STATUS =</span> <span class="fu">ifelse</span>(INSURANCE_STATUS<span class="sc">==</span><span class="dv">4</span>,<span class="dv">9</span>,INSURANCE_STATUS))</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Omit NA, this project used complete case analysis</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df1)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only relevant variables</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(SEX,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>                      MED_INC_QUAR_12, </span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                      agegroup,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                      raceb, </span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                      stage3,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>                      neoadjuvant,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>                      treatnotatdiag,</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                      YEAR_OF_DIAGNOSIS, </span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>                      FACILITY_TYPE_CD, </span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>                      INSURANCE_STATUS, </span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>                      CDCC_TOTAL_BEST, </span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>                      DX_DEFSURG_STARTED_DAYS</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Make variables into factors </span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
-<section id="cleaning-up-data" class="level3">
-<h3 class="anchored" data-anchor-id="cleaning-up-data">Cleaning up data</h3>
+<section id="data-cleaning-and-prep-with-python" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-and-prep-with-python">Data cleaning and prep with Python</h3>
+</section>
+<section id="generating-and-inspecting-synthetic-data" class="level3">
+<h3 class="anchored" data-anchor-id="generating-and-inspecting-synthetic-data">Generating and inspecting synthetic data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if missing RX_SUMM_SYSTEMIC_SUR_SEQ, interoperative, or sequence unknown</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">==</span> <span class="dv">7</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">==</span> <span class="dv">9</span>),]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if RX_SUMM_RADIATION is unknown</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>RX_SUMM_RADIATION <span class="sc">==</span><span class="dv">9</span>),]</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if RX_SUMM_SURGRAD_SEQ is unkown or if interoperative</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ <span class="sc">==</span> <span class="dv">9</span>),]</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if RX_SUMM_CHEMO is unknown or not mentioned</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>RX_SUMM_CHEMO <span class="sc">==</span> <span class="dv">88</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_CHEMO <span class="sc">==</span> <span class="dv">99</span>),]</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if not stage 2 or 3 </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(TNM_CLIN_STAGE_GROUP, <span class="at">stage3 =</span> <span class="fu">ifelse</span>(   <span class="fu">str_detect</span>(TNM_CLIN_STAGE_GROUP,<span class="st">"2"</span>) <span class="sc">==</span> <span class="cn">TRUE</span>,<span class="st">"2"</span>,<span class="st">"0"</span>)) </span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3[<span class="fu">str_detect</span>(df1<span class="sc">$</span>TNM_CLIN_STAGE_GROUP,<span class="st">"3"</span>) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>stage3 <span class="sc">==</span><span class="st">"0"</span>),]</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#sequence number</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[(df1<span class="sc">$</span>SEQUENCE_NUMBER <span class="sc">==</span><span class="st">"00"</span> <span class="sc">|</span> df1<span class="sc">$</span>SEQUENCE_NUMBER <span class="sc">==</span><span class="st">"01"</span>),]</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if histology not adenocarcinoma 8140, 8210, 8260-63, 8470, 8480, and 8481</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[(df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8140</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8210</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8260</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8261</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8262</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8263</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8480</span> <span class="sc">|</span> df1<span class="sc">$</span>HISTOLOGY <span class="sc">==</span><span class="dv">8481</span>),]</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#drop if did not get def surg </span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[(df1<span class="sc">$</span>RX_SUMM_SURG_PRIM_SITE<span class="sc">==</span><span class="dv">40</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURG_PRIM_SITE<span class="sc">==</span><span class="dv">30</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURG_PRIM_SITE<span class="sc">==</span><span class="dv">50</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURG_PRIM_SITE<span class="sc">==</span><span class="dv">60</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURG_PRIM_SITE<span class="sc">==</span><span class="dv">70</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURG_PRIM_SITE<span class="sc">==</span><span class="dv">80</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make synthetic data using CART and bootstrapping</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder for synthetic data generation</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">relocate</span>(raceb, MED_INC_QUAR_12, neoadjuvant)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Strat by race and ethnicity and median income for best overlap</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>synth_1 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df2<span class="sc">$</span>raceb)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>synth_2 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df3<span class="sc">$</span>MED_INC_QUAR_12)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>synth_dat1 <span class="ot">&lt;-</span> synth_1<span class="sc">$</span>syn</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>synth_dat2 <span class="ot">&lt;-</span> synth_2<span class="sc">$</span>syn</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>vars_i_want <span class="ot">&lt;-</span> <span class="fu">colnames</span>(df2)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>vars_i_want <span class="ot">&lt;-</span> vars_i_want[<span class="sc">!</span>vars_i_want <span class="sc">==</span> <span class="st">"DX_DEFSURG_STARTED_DAYS"</span>]</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Heat maps to compare</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat1, df3, <span class="at">tables =</span> <span class="st">"twoway"</span>, <span class="at">vars =</span> vars_i_want)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat2, df3, <span class="at">tables =</span> <span class="st">"twoway"</span>, <span class="at">vars =</span> vars_i_want)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Replicates</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>final_synth_data <span class="ot">&lt;-</span> <span class="fu">sdc</span>(synth_2, df3, <span class="at">label =</span> <span class="st">"synthetic"</span>, <span class="at">rm.replicated.uniques =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> final_synth_data<span class="sc">$</span>syn</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(f, <span class="st">"synthetic_NCDB_data.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
-<section id="assigning-new-variables" class="level3">
-<h3 class="anchored" data-anchor-id="assigning-new-variables">Assigning new variables</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assigning neo adjuvant if got rad OR chemo before surg</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `surg4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ <span class="sc">==</span> <span class="dv">2</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `surg4`.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">==</span> <span class="dv">2</span> <span class="sc">|</span> df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">82</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">85</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">86</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">87</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">82</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">85</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">86</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>surg4[df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_CHEMO<span class="sc">==</span><span class="dv">87</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df1)</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#age group under 45, 45-65, 65 and up AGE</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>agegroup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `agegroup`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>agegroup[df1<span class="sc">$</span>AGE<span class="sc">&lt;=</span><span class="dv">45</span>]<span class="ot">&lt;-</span><span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `agegroup`.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>agegroup[df1<span class="sc">$</span>AGE<span class="sc">&gt;=</span><span class="dv">46</span>]<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>agegroup[df1<span class="sc">$</span>AGE<span class="sc">&gt;=</span><span class="dv">65</span>]<span class="ot">&lt;-</span><span class="dv">2</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#people who switch facility</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(CLASS_OF_CASE, <span class="at">treatnotatdiag =</span> <span class="fu">ifelse</span>(CLASS_OF_CASE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">|</span> CLASS_OF_CASE <span class="sc">==</span> <span class="dv">22</span> <span class="sc">|</span> CLASS_OF_CASE <span class="sc">==</span> <span class="dv">20</span> <span class="sc">|</span> CLASS_OF_CASE <span class="sc">==</span> <span class="dv">21</span>,<span class="st">"Switched"</span>,<span class="st">"Stayed"</span>) ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="logistic-regression-for-odds-of-upfront-surgery" class="level3">
-<h3 class="anchored" data-anchor-id="logistic-regression-for-odds-of-upfront-surgery">Logistic regression for odds of upfront surgery</h3>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<section id="logistic-regression-for-odds-of-upfront-surgery-r" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-for-odds-of-upfront-surgery-r">Logistic regression for odds of upfront surgery (R)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#making variable levels</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>YEAR_OF_DIAGNOSIS <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>YEAR_OF_DIAGNOSIS)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>MED_INC_QUAR_00 <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>MED_INC_QUAR_12)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>INSURANCE_STATUS <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>INSURANCE_STATUS)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>raceb <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>raceb)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>CDCC_TOTAL_BEST <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>CDCC_TOTAL_BEST)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>SEX  <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>SEX )</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>agegroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>agegroup)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3 <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>stage3)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>FACILITY_TYPE_CD <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>FACILITY_TYPE_CD)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>treatnotatdiag <span class="ot">&lt;-</span> <span class="fu">factor</span>(df1<span class="sc">$</span>treatnotatdiag)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3 <span class="ot">&lt;-</span> <span class="fu">relevel</span>(df1<span class="sc">$</span>stage3, <span class="at">ref =</span> <span class="st">"3"</span>)</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">discard</span>(is.null)</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#regression</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>fitlog <span class="ot">&lt;-</span> <span class="fu">glm</span>(surg4 <span class="sc">~</span> YEAR_OF_DIAGNOSIS <span class="sc">+</span> MED_INC_QUAR_00  <span class="sc">+</span>INSURANCE_STATUS <span class="sc">+</span> raceb <span class="sc">+</span> CDCC_TOTAL_BEST <span class="sc">+</span> SEX <span class="sc">+</span> agegroup <span class="sc">+</span> stage3 <span class="sc">+</span> FACILITY_TYPE_CD <span class="sc">+</span> treatnotatdiag,  <span class="at">data =</span> df1, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit))</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#significance</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitlog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = surg4 ~ YEAR_OF_DIAGNOSIS + MED_INC_QUAR_00 + INSURANCE_STATUS + 
-    raceb + CDCC_TOTAL_BEST + SEX + agegroup + stage3 + FACILITY_TYPE_CD + 
-    treatnotatdiag, family = binomial(link = logit), data = df1)
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load synthetic data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"synthetic_NCDB_data.tsv"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># logistic regression</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>log_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(neoadjuvant <span class="sc">~</span> YEAR_OF_DIAGNOSIS <span class="sc">+</span> MED_INC_QUAR_12 <span class="sc">+</span> INSURANCE_STATUS <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    raceb <span class="sc">+</span> CDCC_TOTAL_BEST <span class="sc">+</span> SEX <span class="sc">+</span> agegroup <span class="sc">+</span> stage3 <span class="sc">+</span> FACILITY_TYPE_CD <span class="sc">+</span> treatnotatdiag,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> synthetic_NCDB_data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidy results</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>tidy_log_fit <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary</span>(log_fit)<span class="sc">$</span>coefficients)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(tidy_log_fit <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(Estimate)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Pr...z..))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.1077  -0.5559  -0.4480  -0.3505   2.6807  
-
-Coefficients:
-                         Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)            -1.9300801  0.1156877 -16.684  &lt; 2e-16 ***
-YEAR_OF_DIAGNOSIS2007  -0.0482599  0.0688244  -0.701 0.483176    
-YEAR_OF_DIAGNOSIS2008   0.1278204  0.0647430   1.974 0.048351 *  
-YEAR_OF_DIAGNOSIS2009   0.0457572  0.0648432   0.706 0.480400    
-YEAR_OF_DIAGNOSIS2010  -0.1243497  0.0651851  -1.908 0.056438 .  
-YEAR_OF_DIAGNOSIS2011  -0.1997043  0.0654059  -3.053 0.002263 ** 
-YEAR_OF_DIAGNOSIS2012  -0.3544860  0.0664804  -5.332 9.70e-08 ***
-YEAR_OF_DIAGNOSIS2013  -0.5358786  0.0679307  -7.889 3.06e-15 ***
-YEAR_OF_DIAGNOSIS2014  -0.5978057  0.0675232  -8.853  &lt; 2e-16 ***
-YEAR_OF_DIAGNOSIS2015  -0.6441496  0.0686324  -9.385  &lt; 2e-16 ***
-YEAR_OF_DIAGNOSIS2016  -0.8873434  0.0729187 -12.169  &lt; 2e-16 ***
-MED_INC_QUAR_002        0.0095261  0.0427649   0.223 0.823726    
-MED_INC_QUAR_003       -0.0231732  0.0426817  -0.543 0.587178    
-MED_INC_QUAR_004        0.0003867  0.0424679   0.009 0.992736    
-INSURANCE_STATUS1      -0.0421395  0.0717245  -0.588 0.556855    
-INSURANCE_STATUS2      -0.0761547  0.0890527  -0.855 0.392460    
-INSURANCE_STATUS3       0.1084414  0.0788630   1.375 0.169113    
-INSURANCE_STATUS4       0.0069946  0.1475180   0.047 0.962182    
-INSURANCE_STATUS9       0.2416326  0.1344264   1.798 0.072255 .  
-raceb2                  0.0386154  0.0519130   0.744 0.456968    
-raceb3                  0.0504678  0.0756183   0.667 0.504515    
-raceb4                  0.1962151  0.1351395   1.452 0.146517    
-CDCC_TOTAL_BEST1        0.1872961  0.0347827   5.385 7.25e-08 ***
-CDCC_TOTAL_BEST2        0.3218300  0.0644687   4.992 5.97e-07 ***
-CDCC_TOTAL_BEST3        0.5728939  0.0930981   6.154 7.57e-10 ***
-SEX2                    0.2660656  0.0276362   9.627  &lt; 2e-16 ***
-agegroup1               0.2378698  0.0656151   3.625 0.000289 ***
-agegroup2               0.6592114  0.0736317   8.953  &lt; 2e-16 ***
-stage32                 0.2813083  0.0275118  10.225  &lt; 2e-16 ***
-FACILITY_TYPE_CD2      -0.1913698  0.0466157  -4.105 4.04e-05 ***
-FACILITY_TYPE_CD3      -0.3314190  0.0490509  -6.757 1.41e-11 ***
-FACILITY_TYPE_CD4      -0.5100541  0.0570620  -8.939  &lt; 2e-16 ***
-treatnotatdiagSwitched -0.3995306  0.0280350 -14.251  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 38721  on 51561  degrees of freedom
-Residual deviance: 36843  on 51529  degrees of freedom
-AIC: 36909
-
-Number of Fisher Scoring iterations: 5</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std..Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["z.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr...z.."],"name":[4],"type":["dbl"],"align":["right"]},{"label":["OR"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.4071841553","2":"0.02883489","3":"14.12123365","4":"2.810282e-45","5":"1.5025808","_rn_":"treatnotatdiagSwitched"},{"1":"0.3495830840","2":"0.02828529","3":"12.35918313","4":"4.345500e-35","5":"1.4184760","_rn_":"stage33"},{"1":"1.4275349110","2":"0.11556431","3":"12.35273173","4":"4.708501e-35","5":"4.1684110","_rn_":"(Intercept)"},{"1":"-0.2802823441","2":"0.02833066","3":"-9.89325163","4":"4.453235e-23","5":"0.7555704","_rn_":"SEX2"},{"1":"0.6817194541","2":"0.07310896","3":"9.32470485","4":"1.112929e-20","5":"1.9772746","_rn_":"YEAR_OF_DIAGNOSIS2016"},{"1":"0.5035962481","2":"0.05771761","3":"8.72517469","4":"2.657700e-18","5":"1.6546612","_rn_":"FACILITY_TYPE_CD4"},{"1":"0.6183265466","2":"0.07158919","3":"8.63714922","4":"5.763308e-18","5":"1.8558198","_rn_":"YEAR_OF_DIAGNOSIS2015"},{"1":"0.3958305644","2":"0.05003200","3":"7.91154862","4":"2.542066e-15","5":"1.4856176","_rn_":"FACILITY_TYPE_CD3"},{"1":"0.5490486249","2":"0.07000185","3":"7.84334452","4":"4.387022e-15","5":"1.7316048","_rn_":"YEAR_OF_DIAGNOSIS2014"},{"1":"0.5288362713","2":"0.07050313","3":"7.50089057","4":"6.338569e-14","5":"1.6969564","_rn_":"YEAR_OF_DIAGNOSIS2013"},{"1":"-0.5307671853","2":"0.07173906","3":"-7.39857978","4":"1.376487e-13","5":"0.5881536","_rn_":"agegroup2"},{"1":"0.2747362904","2":"0.04767374","3":"5.76284270","4":"8.270887e-09","5":"1.3161835","_rn_":"FACILITY_TYPE_CD2"},{"1":"-0.1869722169","2":"0.03514557","3":"-5.31993700","4":"1.038032e-07","5":"0.8294668","_rn_":"CDCC_TOTAL_BEST1"},{"1":"-0.2044386612","2":"0.06350889","3":"-3.21905575","4":"1.286135e-03","5":"0.8151047","_rn_":"agegroup1"},{"1":"0.1960413386","2":"0.06828867","3":"2.87077411","4":"4.094680e-03","5":"1.2165772","_rn_":"YEAR_OF_DIAGNOSIS2011"},{"1":"0.1893784554","2":"0.06894265","3":"2.74689857","4":"6.016174e-03","5":"1.2084982","_rn_":"YEAR_OF_DIAGNOSIS2010"},{"1":"0.1807849773","2":"0.06796336","3":"2.66003576","4":"7.813236e-03","5":"1.1981575","_rn_":"YEAR_OF_DIAGNOSIS2012"},{"1":"-0.2122599442","2":"0.09849864","3":"-2.15495309","4":"3.116551e-02","5":"0.8087544","_rn_":"CDCC_TOTAL_BEST3"},{"1":"-0.1414070468","2":"0.07094035","3":"-1.99332333","4":"4.622605e-02","5":"0.8681359","_rn_":"raceb3"},{"1":"-0.1399762067","2":"0.07026595","3":"-1.99209148","4":"4.636102e-02","5":"0.8693789","_rn_":"YEAR_OF_DIAGNOSIS2007"},{"1":"-0.1247161139","2":"0.06666496","3":"-1.87078969","4":"6.137424e-02","5":"0.8827475","_rn_":"CDCC_TOTAL_BEST2"},{"1":"-0.1189478094","2":"0.07941687","3":"-1.49776509","4":"1.341943e-01","5":"0.8878541","_rn_":"INSURANCE_STATUS3"},{"1":"-0.0995810108","2":"0.06826345","3":"-1.45877487","4":"1.446271e-01","5":"0.9052166","_rn_":"YEAR_OF_DIAGNOSIS2008"},{"1":"0.0420753041","2":"0.04410280","3":"0.95402797","4":"3.400695e-01","5":"1.0429730","_rn_":"MED_INC_QUAR_122"},{"1":"-0.0702357129","2":"0.08740054","3":"-0.80360731","4":"4.216238e-01","5":"0.9321741","_rn_":"INSURANCE_STATUS2"},{"1":"-0.0423669151","2":"0.06758696","3":"-0.62685039","4":"5.307573e-01","5":"0.9585180","_rn_":"YEAR_OF_DIAGNOSIS2009"},{"1":"0.0296897748","2":"0.05226497","3":"0.56806262","4":"5.699924e-01","5":"1.0301349","_rn_":"raceb2"},{"1":"-0.0508947306","2":"0.11053489","3":"-0.46044040","4":"6.452001e-01","5":"0.9503787","_rn_":"INSURANCE_STATUS9"},{"1":"0.0199456614","2":"0.04339328","3":"0.45964858","4":"6.457685e-01","5":"1.0201459","_rn_":"MED_INC_QUAR_124"},{"1":"0.0099215664","2":"0.04354882","3":"0.22782632","4":"8.197813e-01","5":"1.0099709","_rn_":"MED_INC_QUAR_123"},{"1":"-0.0019922413","2":"0.13181021","3":"-0.01511447","4":"9.879409e-01","5":"0.9980097","_rn_":"raceb4"},{"1":"-0.0009212353","2":"0.07197409","3":"-0.01279954","4":"9.897877e-01","5":"0.9990792","_rn_":"INSURANCE_STATUS1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AOR and 95% CI</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#exp(cbind(OR = coef(fitlog), confint(fitlog)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?paged_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="graphing-proportion-receiving-upfront-surg-at-different-facility-types-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="graphing-proportion-receiving-upfront-surg-at-different-facility-types-over-time">Graphing proportion receiving upfront surg at different facility types over time</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Making df of just people who got upfront surg</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df1<span class="ot">&lt;-</span><span class="fu">drop_na</span>(df1)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(surg4 <span class="sc">==</span><span class="dv">1</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#renaming the fac type</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, surg4, FACILITY_TYPE_CD)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Making df of just people who got upfront surg</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">as.numeric</span>(neoadjuvant) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(neoadjuvant <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming the fac type</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Unknown or uninitialised column: `Facility_Type`.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#finding proportion of upfront surg by fac type</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS,Facility_Type) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio=</span><span class="fu">mean</span>(surg4))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># finding proportion of upfront surg by fac type</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS, Facility_Type) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'YEAR_OF_DIAGNOSIS'. You can override using
 the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#finding overall median per year of upfront surg</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(surg4))</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span> <span class="fu">select</span>(YEAR_OF_DIAGNOSIS,Facility_Type,ratio)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Merging overall and by facility type</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1,year2)</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting upfron surg by fac type</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">width=</span><span class="dv">6</span>) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x=</span>YEAR_OF_DIAGNOSIS, <span class="at">y=</span>ratio, <span class="at">group =</span> Facility_Type,<span class="at">color=</span>Facility_Type),<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year of Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span><span class="fu">theme_test</span>() <span class="sc">+</span><span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finding overall median per year of upfront surg</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging overall and by facility type</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1, year2)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>mergedyearly<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(mergedyearly<span class="sc">$</span>Facility_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Integrated Network Cancer Program"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Academic Program"</span>, <span class="st">"Overall Median"</span>, <span class="st">"Comprehensive CC Program"</span>, <span class="st">"Community Cancer Program"</span>))</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting upfron surg by fac type</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mergedyearly) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x =</span> YEAR_OF_DIAGNOSIS,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> ratio, <span class="at">group =</span> Facility_Type, <span class="at">color =</span> Facility_Type), <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year of Diagnosis"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span> <span class="fu">theme_test</span>() <span class="sc">+</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>
@@ -517,80 +469,29 @@ the `.groups` argument.</code></pre>
 <section id="looking-at-how-delays-in-surgery-and-facility-switching-are-linked" class="level3">
 <h3 class="anchored" data-anchor-id="looking-at-how-delays-in-surgery-and-facility-switching-are-linked">Looking at how delays in surgery and facility switching are linked</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#making three groups for a surgery delay </span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `surggroup`.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)  </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting surg delay and switching facility</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2,<span class="fu">aes</span>(<span class="at">x=</span>DX_DEFSURG_STARTED_DAYS,<span class="at">fill=</span>treatnotatdiag))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">200</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Days Untill Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Facility Switch"</span>)<span class="sc">+</span><span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">28</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 114 rows containing non-finite values (`stat_bin()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing missing values (`geom_bar()`).</code></pre>
-</div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># making three groups for a surgery delay</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting surg delay and switching facility</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x =</span> DX_DEFSURG_STARTED_DAYS, <span class="at">fill =</span> treatnotatdiag)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">200</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Days Untill Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Facility Switch"</span>) <span class="sc">+</span> <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">28</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
+
+
+<!-- -->
+
 </section>
-<section id="multinomial-logistic-regression" class="level3">
-<h3 class="anchored" data-anchor-id="multinomial-logistic-regression">Multinomial logistic regression</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression for facoters involved in surg delay</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">multinom</span>(surggroup <span class="sc">~</span>  CDCC_TOTAL_BEST  <span class="sc">+</span> FACILITY_TYPE_CD <span class="sc">+</span> treatnotatdiag, <span class="at">data =</span> df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># weights:  27 (16 variable)
-initial  value 7043.203383 
-iter  10 value 6079.941779
-iter  20 value 5907.743829
-final  value 5907.696322 
-converged</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call:
-multinom(formula = surggroup ~ CDCC_TOTAL_BEST + FACILITY_TYPE_CD + 
-    treatnotatdiag, data = df2)
-
-Coefficients:
-            (Intercept) CDCC_TOTAL_BEST1 CDCC_TOTAL_BEST2 CDCC_TOTAL_BEST3
-Long Delay    0.8405949        0.2379591        0.3183511         1.639926
-Short delay   1.1511928        0.2179413        0.4104514         1.292843
-            FACILITY_TYPE_CD2 FACILITY_TYPE_CD3 FACILITY_TYPE_CD4
-Long Delay         0.12436555         0.4794398         0.1989572
-Short delay       -0.00914009        -0.2416883        -0.3256948
-            treatnotatdiagSwitched
-Long Delay                1.086307
-Short delay               0.583440
-
-Std. Errors:
-            (Intercept) CDCC_TOTAL_BEST1 CDCC_TOTAL_BEST2 CDCC_TOTAL_BEST3
-Long Delay    0.1285585        0.1107837        0.2101229        0.4632316
-Short delay   0.1258427        0.1123564        0.2107523        0.4693000
-            FACILITY_TYPE_CD2 FACILITY_TYPE_CD3 FACILITY_TYPE_CD4
-Long Delay          0.1396831         0.1494499         0.1702433
-Short delay         0.1372698         0.1498876         0.1713180
-            treatnotatdiagSwitched
-Long Delay              0.09634423
-Short delay             0.09885331
-
-Residual Deviance: 11815.39 
-AIC: 11847.39 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#z &lt;- summary(test)$coefficients/summary(test)$standard.errors</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#p &lt;- (1 - pnorm(abs(z), 0, 1)) * 2</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#p</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#exp(coef(test))</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#exp(confint(test))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -673,6 +574,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -826,7 +778,252 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb13" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Adoption of a new Colorectal Cancer Treatment"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-05-11"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, python, regression, synthetic data, oncology, data cleaning]</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "headshot.jpeg"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html: </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;style</span> <span class="er">type</span><span class="ot">=</span><span class="st">"text/css"</span><span class="kw">&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>code<span class="fu">.r</span>{</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">14</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>td {</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/style&gt;</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">fig.width=</span><span class="dv">12</span>, <span class="at">fig.height=</span><span class="dv">8</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="co">#py_discover_config()</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co">#use_condaenv("website_env")</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Synthetic Data</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data cleaning and prep with R</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE, tidy=TRUE}</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co"># We will use synthpop to generate a synthetic data set</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(synthpop)</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in original data from the NCDB</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>RectalData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"data_sets/ncdb_project_data.dta"</span>)</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> RectalData <span class="sc">%&gt;%</span> <span class="fu">select</span>(RX_SUMM_SYSTEMIC_SUR_SEQ,</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_RADIATION, </span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURGRAD_SEQ,</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_CHEMO,  </span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>                                 SEX,</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>                                 MED_INC_QUAR_12, </span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>                                 AGE,</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>                                 raceb, </span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>                                 TNM_CLIN_STAGE_GROUP,</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>                                 TNM_PATH_STAGE_GROUP,</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>                                 SEQUENCE_NUMBER, </span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>                                 HISTOLOGY, </span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURG_PRIM_SITE, </span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>                                 YEAR_OF_DIAGNOSIS, </span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>                                 FACILITY_TYPE_CD, </span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>                                 INSURANCE_STATUS, </span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>                                 CDCC_TOTAL_BEST, </span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>                                 DX_DEFSURG_STARTED_DAYS,</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>                                 CLASS_OF_CASE</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">9</span>), <span class="co"># unknown sequence  </span></span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>RX_SUMM_RADIATION <span class="sc">==</span> <span class="dv">9</span>, <span class="co"># unknown if rad recommended, death cert only</span></span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>), <span class="co"># unknown sequence</span></span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">99</span>,<span class="dv">88</span>), <span class="co"># unknown chemo</span></span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>          SEQUENCE_NUMBER <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"00"</span>,<span class="st">"01"</span>), <span class="co"># Primary cancer</span></span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>          HISTOLOGY <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8140</span>, <span class="dv">8210</span>, <span class="dv">8260</span>, <span class="dv">8261</span>, <span class="dv">8262</span>, <span class="dv">8263</span>, <span class="dv">8470</span>, <span class="dv">8480</span>, <span class="dv">8481</span>), <span class="co"># Proper histology codes</span></span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>          RX_SUMM_SURG_PRIM_SITE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>)) <span class="co"># primary surgery</span></span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a simple stage variable and filter to only stage 2 and 3</span></span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(TNM_CLIN_STAGE_GROUP, <span class="at">stage3 =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(TNM_CLIN_STAGE_GROUP,<span class="st">"2"</span>),<span class="st">"2"</span>,<span class="st">"0"</span>)) </span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3[<span class="fu">str_detect</span>(df1<span class="sc">$</span>TNM_CLIN_STAGE_GROUP,<span class="st">"3"</span>) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>stage3 <span class="sc">==</span><span class="st">"0"</span>),]</span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a><span class="co"># Define neoadjuvant, rad or chemo before surgery </span></span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="dv">3</span>)</span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">case_when</span>(RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a>                                              )) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">!=</span> <span class="dv">3</span>)</span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="co"># age group under 45, 45-65, 65 and up AGE</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">agegroup=</span> <span class="fu">case_when</span>(AGE<span class="sc">&lt;=</span><span class="dv">45</span> <span class="sc">~</span><span class="dv">0</span>, AGE <span class="sc">&gt;</span><span class="dv">45</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;</span><span class="dv">65</span> <span class="sc">~</span><span class="dv">1</span>, AGE <span class="sc">&gt;=</span> <span class="dv">65</span> <span class="sc">~</span><span class="dv">2</span>))</span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a><span class="co"># create a var for switching facility and add the unknown gov insurance to unknown insurance </span></span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(CLASS_OF_CASE, <span class="at">treatnotatdiag =</span> <span class="fu">ifelse</span>(CLASS_OF_CASE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>),<span class="st">"Switched"</span>,<span class="st">"Stayed"</span>),</span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>                      <span class="at">INSURANCE_STATUS =</span> <span class="fu">ifelse</span>(INSURANCE_STATUS<span class="sc">==</span><span class="dv">4</span>,<span class="dv">9</span>,INSURANCE_STATUS))</span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Omit NA, this project used complete case analysis</span></span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df1)</span>
+<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only relevant variables</span></span>
+<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(SEX,</span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>                      MED_INC_QUAR_12, </span>
+<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a>                      agegroup,</span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>                      raceb, </span>
+<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a>                      stage3,</span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>                      neoadjuvant,</span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a>                      treatnotatdiag,</span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a>                      YEAR_OF_DIAGNOSIS, </span>
+<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a>                      FACILITY_TYPE_CD, </span>
+<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a>                      INSURANCE_STATUS, </span>
+<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a>                      CDCC_TOTAL_BEST, </span>
+<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a>                      DX_DEFSURG_STARTED_DAYS</span>
+<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a><span class="co"># Make variables into factors </span></span>
+<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
+<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data cleaning and prep with Python</span></span>
+<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a><span class="fu">### Generating and inspecting synthetic data</span></span>
+<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE, tidy=TRUE}</span></span>
+<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a><span class="co"># Make synthetic data using CART and bootstrapping</span></span>
+<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder for synthetic data generation</span></span>
+<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">relocate</span>(raceb,MED_INC_QUAR_12, neoadjuvant) </span>
+<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Strat by race and ethnicity and median income for best overlap</span></span>
+<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a>synth_1 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df2<span class="sc">$</span>raceb)</span>
+<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a>synth_2 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df3<span class="sc">$</span>MED_INC_QUAR_12)</span>
+<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a>synth_dat1 <span class="ot">&lt;-</span> synth_1<span class="sc">$</span>syn</span>
+<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a>synth_dat2 <span class="ot">&lt;-</span> synth_2<span class="sc">$</span>syn</span>
+<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a>vars_i_want <span class="ot">&lt;-</span> <span class="fu">colnames</span>(df2)</span>
+<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a>vars_i_want<span class="ot">&lt;-</span>vars_i_want[<span class="sc">!</span>vars_i_want <span class="sc">==</span> <span class="st">"DX_DEFSURG_STARTED_DAYS"</span>]</span>
+<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Heat maps to compare</span></span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat1, df3,<span class="at">tables=</span><span class="st">"twoway"</span>,<span class="at">vars =</span> vars_i_want)</span>
+<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat2, df3,<span class="at">tables=</span><span class="st">"twoway"</span>,<span class="at">vars =</span> vars_i_want)</span>
+<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Replicates</span></span>
+<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a>final_synth_data <span class="ot">&lt;-</span> <span class="fu">sdc</span>(synth_2, df3, <span class="at">label=</span><span class="st">"synthetic"</span>, <span class="at">rm.replicated.uniques =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> final_synth_data<span class="sc">$</span>syn</span>
+<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(f, <span class="st">"synthetic_NCDB_data.tsv"</span>)</span>
+<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis</span></span>
+<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### Logistic regression for odds of upfront surgery (R)</span></span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, message=FALSE}</span></span>
+<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a><span class="co"># Load synthetic data</span></span>
+<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"synthetic_NCDB_data.tsv"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
+<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression</span></span>
+<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a>log_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(neoadjuvant <span class="sc">~</span> YEAR_OF_DIAGNOSIS <span class="sc">+</span> </span>
+<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a>      MED_INC_QUAR_12 <span class="sc">+</span> </span>
+<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a>      INSURANCE_STATUS <span class="sc">+</span> </span>
+<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a>      raceb <span class="sc">+</span> </span>
+<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a>      CDCC_TOTAL_BEST <span class="sc">+</span> </span>
+<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a>      SEX <span class="sc">+</span> </span>
+<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a>      agegroup <span class="sc">+</span> </span>
+<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a>      stage3 <span class="sc">+</span> </span>
+<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a>      FACILITY_TYPE_CD <span class="sc">+</span> </span>
+<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a>      treatnotatdiag,  </span>
+<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> synthetic_NCDB_data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit))</span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidy results</span></span>
+<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>tidy_log_fit <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary</span>(log_fit)<span class="sc">$</span>coefficients)</span>
+<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(tidy_log_fit <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(Estimate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="st">`</span><span class="at">Pr...z..</span><span class="st">`</span>))</span>
+<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a><span class="co">#?paged_table</span></span>
+<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### Graphing proportion receiving upfront surg at different facility types over time</span></span>
+<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE}</span></span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a><span class="co"># Making df of just people who got upfront surg</span></span>
+<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">as.numeric</span>(neoadjuvant)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming the fac type </span></span>
+<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)</span>
+<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span>
+<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
+<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
+<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
+<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-203"><a href="#cb13-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a><span class="co"># finding proportion of upfront surg by fac type</span></span>
+<span id="cb13-205"><a href="#cb13-205" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS, Facility_Type) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio=</span><span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a><span class="co"># finding overall median per year of upfront surg</span></span>
+<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
+<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span> <span class="fu">select</span>(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)</span>
+<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging overall and by facility type</span></span>
+<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
+<span id="cb13-214"><a href="#cb13-214" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
+<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1,year2)</span>
+<span id="cb13-216"><a href="#cb13-216" aria-hidden="true" tabindex="-1"></a>mergedyearly<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(mergedyearly<span class="sc">$</span>Facility_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Integrated Network Cancer Program"</span>,</span>
+<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Academic Program"</span>,</span>
+<span id="cb13-218"><a href="#cb13-218" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Overall Median"</span>,</span>
+<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Comprehensive CC Program"</span>,</span>
+<span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Community Cancer Program"</span>))</span>
+<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-222"><a href="#cb13-222" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting upfron surg by fac type</span></span>
+<span id="cb13-223"><a href="#cb13-223" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mergedyearly) <span class="sc">+</span> </span>
+<span id="cb13-224"><a href="#cb13-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x=</span>YEAR_OF_DIAGNOSIS, <span class="at">y=</span>ratio, <span class="at">group =</span> Facility_Type, <span class="at">color=</span>Facility_Type), <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span> </span>
+<span id="cb13-225"><a href="#cb13-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year of Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span> </span>
+<span id="cb13-226"><a href="#cb13-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) </span>
+<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Looking at how delays in surgery and facility switching are linked</span></span>
+<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, tidy=TRUE}</span></span>
+<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a><span class="co">#making three groups for a surgery delay </span></span>
+<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span>
+<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
+<span id="cb13-235"><a href="#cb13-235" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
+<span id="cb13-236"><a href="#cb13-236" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)  </span>
+<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting surg delay and switching facility</span></span>
+<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x=</span>DX_DEFSURG_STARTED_DAYS,<span class="at">fill=</span>treatnotatdiag)) <span class="sc">+</span> </span>
+<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb13-241"><a href="#cb13-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">200</span>) <span class="sc">+</span> </span>
+<span id="cb13-242"><a href="#cb13-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Days Untill Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Facility Switch"</span>) <span class="sc">+</span> </span>
+<span id="cb13-243"><a href="#cb13-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span> </span>
+<span id="cb13-244"><a href="#cb13-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">28</span>) </span>
+<span id="cb13-245"><a href="#cb13-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

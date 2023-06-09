@@ -7,3 +7,14 @@ freeze: true
 # Enable banner style title blocks
 title-block-banner: true
 
+#format:
+ # html:
+    #page-layout: full
+    #grid: 
+     #sidebar-width: 300px
+     #body-width: 1200x
+    # margin-width: 500px
+    # gutter-width: 1.5rem
+   # code-block-border-left: "#31BAE9"
+   # code-block-bg: true
+  #  highlight-style: kate
