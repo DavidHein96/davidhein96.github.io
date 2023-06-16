@@ -1,0 +1,42 @@
+---
+title: "GPT-4 Everyone"
+author: "Dave Hein"
+date: "2023-03-30"
+categories: [Natural language processing, Technical communication]
+image: "cover_art.jpg"
+---
+
+```{=html}
+<style type="text/css">
+
+code.r{
+  font-size: 14px;
+}
+td {
+  font-size: 12px;
+}
+
+</style>
+```
+Demystify AI with this fun and easygoing introduction to ChatGPT! First, starting with a gentle introduction to language models and ChatGPT, then diving deep into prompt engineering for any situation, this guide has you covered.
+
+Here's a quick look at some of the awesome things we'll do:
+
+-   Generate practice quizzes, from chemistry to the SAT, with detailed feedback
+-   Automate resumes and cover letters, custom tailored for individual job applications
+-   Quickly write emails and draft outlines for projects at work, cutting down on tedious tasks
+-   Trouble shoot in excel, python, and more, with immediate and adaptive feedback
+-   Plan tasty meals instantly using only what's in your kitchen
+-   Collaborate with AI to increase your creativity, not replace it
+-   Learn how to see through the hype of "Make money quick with ChatGPT" schemes commonly peddled on the internet
+
+By the end of this handbook you'll be well prepared for success in the new world of generative AI! [Amazon link](https://www.amazon.com/GPT-4-Everyone-Maximize-Productivity-Creativity-ebook/dp/B0C14589WW/ref=sr_1_1?crid=APWKT0E57YFN&keywords=GPT4+everyone&qid=1686858600&sprefix=gpt4+everyo%2Caps%2C160&sr=8-1) if you are interested in an ebook version
+
+```{=html}
+<iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="100%"
+    height="100%"
+    src="GPT4Everyone.pdf">
+</iframe>
+```

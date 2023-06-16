@@ -1,9 +1,9 @@
 ---
-title: "Adoption of a new Colorectal Cancer Treatment"
+title: "My First Paper: Trends and Associations in Rectal Cancer Treatment"
 author: "Dave Hein"
-date: "2023-05-11"
-categories: [R, python, regression, synthetic data, oncology, data cleaning]
-image: "headshot.jpeg"
+date: "2023-06-11"
+categories: [R, python, regression, synthetic data, data cleaning]
+image: "dalle_impression_chart_brewer.jpg"
 format:
   html: 
     toc: true
@@ -20,11 +20,22 @@ code.r{
 td {
   font-size: 12px;
 }
+code.python{
+  font-size: 14px;
+}
+pre {
+  font-size: 12px;
+}
+
+}
 
 </style>
 ```
+## Project Setup
+
+This project demonstrates code used in the data cleaning, analysis, and generation of figures in my verfy first publication "Trends and Factors Associated with Receipt of Upfront Surgery for Stage II-III Rectal Adenocarcinoma in the United States". Here's a link to the [abstract.](https://pubmed.ncbi.nlm.nih.gov/33710137/) This blog was created with Quarto in R Studio, so to include Python versions of analysis and graphics I needed to specify an Anaconda environment in the setup chunk.
+
 ```{r, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.width=12, fig.height=8)
 library(tidyverse)
 library(haven)
 library(lmtest)
@@ -33,21 +44,26 @@ library(nnet)
 library(reticulate)
 library(broom)
 library(rmarkdown)
-#py_discover_config()
-#use_condaenv("website_env")
+library(knitr)
 
+use_condaenv("website_env", required = TRUE)
+knitr::opts_chunk$set(python.reticulate = FALSE)
 ```
 
 ## Creating Synthetic Data
 
-### Data cleaning and prep with R
+The original paper uses data from the National Cancer Data Base. This data is not public thus I created a synthetic data set that attempts to recreate the characteristics of the original data but with much greater anonymization.
+
+### Clean and Prep Original Data
+
+First step was to clean and engineer variables as in the original paper. The source file is retained on a secure server and these code chunks were only ran once (`eval=FALSE`)
 
 ```{r, eval=FALSE, tidy=TRUE}
 # We will use synthpop to generate a synthetic data set
 library(synthpop)
 
 # Reading in original data from the NCDB
-RectalData <- read_dta("data_sets/ncdb_project_data.dta")
+RectalData <- read_dta("ncdb_project_data.dta")
 
 df1 <- RectalData %>% select(RX_SUMM_SYSTEMIC_SUR_SEQ,
                                  RX_SUMM_RADIATION, 
@@ -70,14 +86,14 @@ df1 <- RectalData %>% select(RX_SUMM_SYSTEMIC_SUR_SEQ,
                                  CLASS_OF_CASE
 )
 
-df1 <- df1 %>% 
-  filter(!RX_SUMM_SYSTEMIC_SUR_SEQ %in% c(6,7,9), # unknown sequence
-         !RX_SUMM_RADIATION == 9, # unknown if rad recommended, death cert only
-         !RX_SUMM_SURGRAD_SEQ %in% c(6, 9), # unknown sequence
-         !RX_SUMM_CHEMO %in% c(99,88), # unknown chemo
-          SEQUENCE_NUMBER %in% c("00","01"), # Primary cancer
-          HISTOLOGY %in% c(8140, 8210, 8260, 8261, 8262, 8263, 8470, 8480, 8481), # Proper histology codes
-          RX_SUMM_SURG_PRIM_SITE %in% c(30, 40, 50, 60, 70, 80)) # primary surgery
+# Remove unknown sequences, treatments, and keep proper hist codes & primary surgery 
+df1 <- df1 %>% filter(!RX_SUMM_SYSTEMIC_SUR_SEQ %in% c(6,7,9),
+                      !RX_SUMM_RADIATION == 9, 
+                      !RX_SUMM_SURGRAD_SEQ %in% c(6, 9), 
+                      !RX_SUMM_CHEMO %in% c(99,88),
+                      SEQUENCE_NUMBER %in% c("00","01"), 
+                      HISTOLOGY %in% c(8140, 8210, 8260, 8261, 8262, 8263, 8470, 8480, 8481),
+                      RX_SUMM_SURG_PRIM_SITE %in% c(30, 40, 50, 60, 70, 80))
 
 # Make a simple stage variable and filter to only stage 2 and 3
 df1 <- df1 %>% mutate(TNM_CLIN_STAGE_GROUP, stage3 = ifelse(str_detect(TNM_CLIN_STAGE_GROUP,"2"),"2","0")) 
@@ -123,14 +139,9 @@ df1 <- df1 %>% select(SEX,
 df2 <- mutate(across(!DX_DEFSURG_STARTED_DAYS, as.factor))
 ```
 
-### Data cleaning and prep with Python
+### Generate Synthetic Data
 
-```{r}
-
-
-```
-
-### Generating and inspecting synthetic data
+I now use the package `synthpop` to create a synthetic data set using bootstrapping and classification and regression trees. I utilized stratification and changed the order of variables used in the synthesis process to create a data set with lower mean square error. Finally I remove all rows that happen to be identical to rows in the original data to ensure every row is synthetic.
 
 ```{r, eval=FALSE, tidy=TRUE}
 # Make synthetic data using CART and bootstrapping
@@ -148,19 +159,24 @@ synth_dat2 <- synth_2$syn
 vars_i_want <- colnames(df2)
 vars_i_want<-vars_i_want[!vars_i_want == "DX_DEFSURG_STARTED_DAYS"]
 
-# Check Heat maps to compare
+# Check Heat maps to compare pMSE
 synthpop::utility.tables(synth_dat1, df3,tables="twoway",vars = vars_i_want)
 synthpop::utility.tables(synth_dat2, df3,tables="twoway",vars = vars_i_want)
 
-# Remove Replicates
+# Remove Replicates & tag for synthetic 
 final_synth_data <- sdc(synth_2, df3, label="synthetic", rm.replicated.uniques = TRUE)
 f <- final_synth_data$syn
 write_tsv(f, "synthetic_NCDB_data.tsv")
 ```
 
-## Analysis
+## Analysis Using Synthetic Data
 
-### Logistic regression for odds of upfront surgery (R)
+### Logistic Regression
+
+Here I perform logistic regression using the same variables as the original paper. For fun I put in code for both R and Python. The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper. 
+
+::: panel-tabset
+#### Using R
 
 ```{r, tidy=TRUE, message=FALSE}
 # Load synthetic data
@@ -182,31 +198,51 @@ log_fit <- glm(neoadjuvant ~ YEAR_OF_DIAGNOSIS +
 
 # Tidy results
 tidy_log_fit <- data.frame(summary(log_fit)$coefficients)
-
-rmarkdown::paged_table(tidy_log_fit %>% mutate(OR = exp(Estimate)) %>% arrange(`Pr...z..`))
-#?paged_table
+rmarkdown::paged_table(round(tidy_log_fit %>% mutate(OR = exp(Estimate)) %>% arrange(`Pr...z..`),3))
 ```
 
-### Graphing proportion receiving upfront surg at different facility types over time
+#### Using Python
 
-```{r, tidy=TRUE}
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+
+synthetic_NCDB_data_py = pd.read_csv("synthetic_NCDB_data.tsv", sep = '\t')
+
+# Logistic Regression for odds of upfront surgery
+model = smf.logit(formula="neoadjuvant~ C(YEAR_OF_DIAGNOSIS) + C(stage3) + C(MED_INC_QUAR_12) + C(INSURANCE_STATUS) + C(raceb) + C(CDCC_TOTAL_BEST) + C(SEX) + C(agegroup) + C(FACILITY_TYPE_CD) + C(treatnotatdiag)",data = synthetic_NCDB_data_py).fit()
+
+mod_summary = model.summary()
+mod_summary_table = pd.read_html(mod_summary.tables[1].as_html(), header=0, index_col=0)[0]
+print(mod_summary_table)
+```
+:::
+
+### Proportions Over Time
+This figure shows the proportion of patients receiving neoadjuvant treatment by facility type, and how this proportion has increased over time. There were a lot of issues with getting the Python figure to display correctly, so I had to do a little work around and save the figure before knitting the markdown document. Apologies for the colors not matching in the R and Python versions. There's only so much time in the world...
+
+::: panel-tabset
+#### Using R
+
+```{r, tidy=TRUE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 # Making df of just people who got upfront surg
-synthetic_NCDB_data <- synthetic_NCDB_data %>% mutate(neoadjuvant = as.numeric(neoadjuvant)-1)
-df2 <- synthetic_NCDB_data %>% filter(neoadjuvant == 1)
+synthetic_NCDB_data2 <- synthetic_NCDB_data %>% mutate(neoadjuvant = as.numeric(neoadjuvant)-1)
+df2 <- synthetic_NCDB_data2 %>% filter(neoadjuvant == 0)
 
 # renaming the fac type 
-dfyear <- synthetic_NCDB_data %>% dplyr::select(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)
+dfyear <- synthetic_NCDB_data2 %>% dplyr::select(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)
 dfyear$Facility_Type[dfyear$FACILITY_TYPE_CD == 1] <- "Community Cancer Program"
 dfyear$Facility_Type[dfyear$FACILITY_TYPE_CD == 2] <- "Comprehensive CC Program"
 dfyear$Facility_Type[dfyear$FACILITY_TYPE_CD == 3] <- "Academic Program"
 dfyear$Facility_Type[dfyear$FACILITY_TYPE_CD == 4] <- "Integrated Network Cancer Program"
 
-
 # finding proportion of upfront surg by fac type
 dfyear <- dfyear %>% dplyr::group_by(YEAR_OF_DIAGNOSIS, Facility_Type) %>% dplyr::summarize(ratio=mean(neoadjuvant))
 
 # finding overall median per year of upfront surg
-dfyearavg <- synthetic_NCDB_data %>% dplyr::group_by(YEAR_OF_DIAGNOSIS) %>% dplyr::summarize(ratio = mean(neoadjuvant))
+dfyearavg <- synthetic_NCDB_data2 %>% dplyr::group_by(YEAR_OF_DIAGNOSIS) %>% dplyr::summarize(ratio = mean(neoadjuvant))
 dfyearavg$Facility_Type <- "Overall Median"
 dfyearavg <- dfyearavg %>% select(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)
 
@@ -227,9 +263,39 @@ ggplot(mergedyearly) +
   theme_test() + scale_color_brewer(palette = "Dark2") 
 ```
 
-### Looking at how delays in surgery and facility switching are linked
+#### Using Python
 
-```{r, warning=FALSE, tidy=TRUE}
+```{python, eval = FALSE, tidy = TRUE }
+# Graphing proportion receiving upfront surg at different facility types over time
+rcParams['figure.figsize'] = 8,6
+
+dfCC = synthetic_NCDB_data_py.query('FACILITY_TYPE_CD==1').filter(['YEAR_OF_DIAGNOSIS','neoadjuvant']).groupby(['YEAR_OF_DIAGNOSIS']).agg(['mean'])
+dfCCC = synthetic_NCDB_data_py.query('FACILITY_TYPE_CD==2').filter(['YEAR_OF_DIAGNOSIS','neoadjuvant']).groupby(['YEAR_OF_DIAGNOSIS']).agg(['mean'])
+dfA = synthetic_NCDB_data_py.query('FACILITY_TYPE_CD==3').filter(['YEAR_OF_DIAGNOSIS','neoadjuvant']).groupby(['YEAR_OF_DIAGNOSIS']).agg(['mean'])
+dfIN = synthetic_NCDB_data_py.query('FACILITY_TYPE_CD==4').filter(['YEAR_OF_DIAGNOSIS','neoadjuvant']).groupby(['YEAR_OF_DIAGNOSIS']).agg(['mean'])
+
+plt.figure(figsize = (8,6))
+
+plt.plot(dfCC, label="Community Cancer Center")
+plt.plot(dfCCC, label="Comprehensive Community Cancer Center")
+plt.plot(dfA, label="Academic Program")
+plt.plot(dfIN, label="Integrated Cancer Program")
+plt.legend()
+plt.xlabel("Year of Diagnosis")
+plt.ylabel("Proportion Receiving Upfront Surgery")
+plt.savefig('posts/first_project/overtime.png',bbox_inches='tight')
+```
+
+![output](overtime.png)
+:::
+
+### Delays in Surgery and Facility Switching
+This final figure displays how the counts of patients by how many days they have to wait till surgery, colored by whether they switched facilities or not. 
+
+::: panel-tabset
+#### Using R
+
+```{r, warning=FALSE, tidy=TRUE, message=FALSE, fig.height=4, fig.width=8 }
 #making three groups for a surgery delay 
 df2$surggroup[df2$DX_DEFSURG_STARTED_DAYS == 0] <- "Day zero"
 df2$surggroup[df2$DX_DEFSURG_STARTED_DAYS > 0 & df2$DX_DEFSURG_STARTED_DAYS < 28] <- "Short delay"
@@ -244,3 +310,27 @@ ggplot(df2, aes(x=DX_DEFSURG_STARTED_DAYS,fill=treatnotatdiag)) +
   theme_test() + scale_fill_brewer(palette = "Set2") + 
   geom_vline(xintercept=28) 
 ```
+
+#### Using Python
+
+```{python, eval=FALSE, tidy = TRUE}
+#Data frame that only includes people who got upfront surg
+dfsurg = synthetic_NCDB_data_py.query('neoadjuvant == 0')
+
+# Plotting surgery delay and switching facility
+dfsurggraph = dfsurg.filter(['treatnotatdiag','DX_DEFSURG_STARTED_DAYS']).query('DX_DEFSURG_STARTED_DAYS<200')
+dfsurggraphswitch = dfsurggraph.query('treatnotatdiag == "Switched"')
+dfsurggraphstay = dfsurggraph.query('treatnotatdiag == "Stayed"')
+plt.clf()
+plt.hist(dfsurggraphswitch['DX_DEFSURG_STARTED_DAYS'], bins=40, fill=False,histtype='step',stacked=True,label="Switched",alpha=0.5)
+plt.hist(dfsurggraphstay['DX_DEFSURG_STARTED_DAYS'], bins=40,fill=False,histtype='step',stacked=True,label="Stayed",alpha=0.5)
+plt.xlabel("Days Untill Surgery From Diagnosis")
+plt.ylabel("Count")
+plt.legend()
+plt.axvline(x=28)
+plt.savefig('posts/first_project/switchvstay.png',bbox_inches='tight')
+plt.show()
+```
+
+![output](switchvstay.png)
+:::

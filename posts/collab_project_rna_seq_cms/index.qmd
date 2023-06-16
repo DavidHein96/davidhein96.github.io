@@ -10,6 +10,8 @@ format:
     code-fold: show
     code-tools: true
 ---
+
+```{=html}
 <style type="text/css">
 
 code.r{
@@ -20,3 +22,4 @@ td {
 }
 
 </style>
+```

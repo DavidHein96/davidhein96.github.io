@@ -9,3 +9,8 @@ davidhein96.github.io.Rproj
 /data_sets/
 
 *.tsv
+*.DS_Store
+posts/*DS_Store
+docs/.DS_Store
+posts/.DS_Store
+docs/*DS_Store

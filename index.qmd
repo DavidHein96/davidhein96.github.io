@@ -12,11 +12,11 @@ about:
       href: https://github.
 ---
 
-Welcome to my site! I just graduated with my Master's degree in data science and I have a background in academic medical research. My projects at the radiation oncology department at the University of Texas Southwestern Medical Center involve a wide array of techniques in statistics, machine learning, and bioinformatics. I have a strong foundation in statistical analysis and programming an am seeking to leverage these skills to advance ambitious projects in a dynamic, data-driven role.
+Welcome to my site! I just graduated with my MS in data science and have a background in academic medical research. My work involves a full stack of end-to-end skills, from utilizing efficient data structures, assessing bioinformatics tools, navigating clinical healthcare workflows, writing academic manuscripts, to the final communication of findings to stakeholders. Outside of my current position I'm interested in learning to maximize the utility of large language models, and love teaching people what I've found!
 
 # Technical Skills & Projects
 
-Check out [my projects](projects.qmd), which are tagged with technical skill categories
+Check out [my projects](projects.qmd), which are tagged with technical skill categories. As a bonus, here's my [introductory guide](posts/chatGPT_book/index.qmd) to ChatGPT.
 
 # Education
 
@@ -24,35 +24,43 @@ Check out [my projects](projects.qmd), which are tagged with technical skill cat
 
 *Master of Science in Data Science* \| 2021-2023
 
+-   Completed coursework in deep learning, reinforcement learning, and natural language processing
+
 *Bachelor of Science in Chemistry* \| 2015-2019
 
 -   McCombs Business Foundations Certificate
--   High Honors
+-   Graduated with High Honors
 
 # Experience
 
 **University of Texas Southwestern Medical Center**
 
-*Research Assistant* \| 2020 - Present
+Clinical Data Specialist/Research Assistant \| 2020 - Present
 
--   Conduct
+-   Published, as first author, multiple papers concerning colorectal cancer epidemiology and biology with an emphasis on racial and ethnic equity
 
--   Lead
+-   Achieved greater than 90% reductions in compute time and cost for several data processing pipelines utilizing R, Python, Bash, and high-performance computing environments
 
--   Collaborate
+-   Lead research initiatives involving the collection, processing, analysis, and reporting of data from diverse sources such as public databases, clinical trials, electronic medical records, and genetic sequencing results
 
--   Consult
+-   Engaged in cross-sector collaboration with academic labs, such as UTSW's Medical Artificial Intelligence and Automation Lab, and private sector partners, such as Tempus Labs, in projects that benefited from pooled resources
 
--   Manage
+-   Contributed as subject matter expert on additional projects and publications by providing guidance to department faculty in statistical methods and complex data analysis
 
-# Publications
+# Publications & Presentations
 
-hein
+**Hein D**, Rhead B, Pouliot Y, Guinney J, De La Vega F, Sanford N. Racial and Genetic Ancestry Associations with Gene Expression Patterns in a Real-World Cohort of Colorectal Cancer Patients. *American Society of Clinical Oncology Annual Conference Poster Presentation*. 2023 [Publication Link](https://ascopubs.org/doi/abs/10.1200/JCO.2023.41.16_suppl.3541) \| My Projects Link
 
-hein
+**Hein D,** Coughlin L, Poulides N, Koh A, Sanford N. Microbiome and Genomic Profiling in Rectal Adenocarcinoma. *American Association for Cancer Research Annual Conference Poster Poster Presentation*. 2023 [Publication Link](https://doi.org/10.1158/1538-7445.AM2023-5901) \| My Projects Link
 
-hein
+**Hein D**, Deng W, Bleile M, Kazmi S, Jones A, Kainthla R, Jiang W, Cantarel B, Sanford N. Racial and Ethnic Differences in Genomic Profiling of Early Onset Colorectal Cancer*.* *Journal of the National Cancer Institute*. 2022 [Publication Link](https://doi.org/10.1093/jnci/djac014)
 
-hein
+Rhead B, **Hein D**, Pouliot Y, Guinney J, De La Vega F, Sanford N. Genetic Ancestry Differences in Tumor Mutation in Early and Average-Onset Colorectal Cancer. *ASCO Annual Conference Poster Presentation*. 2022 [Publication Link](https://ascopubs.org/doi/abs/10.1200/JCO.2022.40.16_suppl.3620)
 
-# Extra fun stuff
+**Hein D**, Jones A, Chul A, Sanford N. Self-reported Reasons for Colonoscopy Among Adults Aged 45-49 versus 50 Years and Older from 2010-2018. *Cancer Epidemiology*. 2021 [Publication Link](https://doi.org/10.1016/j.canep.2021.101984)
+
+**Hein D**, Ahn C, Aguilera T, Folkert M, Sanford N. Trends and Factors Associated with Receipt of Upfront Surgery for Stage II-III Rectal Adenocarcinoma in the United States, 2006-2016. *American Journal of Clinical Oncology.* 2021 [Publication Link](https://doi.org/10.1097/COC.0000000000000808) \| [My Projects Link](posts/first_project/index.qmd)
+
+Zhang-Velten E, Eraj S, **Hein D**, Aguilera T, Folkert M, Sanford N. Patterns of Dose Escalation Among Patients with Esophageal Cancer Undergoing Definitive Radiation Therapy: 2006-2016. *Advances in Radiation Oncology.* 2020 [Publication Link](https://doi.org/10.1016/j.adro.2020.09.020)
+
+# 

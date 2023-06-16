@@ -10,10 +10,9 @@
   {
     "listing": "/projects.html",
     "items": [
-      "/posts/post-with-code/index.html",
       "/posts/first_project/index.html",
       "/posts/collab_project_rna_seq_cms/index.html",
-      "/posts/welcome/index.html"
+      "/posts/chatGPT_book/index.html"
     ]
   }
 ]
