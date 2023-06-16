@@ -2,7 +2,7 @@
 title: "My First Paper: Trends and Associations in Rectal Cancer Treatment"
 author: "Dave Hein"
 date: "2023-06-11"
-categories: [R, python, regression, synthetic data, data cleaning]
+categories: [R, Python, Statistics, Synthetic data, Data cleaning]
 image: "dalle_impression_chart_brewer.jpg"
 format:
   html: 
@@ -173,7 +173,7 @@ write_tsv(f, "synthetic_NCDB_data.tsv")
 
 ### Logistic Regression
 
-Here I perform logistic regression using the same variables as the original paper. For fun I put in code for both R and Python. The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper. 
+Here I perform logistic regression using the same variables as the original paper. For fun I put in code for both R and Python. The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper.
 
 ::: panel-tabset
 #### Using R
@@ -221,6 +221,7 @@ print(mod_summary_table)
 :::
 
 ### Proportions Over Time
+
 This figure shows the proportion of patients receiving neoadjuvant treatment by facility type, and how this proportion has increased over time. There were a lot of issues with getting the Python figure to display correctly, so I had to do a little work around and save the figure before knitting the markdown document. Apologies for the colors not matching in the R and Python versions. There's only so much time in the world...
 
 ::: panel-tabset
@@ -290,7 +291,8 @@ plt.savefig('posts/first_project/overtime.png',bbox_inches='tight')
 :::
 
 ### Delays in Surgery and Facility Switching
-This final figure displays how the counts of patients by how many days they have to wait till surgery, colored by whether they switched facilities or not. 
+
+This final figure displays how the counts of patients by how many days they have to wait till surgery, colored by whether they switched facilities or not.
 
 ::: panel-tabset
 #### Using R

@@ -1,14 +1,9 @@
 ---
-title: "ASCO Poster"
+title: "ASCO Poster: Genetic Ancestry and Gene Expression in CRC"
 author: "Dave Hein"
-date: "2023-05-11"
-categories: [R, python, regression, synthetic data, oncology, data cleaning]
-image: "headshot.jpeg"
-format:
-  html: 
-    toc: true
-    code-fold: show
-    code-tools: true
+date: "2023-06-01"
+categories: [R, Bioinformatics]
+image: "dalle_chromasome.jpg"
 ---
 
 ```{=html}
@@ -23,3 +18,12 @@ td {
 
 </style>
 ```
+
+
+Check out my poster presentation at ASCO 2023. Project code coming soon!
+
+<object data="ASCO_Poster_new.pdf" type="application/pdf" frameborder="0" width="100%" height="600px" style="padding: 20px;">
+
+  <embed src="https://drive.google.com/file/d/1kwEFgiHj6bUOGNi8NSTuWrQ5GHXHqo2B/preview?usp=drive_link" width="100%" height="600px"/>
+
+</object>

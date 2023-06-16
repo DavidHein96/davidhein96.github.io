@@ -4,21 +4,16 @@ project:
   execute-dir: project
 
 website:
-  title: "Dave's Site"
+  title: "Dave's Portfolio"
   navbar:
     right:
       - projects.qmd
       - index.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/DavidHein96
       - icon: linkedin 
         href: https://linkedin.com/in/david-h-a37220179
-#- icon: linkedin
-#      text: LinkedIn
-#      href: https://linkedin.com
-  #sidebar:
-  #  contents: auto
-  #  style: floating
+
     
 format:
   html:

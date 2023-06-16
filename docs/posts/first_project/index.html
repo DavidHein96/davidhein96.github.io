@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/DavidHein96" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -151,10 +151,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="quarto-title-block"><div><h1 class="title">My First Paper: Trends and Associations in Rectal Cancer Treatment</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                                 <div class="quarto-categories">
                 <div class="quarto-category">R</div>
-                <div class="quarto-category">python</div>
-                <div class="quarto-category">regression</div>
-                <div class="quarto-category">synthetic data</div>
-                <div class="quarto-category">data cleaning</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Synthetic data</div>
+                <div class="quarto-category">Data cleaning</div>
               </div>
                   </div>
   </div>
@@ -897,7 +897,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My First Paper: Trends and Associations in Rectal Cancer Treatment"</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-06-11"</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, python, regression, synthetic data, data cleaning]</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, Python, Statistics, Synthetic data, Data cleaning]</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "dalle_impression_chart_brewer.jpg"</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html: </span></span>
@@ -1068,7 +1068,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a><span class="fu">### Logistic Regression</span></span>
 <span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>Here I perform logistic regression using the same variables as the original paper. For fun I put in code for both R and Python. The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper. </span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>Here I perform logistic regression using the same variables as the original paper. For fun I put in code for both R and Python. The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper.</span>
 <span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
 <span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
@@ -1116,119 +1116,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Proportions Over Time</span></span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>This figure shows the proportion of patients receiving neoadjuvant treatment by facility type, and how this proportion has increased over time. There were a lot of issues with getting the Python figure to display correctly, so I had to do a little work around and save the figure before knitting the markdown document. Apologies for the colors not matching in the R and Python versions. There's only so much time in the world...</span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}</span></span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="co"># Making df of just people who got upfront surg</span></span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data2 <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">as.numeric</span>(neoadjuvant)<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming the fac type </span></span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)</span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a><span class="co"># finding proportion of upfront surg by fac type</span></span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS, Facility_Type) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio=</span><span class="fu">mean</span>(neoadjuvant))</span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a><span class="co"># finding overall median per year of upfront surg</span></span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span> <span class="fu">select</span>(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)</span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging overall and by facility type</span></span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1,year2)</span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a>mergedyearly<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(mergedyearly<span class="sc">$</span>Facility_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Integrated Network Cancer Program"</span>,</span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Academic Program"</span>,</span>
-<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Overall Median"</span>,</span>
-<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Comprehensive CC Program"</span>,</span>
-<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Community Cancer Program"</span>))</span>
-<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting upfron surg by fac type</span></span>
-<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mergedyearly) <span class="sc">+</span> </span>
-<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x=</span>YEAR_OF_DIAGNOSIS, <span class="at">y=</span>ratio, <span class="at">group =</span> Facility_Type, <span class="at">color=</span>Facility_Type), <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span> </span>
-<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year of Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span> </span>
-<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) </span>
-<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
-<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval = FALSE, tidy = TRUE }</span></span>
-<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphing proportion receiving upfront surg at different facility types over time</span></span>
-<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> <span class="dv">8</span>,<span class="dv">6</span></span>
-<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a>dfCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==1'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a>dfCCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==2'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a>dfA <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==3'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a>dfIN <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==4'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>,<span class="dv">6</span>))</span>
-<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCC, label<span class="op">=</span><span class="st">"Community Cancer Center"</span>)</span>
-<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCCC, label<span class="op">=</span><span class="st">"Comprehensive Community Cancer Center"</span>)</span>
-<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a>plt.plot(dfA, label<span class="op">=</span><span class="st">"Academic Program"</span>)</span>
-<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a>plt.plot(dfIN, label<span class="op">=</span><span class="st">"Integrated Cancer Program"</span>)</span>
-<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year of Diagnosis"</span>)</span>
-<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Proportion Receiving Upfront Surgery"</span>)</span>
-<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/overtime.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a><span class="al">![output](overtime.png)</span></span>
-<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-293"><a href="#cb11-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a><span class="fu">### Delays in Surgery and Facility Switching</span></span>
-<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a>This final figure displays how the counts of patients by how many days they have to wait till surgery, colored by whether they switched facilities or not. </span>
+<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>This figure shows the proportion of patients receiving neoadjuvant treatment by facility type, and how this proportion has increased over time. There were a lot of issues with getting the Python figure to display correctly, so I had to do a little work around and save the figure before knitting the markdown document. Apologies for the colors not matching in the R and Python versions. There's only so much time in the world...</span>
+<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
+<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}</span></span>
+<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="co"># Making df of just people who got upfront surg</span></span>
+<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data2 <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">as.numeric</span>(neoadjuvant)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming the fac type </span></span>
+<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)</span>
+<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span>
+<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
+<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
+<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
+<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a><span class="co"># finding proportion of upfront surg by fac type</span></span>
+<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS, Facility_Type) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio=</span><span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a><span class="co"># finding overall median per year of upfront surg</span></span>
+<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
+<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span> <span class="fu">select</span>(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)</span>
+<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging overall and by facility type</span></span>
+<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
+<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
+<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1,year2)</span>
+<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a>mergedyearly<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(mergedyearly<span class="sc">$</span>Facility_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Integrated Network Cancer Program"</span>,</span>
+<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Academic Program"</span>,</span>
+<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Overall Median"</span>,</span>
+<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Comprehensive CC Program"</span>,</span>
+<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Community Cancer Program"</span>))</span>
+<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting upfron surg by fac type</span></span>
+<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mergedyearly) <span class="sc">+</span> </span>
+<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x=</span>YEAR_OF_DIAGNOSIS, <span class="at">y=</span>ratio, <span class="at">group =</span> Facility_Type, <span class="at">color=</span>Facility_Type), <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span> </span>
+<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year of Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span> </span>
+<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) </span>
+<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
+<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval = FALSE, tidy = TRUE }</span></span>
+<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphing proportion receiving upfront surg at different facility types over time</span></span>
+<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a>rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> <span class="dv">8</span>,<span class="dv">6</span></span>
+<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a>dfCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==1'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a>dfCCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==2'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a>dfA <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==3'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a>dfIN <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==4'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCC, label<span class="op">=</span><span class="st">"Community Cancer Center"</span>)</span>
+<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCCC, label<span class="op">=</span><span class="st">"Comprehensive Community Cancer Center"</span>)</span>
+<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a>plt.plot(dfA, label<span class="op">=</span><span class="st">"Academic Program"</span>)</span>
+<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a>plt.plot(dfIN, label<span class="op">=</span><span class="st">"Integrated Cancer Program"</span>)</span>
+<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year of Diagnosis"</span>)</span>
+<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Proportion Receiving Upfront Surgery"</span>)</span>
+<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/overtime.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a><span class="al">![output](overtime.png)</span></span>
+<span id="cb11-293"><a href="#cb11-293" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a><span class="fu">### Delays in Surgery and Facility Switching</span></span>
 <span id="cb11-296"><a href="#cb11-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
-<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, tidy=TRUE, message=FALSE, fig.height=4, fig.width=8 }</span></span>
-<span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a><span class="co">#making three groups for a surgery delay </span></span>
-<span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span>
-<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
-<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
-<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)  </span>
-<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting surg delay and switching facility</span></span>
-<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x=</span>DX_DEFSURG_STARTED_DAYS,<span class="at">fill=</span>treatnotatdiag)) <span class="sc">+</span> </span>
-<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> </span>
-<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">200</span>) <span class="sc">+</span> </span>
-<span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Days Untill Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Facility Switch"</span>) <span class="sc">+</span> </span>
-<span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span> </span>
-<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">28</span>) </span>
-<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
+<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a>This final figure displays how the counts of patients by how many days they have to wait till surgery, colored by whether they switched facilities or not.</span>
+<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
+<span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, tidy=TRUE, message=FALSE, fig.height=4, fig.width=8 }</span></span>
+<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a><span class="co">#making three groups for a surgery delay </span></span>
+<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span>
+<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
+<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
+<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)  </span>
+<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting surg delay and switching facility</span></span>
+<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x=</span>DX_DEFSURG_STARTED_DAYS,<span class="at">fill=</span>treatnotatdiag)) <span class="sc">+</span> </span>
+<span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">200</span>) <span class="sc">+</span> </span>
+<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Days Untill Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Facility Switch"</span>) <span class="sc">+</span> </span>
+<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span> </span>
+<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">28</span>) </span>
+<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE, tidy = TRUE}</span></span>
-<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a><span class="co">#Data frame that only includes people who got upfront surg</span></span>
-<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a>dfsurg <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'neoadjuvant == 0'</span>)</span>
-<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting surgery delay and switching facility</span></span>
-<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a>dfsurggraph <span class="op">=</span> dfsurg.<span class="bu">filter</span>([<span class="st">'treatnotatdiag'</span>,<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>]).query(<span class="st">'DX_DEFSURG_STARTED_DAYS&lt;200'</span>)</span>
-<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a>dfsurggraphswitch <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Switched"'</span>)</span>
-<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a>dfsurggraphstay <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Stayed"'</span>)</span>
-<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
-<span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphswitch[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>, fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Switched"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphstay[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>,fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Stayed"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Days Untill Surgery From Diagnosis"</span>)</span>
-<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span><span class="dv">28</span>)</span>
-<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/switchvstay.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a><span class="al">![output](switchvstay.png)</span></span>
-<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
+<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE, tidy = TRUE}</span></span>
+<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a><span class="co">#Data frame that only includes people who got upfront surg</span></span>
+<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a>dfsurg <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'neoadjuvant == 0'</span>)</span>
+<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting surgery delay and switching facility</span></span>
+<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a>dfsurggraph <span class="op">=</span> dfsurg.<span class="bu">filter</span>([<span class="st">'treatnotatdiag'</span>,<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>]).query(<span class="st">'DX_DEFSURG_STARTED_DAYS&lt;200'</span>)</span>
+<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a>dfsurggraphswitch <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Switched"'</span>)</span>
+<span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a>dfsurggraphstay <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Stayed"'</span>)</span>
+<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphswitch[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>, fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Switched"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphstay[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>,fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Stayed"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Days Untill Surgery From Diagnosis"</span>)</span>
+<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span><span class="dv">28</span>)</span>
+<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/switchvstay.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a><span class="al">![output](switchvstay.png)</span></span>
+<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

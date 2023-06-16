@@ -4,19 +4,22 @@ image: headshot.jpeg
 about:
   template: solana
   links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://linkedin.com/in/david-h-a37220179
     - icon: github
-      text: Github
-      href: https://github.
+      aria-label: Github
+      href: https://github.com/DavidHein96
+    - icon: linkedin
+      aria-label: LinkedIn
+      href: https://linkedin.com/in/david-h-a37220179
+    - icon: filetype-pdf
+      text: Resume
+      href: https://drive.google.com/file/d/1QJSiM3qxUwP8DceH7lIbn_YotEa4PE21/preview?usp=sharing
 ---
 
 Welcome to my site! I just graduated with my MS in data science and have a background in academic medical research. My work involves a full stack of end-to-end skills, from utilizing efficient data structures, assessing bioinformatics tools, navigating clinical healthcare workflows, writing academic manuscripts, to the final communication of findings to stakeholders. Outside of my current position I'm interested in learning to maximize the utility of large language models, and love teaching people what I've found!
 
 # Technical Skills & Projects
 
-Check out [my projects](projects.qmd), which are tagged with technical skill categories. As a bonus, here's my [introductory guide](posts/chatGPT_book/index.qmd) to ChatGPT.
+Check out [my projects](projects.qmd), which are tagged with technical skill categories. As a bonus, here's my [introductory guide](posts/chatGPT_book/index.qmd) to ChatGPT. Many of my coding projects for my degree and my research position are in private repositories, feel free to reach out for more information regarding code samples.
 
 # Education
 
@@ -39,7 +42,7 @@ Clinical Data Specialist/Research Assistant \| 2020 - Present
 
 -   Published, as first author, multiple papers concerning colorectal cancer epidemiology and biology with an emphasis on racial and ethnic equity
 
--   Achieved greater than 90% reductions in compute time and cost for several data processing pipelines utilizing R, Python, Bash, and high-performance computing environments
+-   Achieved significant reductions in compute time and cost for several data processing pipelines utilizing R, Python, Bash, and high-performance computing environments
 
 -   Lead research initiatives involving the collection, processing, analysis, and reporting of data from diverse sources such as public databases, clinical trials, electronic medical records, and genetic sequencing results
 
@@ -49,9 +52,9 @@ Clinical Data Specialist/Research Assistant \| 2020 - Present
 
 # Publications & Presentations
 
-**Hein D**, Rhead B, Pouliot Y, Guinney J, De La Vega F, Sanford N. Racial and Genetic Ancestry Associations with Gene Expression Patterns in a Real-World Cohort of Colorectal Cancer Patients. *American Society of Clinical Oncology Annual Conference Poster Presentation*. 2023 [Publication Link](https://ascopubs.org/doi/abs/10.1200/JCO.2023.41.16_suppl.3541) \| My Projects Link
+**Hein D**, Rhead B, Pouliot Y, Guinney J, De La Vega F, Sanford N. Racial and Genetic Ancestry Associations with Gene Expression Patterns in a Real-World Cohort of Colorectal Cancer Patients. *American Society of Clinical Oncology Annual Conference Poster Presentation*. 2023 [Publication Link](https://ascopubs.org/doi/abs/10.1200/JCO.2023.41.16_suppl.3541) \| [My Projects Link](posts/collab_project_rna_seq_cms/index.qmd)
 
-**Hein D,** Coughlin L, Poulides N, Koh A, Sanford N. Microbiome and Genomic Profiling in Rectal Adenocarcinoma. *American Association for Cancer Research Annual Conference Poster Poster Presentation*. 2023 [Publication Link](https://doi.org/10.1158/1538-7445.AM2023-5901) \| My Projects Link
+**Hein D,** Coughlin L, Poulides N, Koh A, Sanford N. Microbiome and Genomic Profiling in Rectal Adenocarcinoma. *American Association for Cancer Research Annual Conference Poster Poster Presentation*. 2023 [Publication Link](https://doi.org/10.1158/1538-7445.AM2023-5901) \| [My Projects Link](posts/aacr_micro_cms_rna/index.qmd)
 
 **Hein D**, Deng W, Bleile M, Kazmi S, Jones A, Kainthla R, Jiang W, Cantarel B, Sanford N. Racial and Ethnic Differences in Genomic Profiling of Early Onset Colorectal Cancer*.* *Journal of the National Cancer Institute*. 2022 [Publication Link](https://doi.org/10.1093/jnci/djac014)
 
