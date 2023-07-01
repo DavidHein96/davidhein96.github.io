@@ -1,6 +1,6 @@
 /data_sets
 .Rproj.user
-
+_environment
 /.quarto/
 davidhein96.github.io.Rproj
 .DS_Store
@@ -14,3 +14,15 @@ posts/*DS_Store
 docs/.DS_Store
 posts/.DS_Store
 docs/*DS_Store
+docs
+.conda
+.conda/*
+beans
+beans/*
+.vscode
+posts/simple_conv/__pycache__
+posts/simple_conv/runs
+posts/simple_conv/*.th
+beans/*/*
+beans/*/*/*
+beans/*/*/*/*

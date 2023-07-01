@@ -10,6 +10,7 @@
   {
     "listing": "/projects.html",
     "items": [
+      "/posts/simple_conv/index.html",
       "/posts/first_project/index.html",
       "/posts/collab_project_rna_seq_cms/index.html",
       "/posts/aacr_micro_cms_rna/index.html",

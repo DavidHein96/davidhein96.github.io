@@ -22,7 +22,7 @@ format:
     css: styles.css
     #page-layout: full
     grid: 
-     sidebar-width: 340px
+     sidebar-width: 450px
      body-width: 1400px
      margin-width: 450px
      gutter-width: 1.5rem
