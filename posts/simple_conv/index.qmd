@@ -33,7 +33,7 @@ pre {
 
 This is code I originally wrote for an assignment in my deep learning class. In order to post it on my public facing portfolio I've made several alterations and have changed the data set. The new data set I'm using is the "beans" data set from Hugging Face. This data set contains images of bean plant leaves with either no disease, Bean Rust, or Angular Leaf Spot. The leaf below has Bean Rust, identified by the small brown spots.
 
-![](bean_rust_test.1.jpg){fig-align="center" width="244"}
+![](bean_rust_test.jpg){fig-align="center" width="244"}
 
 ## Code
 
