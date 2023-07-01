@@ -14,7 +14,7 @@ posts/*DS_Store
 docs/.DS_Store
 posts/.DS_Store
 docs/*DS_Store
-docs
+
 .conda
 .conda/*
 beans
