@@ -21,7 +21,7 @@ Welcome to my site! I just graduated with my MS in data science and have a backg
 
 Check out [my projects](projects.qmd), which are tagged with technical skill categories. As a bonus, here's my [introductory guide](posts/chatGPT_book/index.qmd) to ChatGPT. Many of my coding projects for my degree and my research position are in private repositories, feel free to reach out for more information regarding code samples.
 
-# Education
+# Education 
 
 **University of Texas at Austin**
 

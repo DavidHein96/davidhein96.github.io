@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.324">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dave Hein">
+<meta name="dcterms.date" content="2023-07-12">
+
+<title>Dave’s Portfolio - Wikipedia Cancer Queries with OpenAI API &amp; SQL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Dave’s Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html" rel="" target="">
+ <span class="menu-text">My Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/DavidHein96" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/david-h-a37220179" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Wikipedia Cancer Queries with OpenAI API &amp; SQL</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Natural language processing</div>
+                <div class="quarto-category">SQL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Dave Hein </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 12, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#wikipedia-cancer-query" id="toc-wikipedia-cancer-query" class="nav-link active" data-scroll-target="#wikipedia-cancer-query">Wikipedia Cancer Query</a>
+  <ul class="collapse">
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
+  <li><a href="#setup-mongodb-database" id="toc-setup-mongodb-database" class="nav-link" data-scroll-target="#setup-mongodb-database">Setup MongoDB Database</a></li>
+  <li><a href="#scrape-wikipedia-pages" id="toc-scrape-wikipedia-pages" class="nav-link" data-scroll-target="#scrape-wikipedia-pages">Scrape Wikipedia Pages</a></li>
+  <li><a href="#setup-sqlite-database" id="toc-setup-sqlite-database" class="nav-link" data-scroll-target="#setup-sqlite-database">Setup SQLite Database</a></li>
+  <li><a href="#use-openai-api-to-extract-data-w-gpt3.5" id="toc-use-openai-api-to-extract-data-w-gpt3.5" class="nav-link" data-scroll-target="#use-openai-api-to-extract-data-w-gpt3.5">Use OpenAI API to Extract Data w/ GPT3.5</a></li>
+  <li><a href="#test-function-for-api-response" id="toc-test-function-for-api-response" class="nav-link" data-scroll-target="#test-function-for-api-response">Test Function for API Response</a></li>
+  <li><a href="#etl-process" id="toc-etl-process" class="nav-link" data-scroll-target="#etl-process">ETL Process</a></li>
+  <li><a href="#data-querying" id="toc-data-querying" class="nav-link" data-scroll-target="#data-querying">Data Querying</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<style type="text/css">
+
+code.r{
+  font-size: 14px;
+}
+td {
+  font-size: 12px;
+}
+code.python{
+  font-size: 14px;
+}
+pre {
+  font-size: 12px;
+}
+
+</style>
+<section id="wikipedia-cancer-query" class="level1">
+<h1>Wikipedia Cancer Query</h1>
+<p>This project was a quick exercise in data engineering, ETL, SQL, NoSQL, and text processing with OpenAI GPT-3.</p>
+<section id="libraries" class="level2">
+<h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libs</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pymongo <span class="im">import</span> MongoClient</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.request <span class="im">import</span> urlopen</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="setup-mongodb-database" class="level2">
+<h2 class="anchored" data-anchor-id="setup-mongodb-database">Setup MongoDB Database</h2>
+<p>Create a MongoDB database and define functions to insert and query data.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to create MongoDB database and collection</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_mongo_connection():</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a MongoDB client</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> MongoClient(<span class="st">'mongodb://localhost:27017/'</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Connect to the "cancerDB" database</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    db <span class="op">=</span> client[<span class="st">'cancerDB'</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> db</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert_data_mongo(collection, data):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Insert a document into the specified collection</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    collection.insert_one(data)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> query_data_mongo(collection, query):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find documents in the specified collection that match the query</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> collection.find(query)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="scrape-wikipedia-pages" class="level2">
+<h2 class="anchored" data-anchor-id="scrape-wikipedia-pages">Scrape Wikipedia Pages</h2>
+<p>Use urlopen to scrape the Wikipedia page for each state and store the raw text in MongoDB.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to scrape Wikipedia pages and store the raw text in MongoDB</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scrape_wikipedia_pages(cancers, db):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use the "wikipediaText" collection</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    wiki_text_collection <span class="op">=</span> db[<span class="st">'wikipediaText'</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    base_url <span class="op">=</span> <span class="st">"https://en.wikipedia.org/wiki/"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cancer <span class="kw">in</span> cancers:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the URL for the Wikipedia page</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> base_url <span class="op">+</span> cancer.replace(<span class="st">" "</span>, <span class="st">"_"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Open the URL and get the raw HTML</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        html <span class="op">=</span> urlopen(url)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Parse the HTML with BeautifulSoup to extract the text</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> soup.get_text()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the text in MongoDB</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> {<span class="st">"cancer_type"</span>: cancer, <span class="st">"text"</span>: text}</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        insert_data_mongo(wiki_text_collection, data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="setup-sqlite-database" class="level2">
+<h2 class="anchored" data-anchor-id="setup-sqlite-database">Setup SQLite Database</h2>
+<p>Create a SQLite database and define a function to execute SQL commands.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to create SQLite database and table</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_connection():</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a connection to the SQLite database</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">'my_database.db'</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conn</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_table(conn, table_name, columns):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a table in the SQLite database</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f"CREATE TABLE </span><span class="sc">{</span>table_name<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>columns<span class="sc">}</span><span class="ss">);"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to execute SQL query</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> execute_query(conn, query):</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Execute the specified SQL query and print the results</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    cur.execute(query)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> cur.fetchall()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> rows:</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(row)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to load data from OpenAI API to database</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data_to_db(conn, table_name, data):</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Insert the data into the specified table in the SQLite database</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(data, index<span class="op">=</span>[<span class="dv">0</span>])</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    df.to_sql(table_name, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="use-openai-api-to-extract-data-w-gpt3.5" class="level2">
+<h2 class="anchored" data-anchor-id="use-openai-api-to-extract-data-w-gpt3.5">Use OpenAI API to Extract Data w/ GPT3.5</h2>
+<p>Use the OpenAI API to extract structured data from the raw text of each Wikipedia page.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to use OpenAI API</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_cancer_info(text):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    openai.api_key <span class="op">=</span> api_key</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set up the conversation</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant in a medical oncology research office."</span>},</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="ss">f"</span><span class="sc">{</span>text<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">Given the above text, extract the following information:</span><span class="ch">\n</span><span class="ss">One word primary cancer location as a string: </span><span class="ch">\n</span><span class="ss">One word most common metastasis site as a string: </span><span class="ch">\n</span><span class="ss">Typical life expectancy for localized disease in years as a float:</span><span class="ch">\n</span><span class="ss"> Common Gene mutation Variants as a list of strings: </span><span class="ch">\n</span><span class="ss"> Whether each common mutation has a targeted therapy avaialble for this cancer as a list of booleans True or False:</span><span class="ch">\n</span><span class="ss">All Approved Drugs as a list of strings:</span><span class="ch">\n</span><span class="ss"> Class of each approved drug, either immunotherapy, chemotherapy, or hormonal_therapy as a list of strings:</span><span class="ch">\n</span><span class="ss"> Please return results in a tidy format as a python dictionary. They keys for the dictionary should be the following: primary_cancer_location, metastasis_site, life_expectancy, common_gene_mutations, targeted_therapy_available, drug_name, drug_class. Values for each key should be the corresponding value extracted from the text in the appropriate format specified above."</span>}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use gpt-3.5-turbo and the openai.ChatCompletion.create method</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-3.5-turbo-16k"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response[<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'message'</span>][<span class="st">'content'</span>].strip()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="test-function-for-api-response" class="level2">
+<h2 class="anchored" data-anchor-id="test-function-for-api-response">Test Function for API Response</h2>
+<p>This ensures the response from Open AI has the correct format for loading into the SQL tables</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_response(response_string):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Replace "true" and "false" with "True" and "False"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    response_string <span class="op">=</span> response_string.replace(<span class="st">"true"</span>, <span class="st">"True"</span>).replace(<span class="st">"false"</span>, <span class="st">"False"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        response_dict <span class="op">=</span> ast.literal_eval(response_string)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (<span class="pp">SyntaxError</span>, <span class="pp">ValueError</span>):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unable to convert response to dictionary: </span><span class="sc">{</span>response_string<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    required_keys <span class="op">=</span> [<span class="st">"primary_cancer_location"</span>, <span class="st">"metastasis_site"</span>, <span class="st">"life_expectancy"</span>, <span class="st">"common_gene_mutations"</span>, <span class="st">"targeted_therapy_available"</span>, <span class="st">"drug_name"</span>, <span class="st">"drug_class"</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> required_keys:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key <span class="kw">not</span> <span class="kw">in</span> response_dict:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Missing key in response: </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check that the lists are of the same length</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    list_keys <span class="op">=</span> [<span class="st">"common_gene_mutations"</span>, <span class="st">"targeted_therapy_available"</span>]</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    list_lengths <span class="op">=</span> [<span class="bu">len</span>(response_dict[key]) <span class="cf">for</span> key <span class="kw">in</span> list_keys]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(list_lengths)) <span class="op">!=</span> <span class="dv">1</span>:</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The lists in the response are not of the same length"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    list_keys <span class="op">=</span> [<span class="st">"drug_name"</span>, <span class="st">"drug_class"</span>]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    list_lengths <span class="op">=</span> [<span class="bu">len</span>(response_dict[key]) <span class="cf">for</span> key <span class="kw">in</span> list_keys]</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(list_lengths)) <span class="op">!=</span> <span class="dv">1</span>:</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The lists in the response are not of the same length"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check that life_expectancy is a double</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(response_dict[<span class="st">"life_expectancy"</span>], <span class="bu">float</span>):</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"life_expectancy is not a double"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check that the elements in the lists are of the correct type</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">str</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"common_gene_mutations"</span>]):</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"common_gene_mutations does not contain only strings"</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">bool</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"targeted_therapy_available"</span>]):</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"targeted_therapy_available does not contain only booleans"</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">str</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"drug_name"</span>]):</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"drug_name does not contain only strings"</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">str</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"drug_class"</span>]):</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"drug_class does not contain only strings"</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="etl-process" class="level2">
+<h2 class="anchored" data-anchor-id="etl-process">ETL Process</h2>
+<p>Clean and transform the data, and load the data into SQLite tables.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Start MongoDB</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#os.system("brew services start mongodb-community@6.0")</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> create_mongo_connection()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Scrape Wikipedia pages and store the raw text in MongoDB</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>cancer_types <span class="op">=</span> [<span class="st">"Breast cancer"</span>, <span class="st">"Lung cancer"</span>, <span class="st">"Prostate cancer"</span>, <span class="st">"Colorectal cancer"</span>, <span class="st">"Skin cancer"</span>]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>scrape_wikipedia_pages(cancer_types, db)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a connection to the SQLite database</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> create_connection()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table for cancer types</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>create_table(conn, <span class="st">"Cancers5"</span>, <span class="st">"id INTEGER PRIMARY KEY, primary_cancer_location TEXT NOT NULL, metastasis_site TEXT, life_expectancy INT"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table for gene variants</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>create_table(conn, <span class="st">"Genes6"</span>, <span class="st">"id INTEGER PRIMARY KEY, primary_cancer_location TEXT, common_gene_mutations TEXT, targeted_therapy_available BOOLEAN"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table for drugs</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>create_table(conn, <span class="st">"Drugs5"</span>, <span class="st">"""id INTEGER PRIMARY KEY, drug_name TEXT NOT NULL, drug_class TEXT CHECK( drug_class IN ('chemotherapy', 'immunotherapy', 'hormonal_therapy')), primary_cancer_location TEXT"""</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each cancer type, extract data and load it into SQL tables</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cancer_type <span class="kw">in</span> cancer_types:</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the raw text from MongoDB and clean it</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> query_data_mongo(db[<span class="st">"wikipediaText"</span>], {<span class="st">"cancer_type"</span>: cancer_type})</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    clean_text <span class="op">=</span> re.findall(<span class="vs">r'From Wikipedia, the free encyclopedia[\S\s]+References'</span>, text[<span class="dv">0</span>][<span class="st">'text'</span>])[<span class="dv">0</span>].replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>).strip()</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># call the API and validate the response</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> extract_cancer_info(clean_text)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    data_dict <span class="op">=</span> validate_response(data)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a DataFrame for the cancer data</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    cancer_df <span class="op">=</span>  pd.DataFrame.from_dict({<span class="st">"primary_cancer_location"</span>: [data_dict[<span class="st">"primary_cancer_location"</span>]],<span class="st">"metastasis_site"</span>: [data_dict[<span class="st">"metastasis_site"</span>]],<span class="st">"life_expectancy"</span>: [data_dict[<span class="st">"life_expectancy"</span>]]})</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a DataFrame for the gene data</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a list of tuples, where each tuple contains a mutation and its corresponding targeted therapy availability</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    mutations_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(data_dict[<span class="st">"common_gene_mutations"</span>], data_dict[<span class="st">"targeted_therapy_available"</span>]))</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the DataFrame from the list of tuples</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    genes_df <span class="op">=</span> pd.DataFrame(mutations_data, columns<span class="op">=</span>[<span class="st">"common_gene_mutations"</span>, <span class="st">"targeted_therapy_available"</span>])</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add the cancer_type column to the DataFrame</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    genes_df[<span class="st">"primary_cancer_location"</span>] <span class="op">=</span> data_dict[<span class="st">"primary_cancer_location"</span>]</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Same process but with the drug data</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    drugs_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(data_dict[<span class="st">"drug_name"</span>], data_dict[<span class="st">"drug_class"</span>]))</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    drugs_df <span class="op">=</span> pd.DataFrame(drugs_data, columns<span class="op">=</span>[<span class="st">"drug_name"</span>, <span class="st">"drug_class"</span>])</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    drugs_df[<span class="st">"primary_cancer_location"</span>] <span class="op">=</span> data_dict[<span class="st">"primary_cancer_location"</span>]</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load dfs into the respective tables</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    cancer_df.to_sql(<span class="st">'Cancer5'</span>, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    genes_df.to_sql(<span class="st">'Genes6'</span>, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    drugs_df.to_sql(<span class="st">'Drugs5'</span>, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="data-querying" class="level2">
+<h2 class="anchored" data-anchor-id="data-querying">Data Querying</h2>
+<p>Query the data in the SQLite database and saving the results to a CSV file.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Execute the query</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql_query(<span class="st">"""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT Cancer5.primary_cancer_location, Cancer5.life_expectancy, COUNT(Genes6.targeted_therapy_available) as num_targeted_therapy</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM Cancer5</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN Genes6 ON Cancer5.primary_cancer_location = Genes6.primary_cancer_location</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE Genes6.targeted_therapy_available = 1</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY Cancer5.primary_cancer_location;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>, conn)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"cancer_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
+<p>Visualization in R because I think it is much much better than python for this purpose.</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cancer_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"posts/api_and_sql/cancer_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 5 Columns: 4
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(1): primary_cancer_location dbl (3): ...1, life_expectancy,
+num_targeted_therapy
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer_data, <span class="fu">aes</span>(<span class="at">x=</span>num_targeted_therapy,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">y=</span>life_expectancy, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> primary_cancer_location)) <span class="sc">+</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size=</span><span class="dv">5</span>, <span class="at">width=</span><span class="fl">0.15</span>,<span class="at">height=</span><span class="fl">0.15</span>, <span class="at">alpha =</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Number of Genetic Variants with Approved Targeted Therapy"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Life Expectancy in Years (Localized Stage)"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color=</span><span class="st">"Cancer Site"</span>)<span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Do Cancers With More Genes With Approved</span><span class="sc">\n</span><span class="st">Targeted Therapies Have Higher Life Expectancy?"</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Wikipedia Cancer Queries with OpenAI API &amp; SQL"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-07-12"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [Python, Natural language processing, SQL]</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "typewriter.jpg"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html: </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style type="text/css"&gt;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="in">code.r{</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 14px;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="in">td {</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 12px;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="in">code.python{</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 14px;</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="in">pre {</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 12px;</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># Wikipedia Cancer Query</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>This project was a quick exercise in data engineering, ETL, SQL, NoSQL, and text processing with OpenAI GPT-3.</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE, include=FALSE}</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="fu">use_condaenv</span>(<span class="st">"website_env"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">python.reticulate =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Libraries</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libs</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pymongo <span class="im">import</span> MongoClient</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.request <span class="im">import</span> urlopen</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup MongoDB Database</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>Create a MongoDB database and define functions to insert and query data.</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to create MongoDB database and collection</span></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_mongo_connection():</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a MongoDB client</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> MongoClient(<span class="st">'mongodb://localhost:27017/'</span>)</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Connect to the "cancerDB" database</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>    db <span class="op">=</span> client[<span class="st">'cancerDB'</span>]</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> db</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert_data_mongo(collection, data):</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Insert a document into the specified collection</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>    collection.insert_one(data)</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> query_data_mongo(collection, query):</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find documents in the specified collection that match the query</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> collection.find(query)</span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(results)</span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scrape Wikipedia Pages</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>Use urlopen to scrape the Wikipedia page for each state and store the raw text in MongoDB.</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to scrape Wikipedia pages and store the raw text in MongoDB</span></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scrape_wikipedia_pages(cancers, db):</span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use the "wikipediaText" collection</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>    wiki_text_collection <span class="op">=</span> db[<span class="st">'wikipediaText'</span>]</span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>    base_url <span class="op">=</span> <span class="st">"https://en.wikipedia.org/wiki/"</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cancer <span class="kw">in</span> cancers:</span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the URL for the Wikipedia page</span></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> base_url <span class="op">+</span> cancer.replace(<span class="st">" "</span>, <span class="st">"_"</span>)</span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Open the URL and get the raw HTML</span></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>        html <span class="op">=</span> urlopen(url)</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Parse the HTML with BeautifulSoup to extract the text</span></span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>        soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> soup.get_text()</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the text in MongoDB</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> {<span class="st">"cancer_type"</span>: cancer, <span class="st">"text"</span>: text}</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>        insert_data_mongo(wiki_text_collection, data)</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup SQLite Database</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>Create a SQLite database and define a function to execute SQL commands.</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to create SQLite database and table</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_connection():</span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a connection to the SQLite database</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>    conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">'my_database.db'</span>)</span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conn</span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_table(conn, table_name, columns):</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a table in the SQLite database</span></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f"CREATE TABLE </span><span class="sc">{</span>table_name<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>columns<span class="sc">}</span><span class="ss">);"</span></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to execute SQL query</span></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> execute_query(conn, query):</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Execute the specified SQL query and print the results</span></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>    cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>    cur.execute(query)</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> cur.fetchall()</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> rows:</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(row)</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to load data from OpenAI API to database</span></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data_to_db(conn, table_name, data):</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Insert the data into the specified table in the SQLite database</span></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(data, index<span class="op">=</span>[<span class="dv">0</span>])</span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>    df.to_sql(table_name, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use OpenAI API to Extract Data w/ GPT3.5</span></span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>Use the OpenAI API to extract structured data from the raw text of each Wikipedia page.</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to use OpenAI API</span></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_cancer_info(text):</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>    openai.api_key <span class="op">=</span> api_key</span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set up the conversation</span></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [</span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant in a medical oncology research office."</span>},</span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="ss">f"</span><span class="sc">{</span>text<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">Given the above text, extract the following information:</span><span class="ch">\n</span><span class="ss">One word primary cancer location as a string: </span><span class="ch">\n</span><span class="ss">One word most common metastasis site as a string: </span><span class="ch">\n</span><span class="ss">Typical life expectancy for localized disease in years as a float:</span><span class="ch">\n</span><span class="ss"> Common Gene mutation Variants as a list of strings: </span><span class="ch">\n</span><span class="ss"> Whether each common mutation has a targeted therapy avaialble for this cancer as a list of booleans True or False:</span><span class="ch">\n</span><span class="ss">All Approved Drugs as a list of strings:</span><span class="ch">\n</span><span class="ss"> Class of each approved drug, either immunotherapy, chemotherapy, or hormonal_therapy as a list of strings:</span><span class="ch">\n</span><span class="ss"> Please return results in a tidy format as a python dictionary. They keys for the dictionary should be the following: primary_cancer_location, metastasis_site, life_expectancy, common_gene_mutations, targeted_therapy_available, drug_name, drug_class. Values for each key should be the corresponding value extracted from the text in the appropriate format specified above."</span>}</span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use gpt-3.5-turbo and the openai.ChatCompletion.create method</span></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-3.5-turbo-16k"</span>,</span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages</span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response[<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'message'</span>][<span class="st">'content'</span>].strip()</span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Test Function for API Response</span></span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>This ensures the response from Open AI has the correct format for loading into the SQL tables</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_response(response_string):</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Replace "true" and "false" with "True" and "False"</span></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>    response_string <span class="op">=</span> response_string.replace(<span class="st">"true"</span>, <span class="st">"True"</span>).replace(<span class="st">"false"</span>, <span class="st">"False"</span>)</span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>        response_dict <span class="op">=</span> ast.literal_eval(response_string)</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (<span class="pp">SyntaxError</span>, <span class="pp">ValueError</span>):</span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unable to convert response to dictionary: </span><span class="sc">{</span>response_string<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>    required_keys <span class="op">=</span> [<span class="st">"primary_cancer_location"</span>, <span class="st">"metastasis_site"</span>, <span class="st">"life_expectancy"</span>, <span class="st">"common_gene_mutations"</span>, <span class="st">"targeted_therapy_available"</span>, <span class="st">"drug_name"</span>, <span class="st">"drug_class"</span>]</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> required_keys:</span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key <span class="kw">not</span> <span class="kw">in</span> response_dict:</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Missing key in response: </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check that the lists are of the same length</span></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>    list_keys <span class="op">=</span> [<span class="st">"common_gene_mutations"</span>, <span class="st">"targeted_therapy_available"</span>]</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>    list_lengths <span class="op">=</span> [<span class="bu">len</span>(response_dict[key]) <span class="cf">for</span> key <span class="kw">in</span> list_keys]</span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(list_lengths)) <span class="op">!=</span> <span class="dv">1</span>:</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The lists in the response are not of the same length"</span>)</span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>    list_keys <span class="op">=</span> [<span class="st">"drug_name"</span>, <span class="st">"drug_class"</span>]</span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>    list_lengths <span class="op">=</span> [<span class="bu">len</span>(response_dict[key]) <span class="cf">for</span> key <span class="kw">in</span> list_keys]</span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(list_lengths)) <span class="op">!=</span> <span class="dv">1</span>:</span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The lists in the response are not of the same length"</span>)</span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check that life_expectancy is a double</span></span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(response_dict[<span class="st">"life_expectancy"</span>], <span class="bu">float</span>):</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"life_expectancy is not a double"</span>)</span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check that the elements in the lists are of the correct type</span></span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">str</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"common_gene_mutations"</span>]):</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"common_gene_mutations does not contain only strings"</span>)</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">bool</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"targeted_therapy_available"</span>]):</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"targeted_therapy_available does not contain only booleans"</span>)</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">str</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"drug_name"</span>]):</span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"drug_name does not contain only strings"</span>)</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(item, <span class="bu">str</span>) <span class="cf">for</span> item <span class="kw">in</span> response_dict[<span class="st">"drug_class"</span>]):</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"drug_class does not contain only strings"</span>)</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response_dict</span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## ETL Process</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a>Clean and transform the data, and load the data into SQLite tables.</span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a><span class="co"># Start MongoDB</span></span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a><span class="co">#os.system("brew services start mongodb-community@6.0")</span></span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> create_mongo_connection()</span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a><span class="co"># Scrape Wikipedia pages and store the raw text in MongoDB</span></span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>cancer_types <span class="op">=</span> [<span class="st">"Breast cancer"</span>, <span class="st">"Lung cancer"</span>, <span class="st">"Prostate cancer"</span>, <span class="st">"Colorectal cancer"</span>, <span class="st">"Skin cancer"</span>]</span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>scrape_wikipedia_pages(cancer_types, db)</span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a connection to the SQLite database</span></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> create_connection()</span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table for cancer types</span></span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a>create_table(conn, <span class="st">"Cancers5"</span>, <span class="st">"id INTEGER PRIMARY KEY, primary_cancer_location TEXT NOT NULL, metastasis_site TEXT, life_expectancy INT"</span>)</span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table for gene variants</span></span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a>create_table(conn, <span class="st">"Genes6"</span>, <span class="st">"id INTEGER PRIMARY KEY, primary_cancer_location TEXT, common_gene_mutations TEXT, targeted_therapy_available BOOLEAN"</span>)</span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table for drugs</span></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>create_table(conn, <span class="st">"Drugs5"</span>, <span class="st">"""id INTEGER PRIMARY KEY, drug_name TEXT NOT NULL, drug_class TEXT CHECK( drug_class IN ('chemotherapy', 'immunotherapy', 'hormonal_therapy')), primary_cancer_location TEXT"""</span>)</span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each cancer type, extract data and load it into SQL tables</span></span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cancer_type <span class="kw">in</span> cancer_types:</span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the raw text from MongoDB and clean it</span></span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> query_data_mongo(db[<span class="st">"wikipediaText"</span>], {<span class="st">"cancer_type"</span>: cancer_type})</span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>    clean_text <span class="op">=</span> re.findall(<span class="vs">r'From Wikipedia, the free encyclopedia[\S\s]+References'</span>, text[<span class="dv">0</span>][<span class="st">'text'</span>])[<span class="dv">0</span>].replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>).strip()</span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>    <span class="co"># call the API and validate the response</span></span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> extract_cancer_info(clean_text)</span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>    data_dict <span class="op">=</span> validate_response(data)</span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a DataFrame for the cancer data</span></span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a>    cancer_df <span class="op">=</span>  pd.DataFrame.from_dict({<span class="st">"primary_cancer_location"</span>: [data_dict[<span class="st">"primary_cancer_location"</span>]],<span class="st">"metastasis_site"</span>: [data_dict[<span class="st">"metastasis_site"</span>]],<span class="st">"life_expectancy"</span>: [data_dict[<span class="st">"life_expectancy"</span>]]})</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a DataFrame for the gene data</span></span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a list of tuples, where each tuple contains a mutation and its corresponding targeted therapy availability</span></span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a>    mutations_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(data_dict[<span class="st">"common_gene_mutations"</span>], data_dict[<span class="st">"targeted_therapy_available"</span>]))</span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the DataFrame from the list of tuples</span></span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a>    genes_df <span class="op">=</span> pd.DataFrame(mutations_data, columns<span class="op">=</span>[<span class="st">"common_gene_mutations"</span>, <span class="st">"targeted_therapy_available"</span>])</span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add the cancer_type column to the DataFrame</span></span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a>    genes_df[<span class="st">"primary_cancer_location"</span>] <span class="op">=</span> data_dict[<span class="st">"primary_cancer_location"</span>]</span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Same process but with the drug data</span></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a>    drugs_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(data_dict[<span class="st">"drug_name"</span>], data_dict[<span class="st">"drug_class"</span>]))</span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a>    drugs_df <span class="op">=</span> pd.DataFrame(drugs_data, columns<span class="op">=</span>[<span class="st">"drug_name"</span>, <span class="st">"drug_class"</span>])</span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a>    drugs_df[<span class="st">"primary_cancer_location"</span>] <span class="op">=</span> data_dict[<span class="st">"primary_cancer_location"</span>]</span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load dfs into the respective tables</span></span>
+<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a>    cancer_df.to_sql(<span class="st">'Cancer5'</span>, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a>    genes_df.to_sql(<span class="st">'Genes6'</span>, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a>    drugs_df.to_sql(<span class="st">'Drugs5'</span>, conn, if_exists<span class="op">=</span><span class="st">'append'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Querying</span></span>
+<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a>Query the data in the SQLite database and saving the results to a CSV file.</span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a><span class="co"># Execute the query</span></span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql_query(<span class="st">"""</span></span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT Cancer5.primary_cancer_location, Cancer5.life_expectancy, COUNT(Genes6.targeted_therapy_available) as num_targeted_therapy</span></span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a><span class="st">FROM Cancer5</span></span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN Genes6 ON Cancer5.primary_cancer_location = Genes6.primary_cancer_location</span></span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE Genes6.targeted_therapy_available = 1</span></span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY Cancer5.primary_cancer_location;</span></span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>, conn)</span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"cancer_data.csv"</span>)</span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualization</span></span>
+<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a>Visualization in R because I think it is much much better than python for this purpose.</span>
+<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a>cancer_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"posts/api_and_sql/cancer_data.csv"</span>)</span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer_data, <span class="fu">aes</span>(<span class="at">x=</span>num_targeted_therapy,</span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a>                        <span class="at">y=</span>life_expectancy, </span>
+<span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> primary_cancer_location)) <span class="sc">+</span> </span>
+<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size=</span><span class="dv">5</span>, <span class="at">width=</span><span class="fl">0.15</span>,<span class="at">height=</span><span class="fl">0.15</span>, <span class="at">alpha =</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Number of Genetic Variants with Approved Targeted Therapy"</span>,</span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Life Expectancy in Years (Localized Stage)"</span>,</span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a>       <span class="at">color=</span><span class="st">"Cancer Site"</span>)<span class="sc">+</span></span>
+<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Do Cancers With More Genes With Approved</span><span class="sc">\n</span><span class="st">Targeted Therapies Have Higher Life Expectancy?"</span>) <span class="sc">+</span></span>
+<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>()</span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

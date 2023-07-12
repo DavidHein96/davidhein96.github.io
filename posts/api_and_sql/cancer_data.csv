@@ -1,0 +1,6 @@
+,primary_cancer_location,life_expectancy,num_targeted_therapy
+0,Breast,5.0,2
+1,Colorectal,5.0,4
+2,Prostate,10.0,2
+3,lung,5.0,4
+4,skin,5.6,1

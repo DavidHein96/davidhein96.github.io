@@ -10,6 +10,7 @@
   {
     "listing": "/projects.html",
     "items": [
+      "/posts/api_and_sql/index.html",
       "/posts/simple_conv/index.html",
       "/posts/first_project/index.html",
       "/posts/collab_project_rna_seq_cms/index.html",
