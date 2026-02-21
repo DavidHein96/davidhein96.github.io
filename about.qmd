@@ -1,0 +1,67 @@
+---
+title: "About"
+---
+
+# Education
+
+**University of Texas at Austin**
+
+*Master of Science in Data Science* \| May 2023
+
+-   Coursework in deep learning, reinforcement learning, causal inference, data structures & algorithms
+
+*Bachelor of Science in Chemistry* \| December 2019
+
+-   McCombs Business Foundations Certificate
+-   High Honors & recipient of department academic scholarship
+
+# Experience
+
+**University of Texas Southwestern Medical Center**
+
+Data Scientist, Bioinformatics \| Sep 2023 -- Present
+
+-   Developed a novel, human-in-the-loop error ontology framework to categorize LLM failure modes in real-world clinical data extraction, enabling collaborative refinement that reduced clinically significant error rates to less than 1%
+
+-   Engineer agentic workflows to transform long EHR histories into structured timelines of key events in the metastatic RCC setting, allowing for robust calculations of progression-free survival (PFS) and adherence to treatment guidelines (NCCN)
+
+-   Maintain MLOps infrastructure on cloud (Azure) and local infrastructure, deploying LLMs, databases, containerized ML APIs with CI/CD pipelines and traceability tools to ensure reproducible model serving and high availability
+
+-   Teach interactive workshops for clinicians and graduate students on AI model bias, failure modes, and interpretation, bridging the gap between technical metrics and clinical applicability
+
+Clinical Data Specialist \| Feb 2020 -- Aug 2023
+
+-   Led cross-functional initiatives for the collection, statistical analysis, and visualization/reporting of data from public databases, leading to a publication that utilized time-to-event statistics to recommend flexible sigmoidoscopy for younger individuals
+
+-   Optimized parallelization in bioinformatics (NGS) processing pipelines using R, Python, AWS, and high-performance computing environments, achieving an 80% reduction in compute time and cost
+
+-   Co-authored, in collaboration with clinicians, multiple publications on colorectal cancer biomarkers, including genomics (driver mutations), gene expression profiles, and microbiome diversity
+
+-   Navigated healthcare data governance, ensuring strict compliance with HIPAA, GCP/HSP, and IRB protocols while coordinating data transfers with external Clinical Research Organizations (CROs)
+
+# Publications
+
+**Hein D**, Christie A, Holcomb M, Xie B, Jain AJ, Vento J, Rakheja N, Shakur AH, Christley S, Cowell LG, Brugarolas J. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. *npj Digital Medicine*. 2025 \| [My Projects Link](posts/npj_llm_extraction/index.qmd)
+
+Sanford NN, Shi Q, **Hein D**, Hall WA. Benchmarks of success in radiotherapy vs systemic therapy: National Clinical Trials Network (NCTN) randomized controlled trials sponsored by the National Cancer Institute (NCI). *JNCI: Journal of the National Cancer Institute*. 2025
+
+Jamieson AR, Holcomb MJ, Dalton TO, Campbell KK, Vedovato S, Shakur AH, Kang S, **Hein D**, Lawson J, Danuser G, Scott DJ. Rubrics to prompts: assessing medical student post-encounter notes with AI. *NEJM AI*. 2024
+
+Rhead B, **Hein D**\*, Pouliot Y, Guinney J, De La Vega FM, Sanford NN. Association of genetic ancestry with molecular tumor profiles in colorectal cancer. *Genome Medicine*. 2024 (\*co-first author) \| [My Projects Link](posts/genome_med_ancestry_rna/index.qmd)
+
+Lin G, **Hein D**, Liu P, Singal AG, Sanford NN. Screening implications for Distribution of Colorectal Cancer Subsite by Age and Role of Flexible Sigmoidoscopy. *Cancers*. 2024 \| [My Projects Link](posts/seer_sigmoidoscopy/index.qmd)
+
+**Hein D**, Coughlin LA, Poulides N, Koh AY, Sanford NN. Assessment of distinct gut microbiome signatures in a diverse cohort of patients undergoing definitive treatment for rectal cancer. *Journal of Immunotherapy and Precision Oncology*. 2024 \| [My Projects Link](posts/microbiome_rectal_cancer/index.qmd)
+
+**Hein D**, Deng W, Bleile M, Kazmi SA, Rhead B, De La Vega FM, Jones AL, Kainthla R, Jiang W, Cantarel B, Sanford NN. Racial and ethnic differences in genomic profiling of early onset colorectal cancer. *JNCI: Journal of the National Cancer Institute*. 2022
+
+Full publication record: [ORCID 0000-0002-8625-9528](https://orcid.org/0000-0002-8625-9528)
+
+# Awards
+
+-   Received \$15,000 in funding from the UTSW Office of Tech Dev to lead a team in an entrepreneurial training program (NIH I-Corps) based on our lab's suite of medical education AI tools
+
+# Public Service & Open Source
+
+-   Designed and maintain the website for a regional food bank, Feeding Families of Alabama (WordPress)
+-   Currently in the beta phase of releasing [InstaWell](https://github.com/DavidHein96/InstaWell), an open-source Dash + Plotly python toolkit for analyzing thermal shift assay data

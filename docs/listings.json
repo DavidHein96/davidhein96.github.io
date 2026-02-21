@@ -1,21 +1,14 @@
 [
   {
-    "listing": "/index.html",
-    "items": [
-      "/posts/post-with-code/index.html",
-      "/posts/first_project/index.html",
-      "/posts/welcome/index.html"
-    ]
-  },
-  {
     "listing": "/projects.html",
     "items": [
-      "/posts/api_and_sql/index.html",
-      "/posts/simple_conv/index.html",
-      "/posts/first_project/index.html",
-      "/posts/collab_project_rna_seq_cms/index.html",
-      "/posts/aacr_micro_cms_rna/index.html",
-      "/posts/chatGPT_book/index.html"
+      "/posts/agentic_llm_workflows/index.html",
+      "/posts/instawell/index.html",
+      "/posts/npj_llm_extraction/index.html",
+      "/posts/microbiome_rectal_cancer/index.html",
+      "/posts/genome_med_ancestry_rna/index.html",
+      "/posts/seer_sigmoidoscopy/index.html",
+      "/posts/first_project/index.html"
     ]
   }
 ]

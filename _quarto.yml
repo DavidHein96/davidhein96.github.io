@@ -4,27 +4,27 @@ project:
   execute-dir: project
 
 website:
-  title: "Dave's Portfolio"
+  title: "David Hein"
+  description: "Data Scientist at UT Southwestern — AI, MLOps, and oncology research."
   navbar:
     right:
       - projects.qmd
       - index.qmd
+      - about.qmd
       - icon: github
         href: https://github.com/DavidHein96
-      - icon: linkedin 
-        href: https://linkedin.com/in/david-h-a37220179
+      - icon: linkedin
+        href: https://linkedin.com/in/david-hein-utsw
 
     
 format:
   html:
     theme: minty
-    fontsize: 1.4em
     css: styles.css
-    #page-layout: full
-    grid: 
-     sidebar-width: 450px
-     body-width: 1400px
-     margin-width: 450px
+    grid:
+     sidebar-width: 275px
+     body-width: 1000px
+     margin-width: 275px
      gutter-width: 1.5rem
     code-block-border-left: "#78c2ad"
     code-block-bg: true

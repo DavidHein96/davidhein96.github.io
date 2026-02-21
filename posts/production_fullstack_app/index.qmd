@@ -1,0 +1,488 @@
+---
+title: "Building a Production-Ready Full Stack App: A Guided Tour"
+author: "Dave Hein"
+date: "2026-02-20"
+categories: [Python, Software Engineering, FastAPI, Docker, CI/CD, DevOps, Open Source]
+image: "goodvibes.jpg"
+format:
+  html:
+    toc: true
+    code-fold: show
+    code-tools: true
+draft: true
+---
+
+```{=html}
+<!-- DRAFT: You'll need a cover image. Could be a system architecture diagram you
+     actually use, or something abstract. A clean diagram of the stack would double
+     as useful content and a cover image. -->
+```
+
+```{=html}
+<!-- DRAFT: OVERALL NOTE — This post fills the biggest gap in your portfolio.
+     Right now everything says "I can analyze data." This says "I can ship software."
+     The tone should be different from the research posts — more opinionated,
+     more "here's what I chose and why", less "here's what the paper found."
+
+     Key decision before writing: Do you already have a repo for this, or are you
+     building one? The post works best as a tour of a REAL repo you maintain,
+     not a hypothetical. If you need to build the repo first, do that, then write the post.
+
+     Also: consider whether this is one long post or a mini-series.
+     If it gets past ~2500 words, split it. -->
+```
+
+## Why Another "Full Stack" Post?
+
+```{=html}
+<!-- DRAFT: Open with what's wrong with the existing tutorials/templates out there.
+     You've probably seen plenty of "build a todo app with FastAPI" posts.
+     What's missing from them? Some angles:
+     - They skip everything that makes prod hard (auth, migrations, CI, observability)
+     - They use flat file structures that fall apart at scale
+     - They don't show testing beyond a single happy-path example
+     - They never show deployment or containerization
+
+     Or open with your own angle: why did YOU need to build this?
+     Was it for a work project? To prove a point? To learn?
+-->
+```
+
+\[Opening — why this exists, what gap it fills, who it's for.\]
+
+\[Link to the repo here.\]
+
+```{=html}
+<!-- DRAFT: Be specific about what this is NOT:
+     - Not a step-by-step tutorial (it's a tour of decisions)
+     - Not a framework comparison
+     - Not production-grade for YOUR specific domain (clinical/healthcare)
+       unless you want it to be — probably cleaner to keep it domain-agnostic
+-->
+```
+
+------------------------------------------------------------------------
+
+## The Stack at a Glance
+
+```{=html}
+<!-- DRAFT: Fill this in once you've made your choices. This should be a quick
+     scannable overview so readers know if the post is relevant to them. -->
+```
+
+| Layer             | Choice                    | Why         |
+|-------------------|---------------------------|-------------|
+| Backend framework | FastAPI                   | \[fill in\] |
+| Database          | PostgreSQL                | \[fill in\] |
+| ORM / query layer | SQLAlchemy 2.0            | \[fill in\] |
+| Migrations        | Alembic                   | \[fill in\] |
+| Auth              | \[JWT / session / OAuth\] | \[fill in\] |
+| Testing           | pytest                    | \[fill in\] |
+| CI/CD             | GitHub Actions            | \[fill in\] |
+| Containerization  | Docker + Compose          | \[fill in\] |
+| Frontend          | \[your choice\]           | \[fill in\] |
+
+```{=html}
+<!-- DRAFT: The "Why" column is what makes this post different from a README.
+     Don't just say "it's popular" — say what you tried before, what tradeoffs you weighed,
+     what you'd pick differently for a different project. -->
+```
+
+## Project Structure
+
+```{=html}
+<!-- DRAFT: Show the actual directory tree and explain the reasoning.
+     This is one of the highest-value sections — most tutorials skip it
+     or use a flat structure. Show how you organize for a project that
+     has 20+ files, not 3. -->
+```
+
+```         
+# PLACEHOLDER — replace with your actual tree
+project-root/
+├── app/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── __init__.py
+│   │   │   ├── auth.py
+│   │   │   ├── users.py
+│   │   │   └── items.py           # or whatever your domain is
+│   │   └── dependencies.py         # shared deps (get_db, get_current_user)
+│   ├── core/
+│   │   ├── config.py               # settings via pydantic-settings
+│   │   ├── security.py             # password hashing, JWT logic
+│   │   └── database.py             # engine, session factory
+│   ├── models/                     # SQLAlchemy models
+│   ├── schemas/                    # Pydantic request/response models
+│   ├── repositories/               # data access layer
+│   ├── services/                   # business logic
+│   └── main.py
+├── migrations/                     # Alembic
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── conftest.py                 # fixtures, factories, test db
+├── docker-compose.yml
+├── Dockerfile
+├── .github/workflows/
+└── pyproject.toml
+```
+
+```{=html}
+<!-- DRAFT: Explain the key structural decisions:
+     - Why separate models/ from schemas/? (DB representation vs API contract)
+     - Why repositories/? (Testability, swappable data layer)
+     - Why services/? (Business logic shouldn't live in route handlers)
+     - How does dependency injection wire these together?
+
+     If you DON'T use this exact structure, show what you actually use.
+     The point is the reasoning, not the specific layout.
+-->
+```
+
+------------------------------------------------------------------------
+
+## Backend: FastAPI Patterns That Matter
+
+```{=html}
+<!-- DRAFT: Pick 3-4 patterns that you think are important and that tutorials skip.
+     Don't try to cover everything — this isn't docs. Show the patterns
+     that cost you time to figure out or that you've seen done wrong.
+     Delete/add subsections below as needed. -->
+```
+
+### Dependency Injection
+
+```{=html}
+<!-- DRAFT: FastAPI's Depends() system is powerful but under-explained.
+     Show how you use it for:
+     - Database sessions (with proper cleanup)
+     - Current user resolution
+     - Permission checking
+     What pattern do you use? Class-based deps? Generator deps? -->
+```
+
+``` python
+# PLACEHOLDER — show your actual dependency injection pattern
+```
+
+### Middleware and Request Lifecycle
+
+```{=html}
+<!-- DRAFT: What middleware do you use? Candidates:
+     - CORS
+     - Request ID injection
+     - Timing / logging
+     - Error handling (turning exceptions into proper HTTP responses)
+     Show the stack, explain the order. -->
+```
+
+``` python
+# PLACEHOLDER — middleware setup
+```
+
+### Configuration Management
+
+```{=html}
+<!-- DRAFT: How do you handle config across environments (local, test, prod)?
+     pydantic-settings? .env files? Environment variables?
+     Show the config class and explain what NOT to put in it. -->
+```
+
+``` python
+# PLACEHOLDER — config pattern
+```
+
+------------------------------------------------------------------------
+
+## Database: Migrations, Pooling, and the Repository Pattern
+
+```{=html}
+<!-- DRAFT: This section is where "toy app" vs "real app" diverges the most.
+     Most tutorials create tables with Base.metadata.create_all() and call it a day.
+     Show what you actually need. -->
+```
+
+### Alembic Migrations
+
+```{=html}
+<!-- DRAFT: Show:
+     - How you set up Alembic with async SQLAlchemy (if applicable)
+     - A real migration example (not just autogenerate — show a data migration or
+       a migration that required manual editing)
+     - How you handle migrations in CI and deployment
+     - The first time a migration went wrong and what you learned
+-->
+```
+
+``` python
+# PLACEHOLDER — example migration
+```
+
+### Connection Pooling
+
+```{=html}
+<!-- DRAFT: This matters in prod and nobody talks about it in tutorials.
+     - What pool settings do you use? (pool_size, max_overflow, pool_recycle)
+     - Have you hit pool exhaustion? What happened?
+     - Async vs sync sessions — which do you use and why? -->
+```
+
+``` python
+# PLACEHOLDER — engine/session configuration
+```
+
+### Repository Pattern
+
+```{=html}
+<!-- DRAFT: This is opinionated — some people hate repositories over SQLAlchemy.
+     Make your case:
+     - What does a repository buy you? (Testability? Abstraction?)
+     - Show a concrete repository class
+     - Show how it gets injected into route handlers
+     - If you DON'T use repositories, explain what you do instead
+-->
+```
+
+``` python
+# PLACEHOLDER — repository example
+```
+
+------------------------------------------------------------------------
+
+## Auth
+
+```{=html}
+<!-- DRAFT: Pick ONE auth approach and explain it well. Don't try to cover
+     JWT AND sessions AND OAuth. Options:
+     - JWT with refresh tokens (most common for APIs)
+     - Session-based (simpler, better for server-rendered)
+     - OAuth2 with external provider (Google, GitHub)
+
+     Show:
+     - The auth flow end to end
+     - How you store/hash passwords (if applicable)
+     - Role-based access control if you implement it
+     - Token refresh / session invalidation
+     - Common mistakes you've seen or made
+-->
+```
+
+### Auth Flow
+
+``` python
+# PLACEHOLDER — auth implementation
+```
+
+### Role-Based Access Control
+
+``` python
+# PLACEHOLDER — RBAC pattern, if applicable
+```
+
+------------------------------------------------------------------------
+
+## Testing: The Part Everyone Skips
+
+```{=html}
+<!-- DRAFT: This could be the best section in the post if you do it right.
+     Most "full stack" posts have zero tests or one trivial test.
+     Show the real testing setup:
+     - How you create a test database (in-memory? Docker? testcontainers?)
+     - Fixtures and factories for generating test data
+     - Unit tests (testing services/repos in isolation)
+     - Integration tests (testing API endpoints with a real DB)
+     - What you DON'T test and why
+
+     The conftest.py is often the most valuable file in a test suite.
+     Show yours.
+-->
+```
+
+### Test Infrastructure
+
+``` python
+# PLACEHOLDER — conftest.py / test database setup
+```
+
+### Factories
+
+```{=html}
+<!-- DRAFT: Do you use factory_boy? Faker? Hand-rolled fixtures?
+     Show how you generate test data that's realistic but deterministic. -->
+```
+
+``` python
+# PLACEHOLDER — test data factories
+```
+
+### Unit vs Integration: Where to Draw the Line
+
+```{=html}
+<!-- DRAFT: What's your actual testing philosophy? Be opinionated:
+     - Do you mock the database or use a real one?
+     - Do you test routes directly or through the FastAPI TestClient?
+     - What's your coverage target? Do you even track coverage?
+     - What tests have caught real bugs vs. what tests are just ceremony?
+-->
+```
+
+``` python
+# PLACEHOLDER — example unit test and integration test side by side
+```
+
+------------------------------------------------------------------------
+
+## CI/CD: GitHub Actions Pipeline
+
+```{=html}
+<!-- DRAFT: Show the actual workflow YAML and walk through it.
+     What runs on every PR? What runs on merge to main?
+     - Linting (ruff? black? isort?)
+     - Type checking (mypy? pyright?)
+     - Tests (which ones? parallelized?)
+     - Build + push Docker image
+     - Deploy (where? how?)
+
+     If your deploy target is Azure (from your work), say so.
+     If it's something simpler for this project, that's fine too.
+-->
+```
+
+``` yaml
+# PLACEHOLDER — .github/workflows/ci.yml
+```
+
+```{=html}
+<!-- DRAFT: Call out anything non-obvious:
+     - How you handle secrets
+     - How you run migrations in the deploy step
+     - Caching strategies for faster CI
+     - Any jobs that run on a schedule (dependency updates, etc.)
+-->
+```
+
+------------------------------------------------------------------------
+
+## Containerization
+
+```{=html}
+<!-- DRAFT: Show TWO Dockerfiles if they differ:
+     1. Local dev (docker-compose with hot reload, local DB, etc.)
+     2. Production (multi-stage build, non-root user, minimal image)
+
+     Most tutorials show one Dockerfile that's bad for both purposes.
+     The docker-compose.yml for local dev is usually more interesting than the Dockerfile.
+-->
+```
+
+### Local Development
+
+``` yaml
+# PLACEHOLDER — docker-compose.yml
+```
+
+### Production Dockerfile
+
+``` dockerfile
+# PLACEHOLDER — multi-stage Dockerfile
+```
+
+```{=html}
+<!-- DRAFT: Tips from your experience:
+     - Image size optimization (what base image? what do you exclude?)
+     - Build cache busting (when do you invalidate?)
+     - Health check configuration
+     - Any gotchas with Python + Docker you've hit?
+-->
+```
+
+------------------------------------------------------------------------
+
+## Observability
+
+```{=html}
+<!-- DRAFT: This section separates "I've deployed something" from "I've run something
+     in production." Cover whatever you actually use:
+     - Structured logging (structlog? python-json-logger? just logging.config?)
+     - Health check endpoints (what do they actually check?)
+     - Error tracking (Sentry? custom?)
+     - Metrics (if applicable)
+
+     Even if your setup is simple, showing that you THINK about observability matters.
+-->
+```
+
+### Structured Logging
+
+``` python
+# PLACEHOLDER — logging configuration
+```
+
+### Health Checks
+
+``` python
+# PLACEHOLDER — health check endpoint that actually checks dependencies
+```
+
+------------------------------------------------------------------------
+
+## Frontend
+
+```{=html}
+<!-- DRAFT: This is the section where you need to make a choice.
+     Options:
+     (a) Full SPA (React/Vue/Svelte) with API client generation from OpenAPI spec
+     (b) HTMX + Jinja2 templates (simpler, trendy, good for a data-focused app)
+     (c) Minimal — just document the API and skip frontend
+     (d) Dash (you already know it from InstaWell)
+
+     If frontend isn't your strongest area, be honest about it.
+     "I chose X because it was the simplest thing that worked" is a valid answer.
+
+     Whatever you pick, show:
+     - How the frontend talks to the backend (API client gen? manual fetch?)
+     - State management approach
+     - How auth tokens are stored/managed on the client side
+-->
+```
+
+\[Frontend section — fill in based on your choice.\]
+
+------------------------------------------------------------------------
+
+## What I'd Do Differently
+
+```{=html}
+<!-- DRAFT: This is the section that will get the most engagement.
+     Be honest about the tradeoffs and mistakes. Ideas:
+     - "I over-engineered X and it wasn't worth it"
+     - "I should have started with Y instead of Z"
+     - "The repository pattern adds boilerplate that I'm not sure pays off at this scale"
+     - "I spent too long on auth and should have just used [library]"
+     - "If this were a real production app with a team, I'd add [thing I skipped]"
+     - "My test coverage is good but my tests are too coupled to implementation"
+
+     3-5 honest bullets is better than a polished retrospective.
+-->
+```
+
+\[Honest retrospective — what worked, what didn't, what you'd change.\]
+
+------------------------------------------------------------------------
+
+## Links
+
+-   [GitHub Repository](#) <!-- DRAFT: replace with real repo link -->
+-   [Live Demo](#) <!-- DRAFT: if applicable, otherwise remove -->
+
+```{=html}
+<!-- DRAFT: BEFORE PUBLISHING checklist:
+     [ ] Repo is public and README is solid
+     [ ] All placeholder code replaced with real code from the repo
+     [ ] Cover image added
+     [ ] Tested that all code snippets are accurate to the actual repo
+     [ ] Read through once for tone — should sound like an engineer's notes, not a tutorial
+     [ ] Consider: is this one post or should it be split into 2-3?
+-->
+```

@@ -27,3 +27,6 @@ beans/*/*
 beans/*/*/*
 beans/*/*/*/*
 my_database.db
+**/*.quarto_ipynb
+_reference/*
+.venv/

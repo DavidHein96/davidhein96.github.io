@@ -1,0 +1,392 @@
+---
+title: "Agentic LLM Workflows: From Prompt Engineering to Function Calling"
+author: "Dave Hein"
+date: "2026-02-20"
+categories: [Python, LLMs, Clinical NLP]
+image: "toolbox.jpg"
+format:
+  html:
+    toc: true
+    code-fold: show
+    code-tools: true
+---
+
+```{=html}
+<!-- DRAFT: You'll need a cover image. Ideas: a diagram of the three approaches side by side,
+     or something abstract about iteration/refinement. DALL-E prompt suggestion:
+     "minimalist technical illustration showing three stages of evolution, simple to complex,
+     with gears and document icons, cool blue tones" -->
+```
+
+## The Three Eras of Getting an LLM to Fill Out a Spreadsheet
+
+```{=html}
+<!-- DRAFT: Write your own opening hook here. Some options:
+     - Start with a specific moment: the first time structured output silently mangled your data
+     - Start with the punchline: "We've tried three fundamentally different approaches to
+       making LLMs extract clinical data. Each one solved the previous approach's problems
+       and introduced new ones."
+     - Start with the stakes: what goes wrong when extraction fails in clinical data
+-->
+```
+
+\[Opening paragraph — set up why this matters and what the reader will get out of this post.\]
+
+This post tells the story of how our clinical data extraction approach evolved across real projects — from naive prompting to structured output to function calling with Pydantic validation. Each transition was driven by hitting a wall with the previous approach, and the failure modes are instructive.
+
+If you've read [my earlier post on our npj Digital Medicine paper](../npj_llm_extraction/index.qmd), this picks up where that left off. The error ontology we developed there — categorizing failures by source, severity, and context — turns out to map almost perfectly onto *why* each approach breaks.
+
+```{=html}
+<!-- DRAFT: Decide how much to reference the npj paper vs. making this standalone.
+     Someone reading this post first should still be able to follow it. -->
+```
+
+------------------------------------------------------------------------
+
+## Act 1: "Ask Nicely for JSON"
+
+```{=html}
+<!-- DRAFT: This is the npj paper era. Draw from your actual experience:
+     - What did your first prompts look like? How did you ask for structured output?
+     - What was the prompt that made you think "this works!" before it didn't?
+     - When did you first realize free-text JSON output was going to be a problem?
+-->
+```
+
+### The Approach
+
+\[Describe the original setup: prompt engineering with instructions to return JSON, parsing the output with regex or `json.loads`, manual post-processing.\]
+
+``` python
+# PLACEHOLDER — replace with a real (simplified) example from your early prompts
+prompt = """
+Extract the following from this pathology report and return as JSON:
+- tumor_subtype
+- histologic_grade
+- margin_status
+
+Report:
+{report_text}
+"""
+
+response = llm(prompt)
+# Then pray that json.loads(response) works
+```
+
+### Where It Breaks
+
+```{=html}
+<!-- DRAFT: Show real failure modes you encountered. Ideas:
+     - Malformed JSON (missing closing brace, trailing comma, unescaped quotes in values)
+     - Hallucinated keys the model invented
+     - Inconsistent key naming across runs (tumor_type vs tumor_subtype vs tumorSubtype)
+     - Model returning conversational text wrapped around the JSON
+     - The regex you wrote to extract JSON from conversational wrappers
+     Pick 2-3 concrete examples. The messier the better.
+-->
+```
+
+**Failure mode 1: Malformed JSON**
+
+``` python
+# What you asked for:
+{"tumor_subtype": "clear cell RCC", "grade": "2"}
+
+# What you got back:
+# EXAMPLE — replace with a real one
+```
+
+**Failure mode 2: Schema drift**
+
+\[Example of inconsistent keys or invented fields across runs.\]
+
+**Failure mode 3: Conversational wrapping**
+
+\[Example of model saying "Sure! Here's the extracted data:" before the JSON.\]
+
+### What We Learned
+
+```{=html}
+<!-- DRAFT: Key insight from this era. Something like:
+     "Free-text prompting works for demos and prototypes, but at scale
+     (thousands of reports), even a 2% malformed-output rate means hundreds
+     of manual fixes. We needed the model to be *constrained*, not just *instructed*."
+
+     Tie to error ontology: these failures are mostly "schema/instruction gap" errors.
+-->
+```
+
+\[Transition sentence to Act 2.\]
+
+------------------------------------------------------------------------
+
+## Act 2: Structured Output / JSON Mode
+
+```{=html}
+<!-- DRAFT: When did you switch to constrained decoding / JSON mode?
+     Was this with OpenAI's JSON mode? vLLM's guided decoding? Both?
+     What made you try it? -->
+```
+
+### The Approach
+
+\[Describe structured output / JSON mode: guaranteed valid JSON, schema enforcement, provider-specific implementations.\]
+
+``` python
+# PLACEHOLDER — show how you set up JSON mode or structured output
+# e.g., OpenAI response_format, vLLM guided decoding, etc.
+```
+
+### The New Problem: Schema Contortion
+
+```{=html}
+<!-- DRAFT: This is the interesting part that most blog posts about structured output miss.
+     The model produces VALID JSON that is WRONG. Examples to look for in your experience:
+     - Model stuffing data into the wrong field because the right field didn't exist
+     - Losing nuance: "probably clear cell, but could be papillary" → forced into one value
+     - Optional fields: model hallucinating values rather than leaving null
+     - Conditional fields: model filling in fields that shouldn't apply to this report
+     - Verbose schemas eating context window on long reports
+
+     This is where the error ontology really shines — these are "LLM errors" that look
+     like correct outputs because the JSON is valid.
+-->
+```
+
+**Pitfall 1: Forcing answers into ill-fitting schemas**
+
+\[Concrete example.\]
+
+**Pitfall 2: Loss of uncertainty**
+
+\[Example where the model couldn't express "I'm not sure" within the rigid schema.\]
+
+**Pitfall 3: Context window pressure**
+
+\[How large schemas + long reports = truncation or degraded performance.\]
+
+### What We Learned
+
+```{=html}
+<!-- DRAFT: Key insight: structured output solves the SYNTAX problem
+     but not the SEMANTICS problem. You need validation that understands
+     the domain, not just the shape of the JSON.
+
+     Tie to error ontology: these are now "LLM errors" masked as valid output —
+     harder to catch, more dangerous than malformed JSON.
+-->
+```
+
+\[Transition sentence to Act 3.\]
+
+------------------------------------------------------------------------
+
+## Act 3: Function Calling + Pydantic Validation
+
+```{=html}
+<!-- DRAFT: This is where you are now. What triggered the move?
+     Was it a specific project or a gradual evolution? -->
+```
+
+### The Approach
+
+\[Describe function calling: model selects and populates function arguments, Pydantic validates, retry/fallback on validation failure.\]
+
+``` python
+# PLACEHOLDER — replace with your actual (simplified) Pydantic models
+from pydantic import BaseModel, Field, field_validator
+from typing import Optional, Literal
+from enum import Enum
+
+class TumorSubtype(str, Enum):
+    CLEAR_CELL = "clear_cell_rcc"
+    PAPILLARY = "papillary_rcc"
+    CHROMOPHOBE = "chromophobe_rcc"
+    # ... etc
+
+class PathologyExtraction(BaseModel):
+    tumor_subtype: TumorSubtype
+    histologic_grade: Optional[int] = Field(None, ge=1, le=4)
+    margin_status: Literal["positive", "negative", "indeterminate", "not_reported"]
+    confidence: Literal["high", "low"]
+    evidence_quote: str = Field(..., min_length=10)
+
+    @field_validator("histologic_grade")
+    @classmethod
+    def grade_only_if_applicable(cls, v, info):
+        # Example: grade validation logic
+        ...
+```
+
+### Why This Works Better
+
+```{=html}
+<!-- DRAFT: What specifically is better about function calling + Pydantic?
+     Ideas to address:
+     - Function calling is more natural for the model than rigid JSON schemas
+       (the model is "calling a function" vs "filling out a form")
+     - Pydantic gives you validation BEYOND schema shape: ranges, enums,
+       cross-field dependencies, custom validators
+     - Clear error messages on failure → automatic retry with the error context
+     - Nested models for complex extractions (specimen → tumor → biomarkers)
+     - Type coercion handles minor formatting issues automatically
+
+     Show a concrete validation catch that the other approaches would miss.
+-->
+```
+
+**Validation in action:**
+
+``` python
+# PLACEHOLDER — show a real example where Pydantic catches something useful
+# e.g., model returns grade=5 (impossible), or fills margin_status for a biopsy
+# where margins aren't assessed
+```
+
+### The Retry Pattern
+
+```{=html}
+<!-- DRAFT: Do you have a retry/correction pattern? Something like:
+     1. Call LLM with function definition
+     2. Parse response into Pydantic model
+     3. If validation fails, send error message back to model as context
+     4. Retry with the specific validation error
+     Show the pattern if you use it. -->
+```
+
+``` python
+# PLACEHOLDER — retry loop with validation feedback
+```
+
+------------------------------------------------------------------------
+
+## Side-by-Side: Same Note, Three Approaches
+
+```{=html}
+<!-- DRAFT: THIS IS THE MONEY SECTION. Pick one messy, realistic clinical note
+     (synthetic/de-identified obviously) and show all three approaches on it.
+     The note should have:
+     - At least one ambiguous finding
+     - A field that's absent/not applicable
+     - Something that's easy to misparse
+
+     Show the prompt/config, the raw output, and the final parsed result for each approach.
+     Highlight where each one fails or succeeds.
+-->
+```
+
+### The Note
+
+```         
+[PLACEHOLDER — synthetic pathology report excerpt. Make it realistic:
+multi-specimen, some ambiguity, missing fields]
+```
+
+### Approach 1: Free-text JSON prompting
+
+``` python
+# prompt + output + what went wrong
+```
+
+### Approach 2: Structured output / JSON mode
+
+``` python
+# config + output + what went wrong differently
+```
+
+### Approach 3: Function calling + Pydantic
+
+``` python
+# function def + output + validation result
+```
+
+### Comparison Table
+
+| Aspect | Free-text JSON | Structured Output | Function Calling + Pydantic |
+|-----------------|-----------------|-----------------|---------------------|
+| Valid JSON? | \[fill in\] | \[fill in\] | \[fill in\] |
+| Correct values? | \[fill in\] | \[fill in\] | \[fill in\] |
+| Handles ambiguity? | \[fill in\] | \[fill in\] | \[fill in\] |
+| Handles missing fields? | \[fill in\] | \[fill in\] | \[fill in\] |
+| Error caught before downstream? | \[fill in\] | \[fill in\] | \[fill in\] |
+
+------------------------------------------------------------------------
+
+## Mapping to the Error Ontology
+
+```{=html}
+<!-- DRAFT: Tie this back to the npj paper's error ontology.
+     The three error sources (LLM error, annotation error, schema/instruction gap)
+     map to the three approaches:
+     - Act 1 failures are mostly schema/instruction gaps (model doesn't know what you want)
+     - Act 2 failures are mostly LLM errors masked as valid output (model knows the schema
+       but fills it wrong)
+     - Act 3 still has LLM errors but they're CAUGHT by validation before they hit your dataset
+
+     This is a genuinely interesting framing if you can make it concrete.
+-->
+```
+
+\[Connect the evolution of approaches to the error categories from the npj paper. Show how each approach shifts the distribution of error types rather than eliminating errors entirely.\]
+
+------------------------------------------------------------------------
+
+## Practical Considerations
+
+```{=html}
+<!-- DRAFT: Fill in from your actual experience deploying these approaches.
+     Some or all of these subsections might apply: -->
+```
+
+### Provider Differences
+
+```{=html}
+<!-- DRAFT: How does function calling work across OpenAI, vLLM, Azure?
+     Any gotchas? Does Llama handle it differently than GPT-4o? -->
+```
+
+\[Notes on cross-provider compatibility.\]
+
+### Cost and Latency
+
+```{=html}
+<!-- DRAFT: Does function calling cost more tokens? Is the retry pattern expensive?
+     Any numbers from your production usage? -->
+```
+
+\[Real numbers if you have them, qualitative comparison if not.\]
+
+### When to Use Which Approach
+
+<!-- DRAFT: Not everything needs function calling. When is each approach appropriate? -->
+
+| Scenario                                  | Recommended Approach |
+|-------------------------------------------|----------------------|
+| Quick prototyping / exploration           | \[fill in\]          |
+| Moderate scale, simple schema             | \[fill in\]          |
+| Production, complex schema, clinical data | \[fill in\]          |
+
+------------------------------------------------------------------------
+
+## What I Still Get Wrong
+
+```{=html}
+<!-- DRAFT: End with honesty, not triumphalism. What DOESN'T function calling solve?
+     - Edge cases that no amount of validation catches?
+     - The fundamental tension between constraining the model and letting it reason?
+     - Anything about agentic patterns (tool use, multi-step reasoning) you're
+       experimenting with now?
+
+     This is also where you could tease future work without promising a follow-up post.
+-->
+```
+
+\[Honest assessment of remaining limitations and open problems.\]
+
+------------------------------------------------------------------------
+
+## Citation
+
+<!-- DRAFT: Link back to the npj paper and the prompts_to_table repo. -->
+
+Related work: **Hein D** et al. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. *npj Digital Medicine*. 8, 301 (2025). [Paper](https://doi.org/10.1038/s41746-025-01686-z) \| [Code](https://github.com/DavidHein96/prompts_to_table)

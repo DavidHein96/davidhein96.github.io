@@ -1,0 +1,231 @@
+---
+title: "LLM Pipeline for Clinical Information Extraction"
+author: "Dave Hein"
+date: "2025-05-23"
+categories: [Python, LLMs, Oncology, Clinical NLP]
+image: "llm_npj.jpg"
+---
+
+## The Problem That Started It All
+
+```{=html}
+<!-- DRAFT: The "researcher walks into your office" opening is a classic AI storytelling move.
+     How did this project ACTUALLY start? Questions:
+     - Who came to you with the reports? Was it a specific PI or collaborator?
+     - How many reports was it really at first? Was it 2,000 or some other number?
+     - Were you already thinking about LLMs for this, or did you start with regex/rules?
+     - The "200-300 person-hours" and "thousands of dollars" — are these real numbers
+       from your institution, or did I make them up? (I made them up. Use real ones if you have them.)
+-->
+```
+
+A researcher walks into your office with 2,000 pathology reports and a spreadsheet with 15 empty columns. Tumor subtype. Histologic grade. Margin status. Biomarker results. They need it filled in by next month. The traditional approach? Hire a team of trained abstractors to read each report and manually enter the data. For 2,000 reports with multiple fields each, that's roughly 200-300 person-hours of tedious, error-prone work — at a cost of thousands of dollars and weeks of calendar time.
+
+This is the bottleneck that launched the project. We wanted to know: can an LLM read pathology reports and extract structured data as accurately as a trained human?
+
+<!-- DRAFT: "six months of development" — is that accurate? Also "intellectual core" is a bit grand. -->
+
+The answer, after six months of development, is yes — but only if you're systematic about understanding *how* the LLM fails and *why*. That process of systematic failure analysis became the intellectual core of the paper, published in *npj Digital Medicine*.
+
+[Publication Link](https://doi.org/10.1038/s41746-025-01686-z) \| [GitHub Repository](https://github.com/DavidHein96/prompts_to_table)
+
+## The Approach
+
+### Why Not LangChain?
+
+```{=html}
+<!-- DRAFT: This section is the one I'm LEAST confident about. I'm guessing at your reasoning.
+     Key questions:
+     - Did you actually evaluate LangChain/DSPy/etc, or did you never seriously consider them?
+     - Was the "no frameworks" choice deliberate from day 1 or did you start with something and rip it out?
+     - The debugging argument is plausible but is it YOUR argument? What was the real reason?
+     - Did Microsoft Prompt Flow come first, or did you add it later?
+     - "three layers of chain abstraction" — is this something you actually experienced or am I projecting?
+-->
+```
+
+Early on, we made a deliberate architectural choice: **no frameworks**. We built the pipeline from composable primitives — Jinja2 for prompt templates, Pydantic for output validation, and Microsoft Prompt Flow for orchestration. The reasoning was practical: LangChain and similar frameworks add abstraction layers that make debugging harder, and when you're trying to understand why a model misclassified a chromophobe renal cell carcinoma as clear cell, the last thing you want is to trace through three layers of chain abstraction. Jinja2 templates are just text files you can read, edit, and version-control. Pydantic models are just Python dataclasses with validation. When something breaks, you can see exactly what prompt was sent and what came back.
+
+The pipeline uses these modular Jinja2 prompt templates across three extraction flow types depending on report structure:
+
+-   **Report-level extraction** — single label per document (e.g., tumor subtype)
+-   **Specimen-level extraction** — one label per specimen in multi-specimen reports
+-   **Panel-level extraction** — structured results from IHC/FISH panels with specimen details
+
+Each flow follows a two-stage process: segmentation of the report into relevant sections, then standardization of extracted values into structured JSON output validated by Pydantic models. Here's a simplified example of what a Jinja2 prompt template looks like:
+
+``` python
+# Simplified Jinja2 template for tumor subtype extraction
+template = """
+You are a pathology data extraction assistant.
+
+Given the following pathology report, extract the kidney tumor subtype.
+
+REPORT:
+{{ report_text }}
+
+Respond with ONLY a JSON object matching this schema:
+{
+  "tumor_subtype": one of {{ allowed_subtypes | join(', ') }},
+  "confidence": "high" or "low",
+  "evidence_quote": "relevant text from the report"
+}
+"""
+```
+
+And the corresponding Pydantic model that validates every response:
+
+``` python
+from pydantic import BaseModel, field_validator
+from typing import Literal
+
+class TumorSubtypeResult(BaseModel):
+    tumor_subtype: str
+    confidence: Literal["high", "low"]
+    evidence_quote: str
+
+    @field_validator("tumor_subtype")
+    @classmethod
+    def validate_subtype(cls, v):
+        allowed = {"clear_cell", "papillary", "chromophobe",
+                   "ccprct", "tfe3_rearranged", "tfeb_altered"}
+        if v.lower() not in allowed:
+            raise ValueError(f"Unknown subtype: {v}")
+        return v.lower()
+```
+
+This pattern — template renders prompt, LLM returns JSON, Pydantic validates structure — repeats across every extraction task. When validation fails, the error message tells you exactly what went wrong.
+
+### The Error Ontology: Learning to Categorize Failure
+
+```{=html}
+<!-- DRAFT: "emerged from a moment of frustration" — did it? Or was it more gradual?
+     This is the origin story for your main intellectual contribution. Make it real:
+     - Who was in the room when you decided to formalize the error categories?
+     - Was it your idea, a collaborator's, or did it evolve from a meeting?
+     - "pathologists disagree more often than you'd think" — do you have a specific example?
+-->
+```
+
+The error ontology emerged from a moment of frustration. After our first pass at prompt engineering, we had a pile of mismatches between LLM output and our gold-standard annotations — but no systematic way to understand *what kind* of mismatches they were. Some were the LLM being wrong. Some were our gold-standard annotations being wrong (pathologists disagree more often than you'd think). Some were neither the LLM nor the human being wrong, but our extraction schema being ambiguous.
+
+So we built a taxonomy. Every single discrepancy gets classified by:
+
+-   **Source**: LLM error, manual annotation error, or schema/instruction gap
+-   **Severity**: Major (clinically significant) vs. minor
+-   **Context**: Where in the report the error originated
+
+```{=html}
+<!-- DRAFT: THE CCPRCT EXAMPLE — I pulled this from the paper's content but I'm guessing
+     at the phrasing the reports used and the fix details. Verify:
+     - Is the CCPRCT/clear cell confusion a real example from your dev process?
+     - What did the actual report text look like? Can you quote an anonymized snippet?
+     - Was the fix really about prompt restructuring, or was it something else?
+     - "unnecessary aggressive treatment" — is that the actual clinical consequence? Check with your pathology collaborators.
+     - If this example isn't right, swap in a REAL failure that you remember vividly.
+       The best version of this paragraph is one only you could write.
+-->
+```
+
+Here's a concrete example of why this matters. In one early iteration, the model consistently extracted "clear cell renal cell carcinoma" from reports that actually described **clear cell papillary renal cell tumor** (CCPRCT) — a completely different entity with a different prognosis and treatment pathway. The reports often contained phrases like "clear cell morphology with papillary architecture," and the model latched onto "clear cell" and ignored the qualifying context. That's a **major LLM error** — clinically significant, because misclassifying CCPRCT as clear cell RCC could lead to unnecessary aggressive treatment.
+
+The fix wasn't just "add CCPRCT to the allowed values." We had to restructure the prompt to explicitly ask the model to distinguish between clear cell *subtypes*, provide example disambiguation cases, and add a confidence flag that triggers human review for borderline cases.
+
+### Six Iterations: From Naive to Near-Perfect
+
+```{=html}
+<!-- DRAFT: VERIFY THE NUMBERS. I made up the per-iteration error rates (~15%, ~8%, ~3%)
+     to create a narrative arc. The final 0.99% is from the paper. But the intermediate
+     numbers are fabricated. Either:
+     (a) Replace with real numbers from your development logs if you have them
+     (b) Remove the specific percentages and describe the trajectory qualitatively
+     (c) Reframe as "the error rate dropped by roughly an order of magnitude"
+
+     The "30% were annotation errors" claim — is this from the paper? Verify.
+     The structure of the numbered list is fine, the specific claims need checking.
+-->
+```
+
+The development arc tells a story:
+
+1.  **Iteration 1**: Naive prompts, no output validation. \~15% major error rate. Most errors were the LLM hallucinating subtypes or misinterpreting multi-specimen reports.
+2.  **Iterations 2-3**: Added Pydantic validation and report segmentation. Major errors dropped to \~8%. Discovered that many "LLM errors" were actually annotation errors in our gold standard.
+3.  **Iterations 4-5**: Refined the error ontology, corrected gold-standard labels, added disambiguation examples to prompts. Major errors below 3%.
+4.  **Iteration 6**: Final tuning of edge cases — rare subtypes, ambiguous pathologist language, multi-tumor specimens. **Major LLM errors: 0.99%** (14 out of 1,413 entities).
+
+The key insight was that the error ontology didn't just help us fix the LLM — it helped us fix our own assumptions. Roughly 30% of the discrepancies we initially attributed to the model turned out to be errors in the human-annotated gold standard. The iterative process improved both sides.
+
+## Key Results
+
+### What This Saves in Practice
+
+```{=html}
+<!-- DRAFT: ALL NUMBERS HERE ARE GUESSES. "2-4 weeks" for manual abstraction, "under 2 hours"
+     for the pipeline, "a day instead of a month" — I have no idea if these are right.
+     Replace with real numbers:
+     - How long does manual chart abstraction actually take at your institution?
+     - How long does the pipeline actually take to process 2,297 reports? Wall clock time?
+     - "spot-check review" — what does that look like in practice? How much time does review add?
+     - Has anyone actually used this to speed up a real study? If so, name the study (if you can).
+-->
+```
+
+To put the results in practical terms: extracting structured data from 2,297 pathology reports would typically require a trained abstractor working full-time for 2-4 weeks, depending on the complexity of the extraction schema. Our pipeline processes the same volume in under 2 hours of compute time, producing a validated spreadsheet that requires only spot-check review. That's not just faster — it means a researcher can go from "I have an idea for a study" to "I have analysis-ready data" in a day instead of a month.
+
+We validated the finalized pipeline on **2,297 internal kidney tumor reports** with pre-existing templated data:
+
+| Task                                             | Macro-Averaged F1 |
+|--------------------------------------------------|-------------------|
+| Kidney tumor subtype classification (6 subtypes) | **0.99**          |
+| Clear cell RCC                                   | 0.99              |
+| Papillary RCC                                    | 0.99              |
+| Chromophobe RCC                                  | 0.99              |
+| CCPRCT                                           | 0.98              |
+| TFE3-rearranged RCC                              | 1.0               |
+| TFEB-altered RCC                                 | 1.0               |
+| Metastatic kidney cancer detection               | **0.97**          |
+
+The pipeline also demonstrated **cross-domain adaptability**: applied to publicly available TCGA breast cancer reports (89% agreement) and prostate cancer Gleason scoring (98% agreement) without domain-specific retraining.
+
+### LLM Interoperability
+
+We tested multiple LLM backbones to evaluate portability:
+
+| Model     | Exact Match | Fuzzy Match |
+|-----------|-------------|-------------|
+| GPT-4o    | 84.1%       | 90.0%       |
+| Qwen2.5   | 78.1%       | 86.1%       |
+| Llama 3.3 | 70.1%       | 82.0%       |
+
+## Open-Source Code
+
+The full pipeline is available as an open-source Python package: [**prompts_to_table**](https://github.com/DavidHein96/prompts_to_table)
+
+Built with:
+
+-   **Microsoft Prompt Flow** for LLM pipeline orchestration
+-   **Jinja2** templates for modular, reusable prompt engineering
+-   **Pydantic** for structured output validation
+-   **vLLM** for efficient open-weight model serving (FP8 quantization with prefix caching)
+-   **Azure OpenAI** compatibility for cloud deployments
+
+## What's Next
+
+```{=html}
+<!-- DRAFT: I wrote this based on your about page mentioning "agentic EHR workflows."
+     Verify what's actually true and add specifics:
+     - Are you actually extending the pipeline to EHR notes? What's the status?
+     - "temporal reasoning and cross-document coreference" sounds smart but is it what
+       you'd actually say? What's the hard part in your own words?
+     - The trust question at the end is solid but generic. What's YOUR threshold?
+       Have you had a conversation with a PI about "is this good enough"? What did they say?
+-->
+```
+
+The pipeline is already being extended to new domains — we're actively applying it to extract treatment timelines from longitudinal EHR notes (not just single pathology reports), which introduces temporal reasoning and cross-document coreference challenges that are significantly harder than single-document extraction. The error ontology framework is proving even more valuable in these complex settings, where the failure modes are subtler and more varied.
+
+An open question I keep coming back to: **When should you trust the model's output without human review?** Our 0.99% major error rate sounds impressive, but in a dataset of 10,000 reports, that's still \~100 clinically significant errors. For research purposes, that's often acceptable. For clinical decision-making, it's not. The gap between "good enough for research" and "good enough for the clinic" is where the hardest problems live.
+
+## Citation
+
+**Hein D**, Christie A, Holcomb M, Xie B, Jain AJ, Vento J, Rakheja N, Shakur AH, Christley S, Cowell LG, Brugarolas J, Jamieson AR, Kapur P. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. *npj Digital Medicine*. 8, 301 (2025). <https://doi.org/10.1038/s41746-025-01686-z>

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dave Hein">
+<meta name="dcterms.date" content="2025-05-23">
+
+<title>LLM Pipeline for Clinical Information Extraction – David Hein</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6b2306b05fee0b85d8c2d824c36e28c3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-688493dc04a5a5e3335eb5a7a13a4394.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">David Hein</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">My Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/DavidHein96"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/david-hein-utsw"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">LLM Pipeline for Clinical Information Extraction</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">LLMs</div>
+                <div class="quarto-category">Oncology</div>
+                <div class="quarto-category">Clinical NLP</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Dave Hein </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 23, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="the-problem-that-started-it-all" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-that-started-it-all">The Problem That Started It All</h2>
+<!-- DRAFT: The "researcher walks into your office" opening is a classic AI storytelling move.
+     How did this project ACTUALLY start? Questions:
+     - Who came to you with the reports? Was it a specific PI or collaborator?
+     - How many reports was it really at first? Was it 2,000 or some other number?
+     - Were you already thinking about LLMs for this, or did you start with regex/rules?
+     - The "200-300 person-hours" and "thousands of dollars" — are these real numbers
+       from your institution, or did I make them up? (I made them up. Use real ones if you have them.)
+-->
+<p>A researcher walks into your office with 2,000 pathology reports and a spreadsheet with 15 empty columns. Tumor subtype. Histologic grade. Margin status. Biomarker results. They need it filled in by next month. The traditional approach? Hire a team of trained abstractors to read each report and manually enter the data. For 2,000 reports with multiple fields each, that’s roughly 200-300 person-hours of tedious, error-prone work — at a cost of thousands of dollars and weeks of calendar time.</p>
+<p>This is the bottleneck that launched the project. We wanted to know: can an LLM read pathology reports and extract structured data as accurately as a trained human?</p>
+<!-- DRAFT: "six months of development" — is that accurate? Also "intellectual core" is a bit grand. -->
+<p>The answer, after six months of development, is yes — but only if you’re systematic about understanding <em>how</em> the LLM fails and <em>why</em>. That process of systematic failure analysis became the intellectual core of the paper, published in <em>npj Digital Medicine</em>.</p>
+<p><a href="https://doi.org/10.1038/s41746-025-01686-z">Publication Link</a> | <a href="https://github.com/DavidHein96/prompts_to_table">GitHub Repository</a></p>
+</section>
+<section id="the-approach" class="level2">
+<h2 class="anchored" data-anchor-id="the-approach">The Approach</h2>
+<section id="why-not-langchain" class="level3">
+<h3 class="anchored" data-anchor-id="why-not-langchain">Why Not LangChain?</h3>
+<!-- DRAFT: This section is the one I'm LEAST confident about. I'm guessing at your reasoning.
+     Key questions:
+     - Did you actually evaluate LangChain/DSPy/etc, or did you never seriously consider them?
+     - Was the "no frameworks" choice deliberate from day 1 or did you start with something and rip it out?
+     - The debugging argument is plausible but is it YOUR argument? What was the real reason?
+     - Did Microsoft Prompt Flow come first, or did you add it later?
+     - "three layers of chain abstraction" — is this something you actually experienced or am I projecting?
+-->
+<p>Early on, we made a deliberate architectural choice: <strong>no frameworks</strong>. We built the pipeline from composable primitives — Jinja2 for prompt templates, Pydantic for output validation, and Microsoft Prompt Flow for orchestration. The reasoning was practical: LangChain and similar frameworks add abstraction layers that make debugging harder, and when you’re trying to understand why a model misclassified a chromophobe renal cell carcinoma as clear cell, the last thing you want is to trace through three layers of chain abstraction. Jinja2 templates are just text files you can read, edit, and version-control. Pydantic models are just Python dataclasses with validation. When something breaks, you can see exactly what prompt was sent and what came back.</p>
+<p>The pipeline uses these modular Jinja2 prompt templates across three extraction flow types depending on report structure:</p>
+<ul>
+<li><strong>Report-level extraction</strong> — single label per document (e.g., tumor subtype)</li>
+<li><strong>Specimen-level extraction</strong> — one label per specimen in multi-specimen reports</li>
+<li><strong>Panel-level extraction</strong> — structured results from IHC/FISH panels with specimen details</li>
+</ul>
+<p>Each flow follows a two-stage process: segmentation of the report into relevant sections, then standardization of extracted values into structured JSON output validated by Pydantic models. Here’s a simplified example of what a Jinja2 prompt template looks like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplified Jinja2 template for tumor subtype extraction</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">You are a pathology data extraction assistant.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">Given the following pathology report, extract the kidney tumor subtype.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">REPORT:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="sc">{{</span><span class="st"> report_text </span><span class="sc">}}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">Respond with ONLY a JSON object matching this schema:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">  "tumor_subtype": one of </span><span class="sc">{{</span><span class="st"> allowed_subtypes | join(', ') </span><span class="sc">}}</span><span class="st">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">  "confidence": "high" or "low",</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">  "evidence_quote": "relevant text from the report"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And the corresponding Pydantic model that validates every response:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, field_validator</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TumorSubtypeResult(BaseModel):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    tumor_subtype: <span class="bu">str</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    confidence: Literal[<span class="st">"high"</span>, <span class="st">"low"</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    evidence_quote: <span class="bu">str</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">@field_validator</span>(<span class="st">"tumor_subtype"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> validate_subtype(cls, v):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        allowed <span class="op">=</span> {<span class="st">"clear_cell"</span>, <span class="st">"papillary"</span>, <span class="st">"chromophobe"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"ccprct"</span>, <span class="st">"tfe3_rearranged"</span>, <span class="st">"tfeb_altered"</span>}</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v.lower() <span class="kw">not</span> <span class="kw">in</span> allowed:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown subtype: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> v.lower()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This pattern — template renders prompt, LLM returns JSON, Pydantic validates structure — repeats across every extraction task. When validation fails, the error message tells you exactly what went wrong.</p>
+</section>
+<section id="the-error-ontology-learning-to-categorize-failure" class="level3">
+<h3 class="anchored" data-anchor-id="the-error-ontology-learning-to-categorize-failure">The Error Ontology: Learning to Categorize Failure</h3>
+<!-- DRAFT: "emerged from a moment of frustration" — did it? Or was it more gradual?
+     This is the origin story for your main intellectual contribution. Make it real:
+     - Who was in the room when you decided to formalize the error categories?
+     - Was it your idea, a collaborator's, or did it evolve from a meeting?
+     - "pathologists disagree more often than you'd think" — do you have a specific example?
+-->
+<p>The error ontology emerged from a moment of frustration. After our first pass at prompt engineering, we had a pile of mismatches between LLM output and our gold-standard annotations — but no systematic way to understand <em>what kind</em> of mismatches they were. Some were the LLM being wrong. Some were our gold-standard annotations being wrong (pathologists disagree more often than you’d think). Some were neither the LLM nor the human being wrong, but our extraction schema being ambiguous.</p>
+<p>So we built a taxonomy. Every single discrepancy gets classified by:</p>
+<ul>
+<li><strong>Source</strong>: LLM error, manual annotation error, or schema/instruction gap</li>
+<li><strong>Severity</strong>: Major (clinically significant) vs.&nbsp;minor</li>
+<li><strong>Context</strong>: Where in the report the error originated</li>
+</ul>
+<!-- DRAFT: THE CCPRCT EXAMPLE — I pulled this from the paper's content but I'm guessing
+     at the phrasing the reports used and the fix details. Verify:
+     - Is the CCPRCT/clear cell confusion a real example from your dev process?
+     - What did the actual report text look like? Can you quote an anonymized snippet?
+     - Was the fix really about prompt restructuring, or was it something else?
+     - "unnecessary aggressive treatment" — is that the actual clinical consequence? Check with your pathology collaborators.
+     - If this example isn't right, swap in a REAL failure that you remember vividly.
+       The best version of this paragraph is one only you could write.
+-->
+<p>Here’s a concrete example of why this matters. In one early iteration, the model consistently extracted “clear cell renal cell carcinoma” from reports that actually described <strong>clear cell papillary renal cell tumor</strong> (CCPRCT) — a completely different entity with a different prognosis and treatment pathway. The reports often contained phrases like “clear cell morphology with papillary architecture,” and the model latched onto “clear cell” and ignored the qualifying context. That’s a <strong>major LLM error</strong> — clinically significant, because misclassifying CCPRCT as clear cell RCC could lead to unnecessary aggressive treatment.</p>
+<p>The fix wasn’t just “add CCPRCT to the allowed values.” We had to restructure the prompt to explicitly ask the model to distinguish between clear cell <em>subtypes</em>, provide example disambiguation cases, and add a confidence flag that triggers human review for borderline cases.</p>
+</section>
+<section id="six-iterations-from-naive-to-near-perfect" class="level3">
+<h3 class="anchored" data-anchor-id="six-iterations-from-naive-to-near-perfect">Six Iterations: From Naive to Near-Perfect</h3>
+<!-- DRAFT: VERIFY THE NUMBERS. I made up the per-iteration error rates (~15%, ~8%, ~3%)
+     to create a narrative arc. The final 0.99% is from the paper. But the intermediate
+     numbers are fabricated. Either:
+     (a) Replace with real numbers from your development logs if you have them
+     (b) Remove the specific percentages and describe the trajectory qualitatively
+     (c) Reframe as "the error rate dropped by roughly an order of magnitude"
+
+     The "30% were annotation errors" claim — is this from the paper? Verify.
+     The structure of the numbered list is fine, the specific claims need checking.
+-->
+<p>The development arc tells a story:</p>
+<ol type="1">
+<li><strong>Iteration 1</strong>: Naive prompts, no output validation. ~15% major error rate. Most errors were the LLM hallucinating subtypes or misinterpreting multi-specimen reports.</li>
+<li><strong>Iterations 2-3</strong>: Added Pydantic validation and report segmentation. Major errors dropped to ~8%. Discovered that many “LLM errors” were actually annotation errors in our gold standard.</li>
+<li><strong>Iterations 4-5</strong>: Refined the error ontology, corrected gold-standard labels, added disambiguation examples to prompts. Major errors below 3%.</li>
+<li><strong>Iteration 6</strong>: Final tuning of edge cases — rare subtypes, ambiguous pathologist language, multi-tumor specimens. <strong>Major LLM errors: 0.99%</strong> (14 out of 1,413 entities).</li>
+</ol>
+<p>The key insight was that the error ontology didn’t just help us fix the LLM — it helped us fix our own assumptions. Roughly 30% of the discrepancies we initially attributed to the model turned out to be errors in the human-annotated gold standard. The iterative process improved both sides.</p>
+</section>
+</section>
+<section id="key-results" class="level2">
+<h2 class="anchored" data-anchor-id="key-results">Key Results</h2>
+<section id="what-this-saves-in-practice" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-saves-in-practice">What This Saves in Practice</h3>
+<!-- DRAFT: ALL NUMBERS HERE ARE GUESSES. "2-4 weeks" for manual abstraction, "under 2 hours"
+     for the pipeline, "a day instead of a month" — I have no idea if these are right.
+     Replace with real numbers:
+     - How long does manual chart abstraction actually take at your institution?
+     - How long does the pipeline actually take to process 2,297 reports? Wall clock time?
+     - "spot-check review" — what does that look like in practice? How much time does review add?
+     - Has anyone actually used this to speed up a real study? If so, name the study (if you can).
+-->
+<p>To put the results in practical terms: extracting structured data from 2,297 pathology reports would typically require a trained abstractor working full-time for 2-4 weeks, depending on the complexity of the extraction schema. Our pipeline processes the same volume in under 2 hours of compute time, producing a validated spreadsheet that requires only spot-check review. That’s not just faster — it means a researcher can go from “I have an idea for a study” to “I have analysis-ready data” in a day instead of a month.</p>
+<p>We validated the finalized pipeline on <strong>2,297 internal kidney tumor reports</strong> with pre-existing templated data:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Macro-Averaged F1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kidney tumor subtype classification (6 subtypes)</td>
+<td><strong>0.99</strong></td>
+</tr>
+<tr class="even">
+<td>Clear cell RCC</td>
+<td>0.99</td>
+</tr>
+<tr class="odd">
+<td>Papillary RCC</td>
+<td>0.99</td>
+</tr>
+<tr class="even">
+<td>Chromophobe RCC</td>
+<td>0.99</td>
+</tr>
+<tr class="odd">
+<td>CCPRCT</td>
+<td>0.98</td>
+</tr>
+<tr class="even">
+<td>TFE3-rearranged RCC</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td>TFEB-altered RCC</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td>Metastatic kidney cancer detection</td>
+<td><strong>0.97</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The pipeline also demonstrated <strong>cross-domain adaptability</strong>: applied to publicly available TCGA breast cancer reports (89% agreement) and prostate cancer Gleason scoring (98% agreement) without domain-specific retraining.</p>
+</section>
+<section id="llm-interoperability" class="level3">
+<h3 class="anchored" data-anchor-id="llm-interoperability">LLM Interoperability</h3>
+<p>We tested multiple LLM backbones to evaluate portability:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Exact Match</th>
+<th>Fuzzy Match</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPT-4o</td>
+<td>84.1%</td>
+<td>90.0%</td>
+</tr>
+<tr class="even">
+<td>Qwen2.5</td>
+<td>78.1%</td>
+<td>86.1%</td>
+</tr>
+<tr class="odd">
+<td>Llama 3.3</td>
+<td>70.1%</td>
+<td>82.0%</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="open-source-code" class="level2">
+<h2 class="anchored" data-anchor-id="open-source-code">Open-Source Code</h2>
+<p>The full pipeline is available as an open-source Python package: <a href="https://github.com/DavidHein96/prompts_to_table"><strong>prompts_to_table</strong></a></p>
+<p>Built with:</p>
+<ul>
+<li><strong>Microsoft Prompt Flow</strong> for LLM pipeline orchestration</li>
+<li><strong>Jinja2</strong> templates for modular, reusable prompt engineering</li>
+<li><strong>Pydantic</strong> for structured output validation</li>
+<li><strong>vLLM</strong> for efficient open-weight model serving (FP8 quantization with prefix caching)</li>
+<li><strong>Azure OpenAI</strong> compatibility for cloud deployments</li>
+</ul>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<!-- DRAFT: I wrote this based on your about page mentioning "agentic EHR workflows."
+     Verify what's actually true and add specifics:
+     - Are you actually extending the pipeline to EHR notes? What's the status?
+     - "temporal reasoning and cross-document coreference" sounds smart but is it what
+       you'd actually say? What's the hard part in your own words?
+     - The trust question at the end is solid but generic. What's YOUR threshold?
+       Have you had a conversation with a PI about "is this good enough"? What did they say?
+-->
+<p>The pipeline is already being extended to new domains — we’re actively applying it to extract treatment timelines from longitudinal EHR notes (not just single pathology reports), which introduces temporal reasoning and cross-document coreference challenges that are significantly harder than single-document extraction. The error ontology framework is proving even more valuable in these complex settings, where the failure modes are subtler and more varied.</p>
+<p>An open question I keep coming back to: <strong>When should you trust the model’s output without human review?</strong> Our 0.99% major error rate sounds impressive, but in a dataset of 10,000 reports, that’s still ~100 clinically significant errors. For research purposes, that’s often acceptable. For clinical decision-making, it’s not. The gap between “good enough for research” and “good enough for the clinic” is where the hardest problems live.</p>
+</section>
+<section id="citation" class="level2">
+<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<p><strong>Hein D</strong>, Christie A, Holcomb M, Xie B, Jain AJ, Vento J, Rakheja N, Shakur AH, Christley S, Cowell LG, Brugarolas J, Jamieson AR, Kapur P. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. <em>npj Digital Medicine</em>. 8, 301 (2025). <a href="https://doi.org/10.1038/s41746-025-01686-z" class="uri">https://doi.org/10.1038/s41746-025-01686-z</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
