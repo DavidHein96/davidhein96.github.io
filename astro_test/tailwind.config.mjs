@@ -5,9 +5,9 @@ export default {
     extend: {
       colors: {
         accent: {
-          DEFAULT: '#437594',
-          dark: '#345b74',
-          light: '#6a9bb8',
+          DEFAULT: '#3a6680',
+          dark: '#2d4f63',
+          light: '#5a8ea8',
         },
       },
       fontFamily: {

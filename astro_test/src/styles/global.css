@@ -13,6 +13,13 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     @apply text-gray-800 bg-white;
   }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid theme('colors.accent.DEFAULT');
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
 @layer components {
@@ -144,7 +151,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 32px;
+    width: 48px;
     pointer-events: none;
     opacity: 1;
     transition: opacity 0.3s ease;
@@ -159,7 +166,7 @@
   }
   /* Dark fade for code blocks */
   .scroll-hint--dark::after {
-    background: linear-gradient(to right, transparent, rgba(17, 24, 39, 0.85));
+    background: linear-gradient(to right, transparent, rgba(17, 24, 39, 0.95));
   }
 
   .prose-body h1 {
