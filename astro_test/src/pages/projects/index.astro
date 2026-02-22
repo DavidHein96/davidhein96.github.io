@@ -5,10 +5,12 @@ import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("posts");
 
-// Sort newest first
-const sorted = allPosts.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-);
+// Filter out drafts in production, sort newest first
+const sorted = allPosts
+  .filter((post) => import.meta.env.DEV || !post.data.draft)
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  );
 
 function formatDate(d: string): string {
   const [year, month, day] = d.split("-").map(Number);
