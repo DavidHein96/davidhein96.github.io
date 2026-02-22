@@ -134,6 +134,34 @@
     background: theme('colors.gray.400');
   }
 
+  /* Scroll hint wrapper for overflowing elements */
+  .scroll-hint {
+    position: relative;
+  }
+  .scroll-hint::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
+  .scroll-hint.scrolled-end::after {
+    opacity: 0;
+  }
+  /* Light fade for tables */
+  .scroll-hint--light::after {
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.85));
+  }
+  /* Dark fade for code blocks */
+  .scroll-hint--dark::after {
+    background: linear-gradient(to right, transparent, rgba(17, 24, 39, 0.85));
+  }
+
   .prose-body h1 {
     @apply text-2xl font-bold text-gray-900 mt-12 mb-4;
   }

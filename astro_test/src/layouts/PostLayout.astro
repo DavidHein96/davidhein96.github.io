@@ -196,4 +196,26 @@ function formatDate(d: string): string {
 
     initToc();
   </script>
+
+  <!-- Scroll-hint fade for overflowing code blocks & tables -->
+  <script>
+    function initScrollHints() {
+      const els = document.querySelectorAll('.prose-body pre, .prose-body table');
+      els.forEach(el => {
+        if (el.scrollWidth <= el.clientWidth) return;
+
+        const wrapper = document.createElement('div');
+        const isDark = el.tagName === 'PRE';
+        wrapper.className = `scroll-hint ${isDark ? 'scroll-hint--dark' : 'scroll-hint--light'}`;
+        el.parentNode!.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+
+        el.addEventListener('scroll', () => {
+          const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+          wrapper.classList.toggle('scrolled-end', atEnd);
+        }, { passive: true });
+      });
+    }
+    initScrollHints();
+  </script>
 </BaseLayout>
