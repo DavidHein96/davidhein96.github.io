@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("posts");
+
+// Sort newest first
+const sorted = allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+function formatDate(d: string): string {
+  const [year, month, day] = d.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
+---
+
+<BaseLayout
+  title="Projects"
+  description="Projects and writing by Dave Hein — data science, bioinformatics, clinical NLP, and software engineering"
+>
+  <div class="max-w-5xl mx-auto px-6 py-14">
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold text-gray-900 mb-3">
+        Projects &amp; Writing
+      </h1>
+      <p class="text-gray-600 leading-relaxed max-w-2xl">
+        Write-ups on research and engineering projects — the decisions,
+        trade-offs, and an occasional sprinkling of philosophical takes.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {
+        sorted.map((post) => (
+          <ProjectCard
+            title={post.data.title}
+            date={formatDate(post.data.date)}
+            categories={post.data.categories}
+            description={post.data.description}
+            href={post.data.draft ? undefined : `/posts/${post.slug}`}
+            comingSoon={post.data.draft ?? false}
+            cover={post.data.cover}
+          />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

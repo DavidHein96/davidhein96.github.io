@@ -1,316 +1,76 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-<meta name="author" content="Dave Hein">
-<meta name="dcterms.date" content="2024-08-19">
-
-<title>Gut Microbiome Signatures and the Difficulty of p&gt;&gt;n – David Hein</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6b2306b05fee0b85d8c2d824c36e28c3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-688493dc04a5a5e3335eb5a7a13a4394.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
-</head>
-
-<body class="nav-fixed quarto-light">
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">David Hein</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../projects.html"> 
-<span class="menu-text">My Projects</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/DavidHein96"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/david-hein-utsw"> <i class="bi bi-linkedin" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Gut Microbiome Signatures and the Difficulty of p&gt;&gt;n</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-                                <div class="quarto-categories">
-                <div class="quarto-category">R</div>
-                <div class="quarto-category">Bioinformatics</div>
-                <div class="quarto-category">Oncology</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Dave Hein </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">August 19, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
-  <ul class="collapse">
-  <li><a href="#on-sample-size-and-the-noise-floor-of-microbiome-studies" id="toc-on-sample-size-and-the-noise-floor-of-microbiome-studies" class="nav-link" data-scroll-target="#on-sample-size-and-the-noise-floor-of-microbiome-studies">On Sample Size and the Noise Floor of Microbiome Studies</a></li>
-  </ul></li>
-  <li><a href="#s-rrna-processing-with-dada2" id="toc-s-rrna-processing-with-dada2" class="nav-link" data-scroll-target="#s-rrna-processing-with-dada2">16S rRNA Processing with DADA2</a></li>
-  <li><a href="#phyloseq-object-construction" id="toc-phyloseq-object-construction" class="nav-link" data-scroll-target="#phyloseq-object-construction">Phyloseq Object Construction</a></li>
-  <li><a href="#differential-abundance-dual-method-with-cauchy-combination" id="toc-differential-abundance-dual-method-with-cauchy-combination" class="nav-link" data-scroll-target="#differential-abundance-dual-method-with-cauchy-combination">Differential Abundance: Dual-Method with Cauchy Combination</a></li>
-  <li><a href="#batch-correction-with-conqur" id="toc-batch-correction-with-conqur" class="nav-link" data-scroll-target="#batch-correction-with-conqur">Batch Correction with ConQuR</a></li>
-  <li><a href="#beta-diversity-permanova" id="toc-beta-diversity-permanova" class="nav-link" data-scroll-target="#beta-diversity-permanova">Beta Diversity &amp; PERMANOVA</a></li>
-  <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha Diversity</a></li>
-  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
-  <li><a href="#what-wed-do-differently" id="toc-what-wed-do-differently" class="nav-link" data-scroll-target="#what-wed-do-differently">What We’d Do Differently</a></li>
-  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
-  </ul>
-</nav>
-    </div>
-<!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<style type="text/css">
-
-code.r{
-  font-size: 14px;
-}
-td {
-  font-size: 12px;
-}
-pre {
-  font-size: 12px;
-}
-
-</style>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Microbiome analysis in a rectal cancer cohort — a deep dive into the p>>n problem, dual-method validation with LinDA and MaAsLin2, and why requiring two methods to agree is epistemic honesty, not just methodological rigor."><title>Gut Microbiome Signatures and the Difficulty of p&gt;&gt;n | Dave Hein</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_slug_.BLcdHob9.css"><script type="module">function g(){const o=document.querySelectorAll(".toc-h2"),l=document.querySelectorAll(".toc-link"),u=document.querySelectorAll(".toc-children");if(!o.length)return;const r=[],n=[];o.forEach(a=>{const e=a.getAttribute("data-slug");if(e){const s=document.getElementById(e);s&&(r.push(e),n.push(s))}});function i(){let a=0;for(let t=0;t<n.length;t++)n[t].getBoundingClientRect().top<=100&&(a=t);const e=r[a];let s=e;l.forEach(t=>{const c=t.getAttribute("data-slug");if(c){const d=document.getElementById(c);d&&d.getBoundingClientRect().top<=100&&(s=c)}}),u.forEach(t=>{t.getAttribute("data-parent")===e?(t.classList.remove("max-h-0","opacity-0"),t.classList.add("max-h-96","opacity-100")):(t.classList.add("max-h-0","opacity-0"),t.classList.remove("max-h-96","opacity-100"))}),l.forEach(t=>{t.getAttribute("data-slug")===s?(t.classList.add("text-accent","border-accent","font-medium"),t.classList.remove("border-transparent","text-gray-600","text-gray-400")):(t.classList.remove("text-accent","border-accent","font-medium"),t.classList.contains("toc-h3")?t.classList.add("border-transparent","text-gray-400"):t.classList.add("border-transparent","text-gray-600"))})}window.addEventListener("scroll",i,{passive:!0}),i()}g();
+</script></head> <body class="min-h-screen flex flex-col"> <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm"> <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between"> <!-- Brand --> <a href="/" class="text-base font-semibold text-gray-900 hover:text-accent transition-colors">
+Dave Hein
+</a> <!-- Nav links + social icons --> <div class="flex items-center gap-5"> <a href="/" class="text-sm font-medium transition-colors text-gray-500 hover:text-gray-900"> Home </a><a href="/about" class="text-sm font-medium transition-colors text-gray-500 hover:text-gray-900"> About </a><a href="/projects" class="text-sm font-medium transition-colors text-gray-500 hover:text-gray-900"> Projects </a> <!-- Divider --> <span class="text-gray-200 select-none">|</span> <!-- GitHub --> <a href="https://github.com/DavidHein96" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 hover:text-[#333] transition-colors"> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.92.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path> </svg> </a> <!-- LinkedIn --> <a href="https://linkedin.com/in/david-hein-utsw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-gray-400 hover:text-[#0a66c2] transition-colors"> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path> </svg> </a> </div> </div> </nav> <main class="flex-1">  <div class="max-w-7xl mx-auto px-6 py-12 lg:flex lg:justify-center lg:gap-10"> <!-- Left spacer to keep article centered when TOC is present --> <div class="hidden lg:block lg:w-56 xl:w-64 shrink-0" aria-hidden="true"></div> <!-- Main article --> <article class="max-w-4xl mx-auto lg:mx-0 w-full min-w-0"> <!-- Cover image --> <div class="mb-10 rounded-xl overflow-hidden shadow-sm"> <img src="/_astro/dalle_ecoli.BOels5Xq_lj0Ij.webp" alt="Gut Microbiome Signatures and the Difficulty of p>>n" class="w-full object-cover max-h-72" style="object-position: center" width="1024" height="1024" loading="lazy" decoding="async"> </div> <!-- Header --> <header class="mb-10"> <div class="flex flex-wrap gap-1.5 mb-4"> <span class="tag">R</span><span class="tag">Bioinformatics</span><span class="tag">Oncology</span> </div> <h1 class="text-3xl font-bold text-gray-900 leading-tight mb-3">Gut Microbiome Signatures and the Difficulty of p&gt;&gt;n</h1> <p class="text-sm text-gray-400">August 2024</p> </header> <!-- Body --> <div class="prose-body">  <h2 id="overview">Overview</h2>
 <p>The gut microbiome varies across individuals in ways that aren’t fully understood — shaped by diet, environment, genetics, and a lot of noise. This paper, published in the <a href="https://doi.org/10.36401/JIPO-23-30"><em>Journal of Immunotherapy and Precision Oncology</em></a> (2024), looks at whether rectal cancer patients show distinct microbiome signatures by ethnicity, age of onset, and treatment response — using a prospectively collected cohort where I personally collected every stool sample.</p>
 <p>Prevotellaceae is a family of gut bacteria that shows up frequently in microbiome research, though its role in colorectal cancer is genuinely unclear. Some studies associate it with certain dietary patterns, others find it elevated in specific cancer cohorts — and with a cohort of 64 patients, we’re not in a position to say much about why it’s elevated here. What we can say is that the finding was consistent across two independent methods, which is the most we can claim given the sample size.</p>
 <p>This raises the obvious confounder question: <strong>Is the ethnicity association we found actually a diet association?</strong> Our 16S sequencing captures <em>who’s there</em> in the gut, not <em>why</em> they’re there. Disentangling whether ethnicity is proxying for diet, host genetics, or some other environmental exposure isn’t possible from this data. That’s a real limitation, and it’s worth being upfront about it.</p>
-<section id="on-sample-size-and-the-noise-floor-of-microbiome-studies" class="level3">
-<h3 class="anchored" data-anchor-id="on-sample-size-and-the-noise-floor-of-microbiome-studies">On Sample Size and the Noise Floor of Microbiome Studies</h3>
+<h3 id="on-sample-size-and-the-noise-floor-of-microbiome-studies">On Sample Size and the Noise Floor of Microbiome Studies</h3>
 <p>Sixty-four patients is small, and I won’t pretend otherwise. I’ll say this much: I collected every single one of those samples myself. I enrolled the patients onto the study, handed them the kits, collected the samples, and put them in the freezer. So I have a personal appreciation for why prospective microbiome cohorts are hard to grow.</p>
 <p>The pre-treatment timing requirement is the main bottleneck. Antibiotics, bowel prep, and chemoradiation all dramatically disrupt the native microbiome, so samples have to come in before any of that starts — which means a very short window between diagnosis and first treatment. But even setting aside the logistical challenges, the microbiome itself is a noisy measurement. Diet fluctuates day to day. A patient who had a stomach bug last month, or took a course of antibiotics for a dental procedure, or just happened to eat differently the week of collection — all of that shows up in the 16S signal. There’s a real noise floor to this kind of data that doesn’t go away with better sequencing; it’s just inherent to measuring a system that changes constantly in response to things that have nothing to do with cancer.</p>
 <p>That’s the p&gt;&gt;n problem in its most uncomfortable form: you have far more dimensions to test than you have samples to test them on, and the biological system you’re measuring is itself a moving target. In this regime, any single analytical method has enough degrees of freedom to find patterns that don’t exist. You could pick the right normalization, the right distance metric, the right significance threshold — and still be looking at noise that happened to pass your filters.</p>
 <p>The dual-method approach and the Cauchy combination of p-values were a direct response to this. Requiring agreement between LinDA and MaAsLin2 — methods with different normalization strategies and different underlying statistical models — isn’t just methodological caution. It’s a way of being honest with yourself about how much trust any single result deserves. If a finding evaporates when you look at it through a different lens, it probably wasn’t real. If it holds up across both, you have something worth reporting — even if you still can’t be certain why it’s there.</p>
 <p><a href="https://doi.org/10.36401/JIPO-23-30">Publication Link</a></p>
-</section>
-</section>
-<section id="s-rrna-processing-with-dada2" class="level2">
-<h2 class="anchored" data-anchor-id="s-rrna-processing-with-dada2">16S rRNA Processing with DADA2</h2>
+<h2 id="16s-rrna-processing-with-dada2">16S rRNA Processing with DADA2</h2>
 <p>Raw paired-end FASTQ files from Illumina MiSeq sequencing were processed through the <a href="https://benjjneb.github.io/dada2/">DADA2</a> pipeline to resolve amplicon sequence variants (ASVs) — the modern replacement for OTU clustering that retains single-nucleotide resolution.</p>
 <p>The core pipeline: quality filtering, error model learning, denoising, read merging, chimera removal, and taxonomic assignment against the Silva v138.1 database:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quality-based filtering and trimming</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">filterAndTrim</span>(fnFs, filtFs, fnRs, filtRs,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">truncLen =</span> <span class="fu">c</span>(<span class="dv">220</span>, <span class="dv">200</span>),   <span class="co"># trim forward/reverse</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">maxN =</span> <span class="dv">0</span>, <span class="at">maxEE =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">truncQ =</span> <span class="dv">2</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">rm.phix =</span> <span class="cn">TRUE</span>, <span class="at">compress =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">multithread =</span> <span class="cn">TRUE</span>, <span class="at">trimLeft =</span> <span class="dv">30</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Learn error rates for the DADA2 algorithm</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>errF <span class="ot">&lt;-</span> <span class="fu">learnErrors</span>(filtFs, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>errR <span class="ot">&lt;-</span> <span class="fu">learnErrors</span>(filtRs, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Core denoising</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>dadaFs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtFs, <span class="at">err =</span> errF, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>dadaRs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtRs, <span class="at">err =</span> errR, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge paired reads and remove chimeras</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, dadaRs, filtRs, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>seqtab <span class="ot">&lt;-</span> <span class="fu">makeSequenceTable</span>(mergers)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>seqtab.nochim <span class="ot">&lt;-</span> <span class="fu">removeBimeraDenovo</span>(seqtab, <span class="at">method =</span> <span class="st">"consensus"</span>,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Taxonomic assignment with Silva</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">assignTaxonomy</span>(seqtab.nochim, <span class="st">"silva_nr99_v138.1_train_set.fa.gz"</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">addSpecies</span>(taxa, <span class="st">"silva_species_assignment_v138.1.fa.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#6A737D"># Quality-based filtering and trimming</span></span>
+<span class="line"><span style="color:#E1E4E8">out </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> filterAndTrim</span><span style="color:#E1E4E8">(fnFs, filtFs, fnRs, filtRs,</span></span>
+<span class="line"><span style="color:#FFAB70">                     truncLen</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">220</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">),   </span><span style="color:#6A737D"># trim forward/reverse</span></span>
+<span class="line"><span style="color:#FFAB70">                     maxN</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">maxEE</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">), </span><span style="color:#FFAB70">truncQ</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">                     rm.phix</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">compress</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">                     multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">trimLeft</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 30</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Learn error rates for the DADA2 algorithm</span></span>
+<span class="line"><span style="color:#E1E4E8">errF </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> learnErrors</span><span style="color:#E1E4E8">(filtFs, </span><span style="color:#FFAB70">multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">errR </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> learnErrors</span><span style="color:#E1E4E8">(filtRs, </span><span style="color:#FFAB70">multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Core denoising</span></span>
+<span class="line"><span style="color:#E1E4E8">dadaFs </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> dada</span><span style="color:#E1E4E8">(filtFs, </span><span style="color:#FFAB70">err</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> errF, </span><span style="color:#FFAB70">multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">dadaRs </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> dada</span><span style="color:#E1E4E8">(filtRs, </span><span style="color:#FFAB70">err</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> errR, </span><span style="color:#FFAB70">multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Merge paired reads and remove chimeras</span></span>
+<span class="line"><span style="color:#E1E4E8">mergers </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> mergePairs</span><span style="color:#E1E4E8">(dadaFs, filtFs, dadaRs, filtRs, </span><span style="color:#FFAB70">verbose</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">seqtab </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> makeSequenceTable</span><span style="color:#E1E4E8">(mergers)</span></span>
+<span class="line"><span style="color:#E1E4E8">seqtab.nochim </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> removeBimeraDenovo</span><span style="color:#E1E4E8">(seqtab, </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;consensus&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">                                     multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Taxonomic assignment with Silva</span></span>
+<span class="line"><span style="color:#E1E4E8">taxa </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> assignTaxonomy</span><span style="color:#E1E4E8">(seqtab.nochim, </span><span style="color:#9ECBFF">&quot;silva_nr99_v138.1_train_set.fa.gz&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">                       multithread</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">taxa </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> addSpecies</span><span style="color:#E1E4E8">(taxa, </span><span style="color:#9ECBFF">&quot;silva_species_assignment_v138.1.fa.gz&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span></code></pre>
 <p>The <code>truncLen</code> parameters (220 for forward, 200 for reverse) were chosen by inspecting quality profiles — reverse reads typically degrade faster. The <code>trimLeft = 30</code> removes primer sequences.</p>
-</section>
-<section id="phyloseq-object-construction" class="level2">
-<h2 class="anchored" data-anchor-id="phyloseq-object-construction">Phyloseq Object Construction</h2>
+<h2 id="phyloseq-object-construction">Phyloseq Object Construction</h2>
 <p>All downstream analyses used <a href="https://joey711.github.io/phyloseq/">phyloseq</a> objects that bundle the ASV count matrix, taxonomy table, and clinical metadata. The construction function handles several data quality steps:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>build_phylo_obj <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_patients, counts_all) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter to selected patients, remove Archaea, drop zero-count ASVs</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  counts_all <span class="ot">&lt;-</span> counts_all <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Kingdom <span class="sc">!=</span> <span class="st">"Archaea"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric))) <span class="sc">!=</span> <span class="dv">0</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine identical ASVs by full taxonomic string</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  counts_all_combinedASV <span class="ot">&lt;-</span> counts_all <span class="sc">%&gt;%</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">taxonomy =</span> <span class="fu">paste</span>(Kingdom, Phylum, Class, Order,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                            Family, Genus, Species, <span class="at">sep =</span> <span class="st">";"</span>))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  counts_all_combinedASV3 <span class="ot">&lt;-</span> counts_all_combinedASV2 <span class="sc">%&gt;%</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ddply</span>(<span class="st">"taxonomy"</span>, <span class="fu">numcolwise</span>(sum))</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Build phyloseq components</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  otu <span class="ot">&lt;-</span> <span class="fu">otu_table</span>(asvs, <span class="at">taxa_are_rows =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  samples <span class="ot">&lt;-</span> <span class="fu">sample_data</span>(clin)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  tax <span class="ot">&lt;-</span> <span class="fu">tax_table</span>(tax)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(otu, samples, tax)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 10% prevalence filter for the filtered version</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  obj_filt <span class="ot">&lt;-</span> <span class="fu">filter_taxa</span>(obj, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">&gt;</span> <span class="fu">nrow</span>(clin) <span class="sc">*</span> <span class="fl">0.1</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">unfilt =</span> obj, <span class="at">filt =</span> obj_filt))</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#B392F0">build_phylo_obj</span><span style="color:#F97583"> &lt;-</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8">(selected_patients, counts_all) {</span></span>
+<span class="line"><span style="color:#6A737D">  # Filter to selected patients, remove Archaea, drop zero-count ASVs</span></span>
+<span class="line"><span style="color:#E1E4E8">  counts_all </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> counts_all </span><span style="color:#F97583">%&gt;%</span></span>
+<span class="line"><span style="color:#79B8FF">    filter</span><span style="color:#E1E4E8">(Kingdom </span><span style="color:#F97583">!=</span><span style="color:#9ECBFF"> &quot;Archaea&quot;</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">%&gt;%</span></span>
+<span class="line"><span style="color:#79B8FF">    filter</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">rowSums</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">across</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">where</span><span style="color:#E1E4E8">(is.numeric))) </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # Combine identical ASVs by full taxonomic string</span></span>
+<span class="line"><span style="color:#E1E4E8">  counts_all_combinedASV </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> counts_all </span><span style="color:#F97583">%&gt;%</span></span>
+<span class="line"><span style="color:#FFAB70">    mutate</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">taxonomy</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> paste</span><span style="color:#E1E4E8">(Kingdom, Phylum, Class, Order,</span></span>
+<span class="line"><span style="color:#E1E4E8">                            Family, Genus, Species, </span><span style="color:#FFAB70">sep</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;;&quot;</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">  counts_all_combinedASV3 </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> counts_all_combinedASV2 </span><span style="color:#F97583">%&gt;%</span></span>
+<span class="line"><span style="color:#FFAB70">    ddply</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;taxonomy&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">numcolwise</span><span style="color:#E1E4E8">(sum))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # Build phyloseq components</span></span>
+<span class="line"><span style="color:#E1E4E8">  otu </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> otu_table</span><span style="color:#E1E4E8">(asvs, </span><span style="color:#FFAB70">taxa_are_rows</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  samples </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> sample_data</span><span style="color:#E1E4E8">(clin)</span></span>
+<span class="line"><span style="color:#E1E4E8">  tax </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> tax_table</span><span style="color:#E1E4E8">(tax)</span></span>
+<span class="line"><span style="color:#E1E4E8">  obj </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> phyloseq</span><span style="color:#E1E4E8">(otu, samples, tax)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # 10% prevalence filter for the filtered version</span></span>
+<span class="line"><span style="color:#E1E4E8">  obj_filt </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> filter_taxa</span><span style="color:#E1E4E8">(obj, </span><span style="color:#F97583">function</span><span style="color:#E1E4E8">(x) </span><span style="color:#79B8FF">sum</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&gt;</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">&gt;</span><span style="color:#79B8FF"> nrow</span><span style="color:#E1E4E8">(clin) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">TRUE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">list</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">unfilt</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> obj, </span><span style="color:#FFAB70">filt</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> obj_filt))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
 <p>We return both filtered and unfiltered versions. The unfiltered object is used for differential abundance testing (which applies its own prevalence filters), while the filtered version is used for diversity analyses where rare taxa add noise.</p>
-</section>
-<section id="differential-abundance-dual-method-with-cauchy-combination" class="level2">
-<h2 class="anchored" data-anchor-id="differential-abundance-dual-method-with-cauchy-combination">Differential Abundance: Dual-Method with Cauchy Combination</h2>
+<h2 id="differential-abundance-dual-method-with-cauchy-combination">Differential Abundance: Dual-Method with Cauchy Combination</h2>
 <p>Minimizing false positives was the main analytical challenge here. With counts spanning six taxonomic levels and a small cohort, the multiple testing burden is substantial — and there’s a published benchmark paper showing that differential abundance methods in microbiome research give wildly different results depending on which one you pick. That’s not a minor issue; it means your findings can be a function of your software choice as much as your biology.</p>
 <p>The solution was to use <strong>two independent methods</strong> with different normalization strategies and different underlying models, and require agreement between them before reporting anything:</p>
 <ul>
@@ -318,934 +78,171 @@ pre {
 <li><strong>MaAsLin2</strong>: CSS normalization with a log transform and mixed-effects linear model — different normalization path to a similar goal</li>
 </ul>
 <p>Both were run across all taxonomic levels (Phylum through Species) with 20% prevalence filtering and Benjamini-Hochberg FDR correction:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>run_mas_all_levels <span class="ot">&lt;-</span> <span class="cf">function</span>(phylo_obj, variable) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  mas_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  tax_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tax_level <span class="cf">in</span> tax_levels) {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    obj_sub <span class="ot">&lt;-</span> <span class="fu">aggregate_taxa</span>(phylo_obj, tax_level)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    fit_mas <span class="ot">&lt;-</span> <span class="fu">Maaslin2</span>(</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">input_data =</span> <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>otu_table),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">input_metadata =</span> <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>sam_data),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">fixed_effects =</span> <span class="fu">c</span>(variable),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">random_effects =</span> <span class="fu">c</span>(<span class="st">"batch"</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">min_prevalence =</span> <span class="fl">0.2</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">normalization =</span> <span class="st">"CSS"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">transform =</span> <span class="st">"LOG"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    mas_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mas_results, <span class="fu">data.frame</span>(fit_mas<span class="sc">$</span>results))</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  mas_results<span class="sc">$</span>mas_bhcor_p <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(mas_results[, <span class="dv">6</span>], <span class="at">method =</span> <span class="st">"BH"</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mas_results)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#B392F0">run_mas_all_levels</span><span style="color:#F97583"> &lt;-</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8">(phylo_obj, variable) {</span></span>
+<span class="line"><span style="color:#E1E4E8">  mas_results </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> data.frame</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">  tax_levels  </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Phylum&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Class&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Order&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Family&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Genus&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Species&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  for</span><span style="color:#E1E4E8"> (tax_level </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> tax_levels) {</span></span>
+<span class="line"><span style="color:#E1E4E8">    obj_sub </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> aggregate_taxa</span><span style="color:#E1E4E8">(phylo_obj, tax_level)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    fit_mas </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> Maaslin2</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">      input_data    = </span><span style="color:#79B8FF">data.frame</span><span style="color:#E1E4E8">(obj_sub</span><span style="color:#F97583">@</span><span style="color:#E1E4E8">otu_table),</span></span>
+<span class="line"><span style="color:#FFAB70">      input_metadata</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> data.frame</span><span style="color:#E1E4E8">(obj_sub</span><span style="color:#F97583">@</span><span style="color:#E1E4E8">sam_data),</span></span>
+<span class="line"><span style="color:#FFAB70">      fixed_effects</span><span style="color:#F97583">  =</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(variable),</span></span>
+<span class="line"><span style="color:#FFAB70">      random_effects</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;batch&quot;</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#FFAB70">      min_prevalence</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">      normalization</span><span style="color:#F97583">  =</span><span style="color:#9ECBFF"> &quot;CSS&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">      transform</span><span style="color:#F97583">      =</span><span style="color:#9ECBFF"> &quot;LOG&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    mas_results </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> rbind</span><span style="color:#E1E4E8">(mas_results, </span><span style="color:#79B8FF">data.frame</span><span style="color:#E1E4E8">(fit_mas</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">results))</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">  mas_results</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">mas_bhcor_p </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> p.adjust</span><span style="color:#E1E4E8">(mas_results[, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">], </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;BH&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8">(mas_results)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
 <p>The LinDA wrapper follows the same pattern but uses a formula-based interface with mixed effects:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>run_linda_all_levels <span class="ot">&lt;-</span> <span class="cf">function</span>(phylo_obj, variable) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  lin_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  tax_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tax_level <span class="cf">in</span> tax_levels) {</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    obj_sub <span class="ot">&lt;-</span> <span class="fu">aggregate_taxa</span>(phylo_obj, tax_level)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    fit_lin <span class="ot">&lt;-</span> <span class="fu">linda</span>(</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>otu_table),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>sam_data),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">formula =</span> <span class="fu">paste0</span>(<span class="st">"~"</span>, variable, <span class="st">"+(1|batch)"</span>),</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">"count"</span>, <span class="at">prev.cut =</span> <span class="fl">0.2</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">pseudo.cnt =</span> <span class="fl">0.5</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    lin_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(lin_results, <span class="fu">data.frame</span>(fit_lin<span class="sc">$</span>output))</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  lin_results<span class="sc">$</span>lin_bhcor_p <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(lin_results[, <span class="dv">5</span>], <span class="at">method =</span> <span class="st">"BH"</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lin_results)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#B392F0">run_linda_all_levels</span><span style="color:#F97583"> &lt;-</span><span style="color:#F97583"> function</span><span style="color:#E1E4E8">(phylo_obj, variable) {</span></span>
+<span class="line"><span style="color:#E1E4E8">  lin_results </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> data.frame</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">  tax_levels  </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Phylum&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Class&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Order&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Family&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Genus&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Species&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  for</span><span style="color:#E1E4E8"> (tax_level </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> tax_levels) {</span></span>
+<span class="line"><span style="color:#E1E4E8">    obj_sub </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> aggregate_taxa</span><span style="color:#E1E4E8">(phylo_obj, tax_level)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    fit_lin </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> linda</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">      data.frame</span><span style="color:#E1E4E8">(obj_sub</span><span style="color:#F97583">@</span><span style="color:#E1E4E8">otu_table),</span></span>
+<span class="line"><span style="color:#79B8FF">      data.frame</span><span style="color:#E1E4E8">(obj_sub</span><span style="color:#F97583">@</span><span style="color:#E1E4E8">sam_data),</span></span>
+<span class="line"><span style="color:#FFAB70">      formula</span><span style="color:#F97583">    =</span><span style="color:#79B8FF"> paste0</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;~&quot;</span><span style="color:#E1E4E8">, variable, </span><span style="color:#9ECBFF">&quot; + (1|batch)&quot;</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#FFAB70">      type</span><span style="color:#F97583">       =</span><span style="color:#9ECBFF"> &quot;count&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">      prev.cut</span><span style="color:#F97583">   =</span><span style="color:#79B8FF"> 0.2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">      adaptive</span><span style="color:#F97583">   =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">      pseudo.cnt</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.5</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    lin_results </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> rbind</span><span style="color:#E1E4E8">(lin_results, </span><span style="color:#79B8FF">data.frame</span><span style="color:#E1E4E8">(fit_lin</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">output))</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">  lin_results</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">lin_bhcor_p </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> p.adjust</span><span style="color:#E1E4E8">(lin_results[, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">], </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;BH&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8">(lin_results)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
 <p>Results from both methods were combined using the <strong>Cauchy combination test</strong> — a method for merging p-values that is robust to dependence between tests:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cauchy combination of p-values from LinDA and MaAsLin2</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>combined_wp <span class="ot">&lt;-</span> combined2 <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">couchy_t =</span> <span class="fl">0.5</span> <span class="sc">*</span> ((<span class="fu">tan</span>((<span class="fl">0.5</span> <span class="sc">-</span> pvalue_lin) <span class="sc">*</span> pi)) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">tan</span>((<span class="fl">0.5</span> <span class="sc">-</span> pvalue_mas) <span class="sc">*</span> pi))) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">couchy_p =</span> <span class="fl">0.5</span> <span class="sc">-</span> (<span class="fu">atan</span>(couchy_t) <span class="sc">/</span> pi))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Final BH correction on combined p-values</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>combined_wp<span class="sc">$</span>comb_bhcor_p <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(combined_wp<span class="sc">$</span>couchy_p, <span class="at">method =</span> <span class="st">"BH"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#6A737D"># Cauchy combination of p-values from LinDA and MaAsLin2</span></span>
+<span class="line"><span style="color:#E1E4E8">combined_wp </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> combined2 </span><span style="color:#F97583">%&gt;%</span></span>
+<span class="line"><span style="color:#FFAB70">  mutate</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">couchy_t</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.5</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> ((</span><span style="color:#79B8FF">tan</span><span style="color:#E1E4E8">((</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> pvalue_lin) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> pi</span><span style="color:#E1E4E8">)) </span><span style="color:#F97583">+</span></span>
+<span class="line"><span style="color:#79B8FF">                            tan</span><span style="color:#E1E4E8">((</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> pvalue_mas) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> pi</span><span style="color:#E1E4E8">))) </span><span style="color:#F97583">%&gt;%</span></span>
+<span class="line"><span style="color:#FFAB70">  mutate</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">couchy_p</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.5</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">atan</span><span style="color:#E1E4E8">(couchy_t) </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> pi</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Final BH correction on combined p-values</span></span>
+<span class="line"><span style="color:#E1E4E8">combined_wp</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">comb_bhcor_p </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> p.adjust</span><span style="color:#E1E4E8">(combined_wp</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">couchy_p, </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;BH&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span></code></pre>
 <p>We ran models for multiple comparisons — ethnicity, age of onset, treatment response, T-stage, and antibiotics — each adjusting for the others as appropriate.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="abundance.png" class="img-fluid figure-img" style="width:66.0%"></p>
-<figcaption>Differential abundance results. Prevotellaceae is enriched ~5x in White Hispanic patients relative to White Non-Hispanic patients, consistent across both LinDA and MaAsLin2.</figcaption>
-</figure>
-</div>
-</section>
-<section id="batch-correction-with-conqur" class="level2">
-<h2 class="anchored" data-anchor-id="batch-correction-with-conqur">Batch Correction with ConQuR</h2>
+<p><img src="/_astro/abundance.C3I-oB67_ZrlBpM.webp" alt="Differential abundance results. Prevotellaceae is enriched ~5x in White Hispanic patients relative to White Non-Hispanic patients, consistent across both LinDA and MaAsLin2." width="897" height="1024" loading="lazy" decoding="async"></p>
+<h2 id="batch-correction-with-conqur">Batch Correction with ConQuR</h2>
 <p>Stool samples were collected across five sequencing batches. For beta diversity analysis, we used the <a href="https://github.com/wdl2459/ConQuR">ConQuR</a> package (quantile regression approach) to remove batch effects while preserving biological signal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>corrected_asv <span class="ot">&lt;-</span> <span class="fu">ConQuR_libsize</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">tax_tab =</span> asv_t,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">batchid =</span> batch_ids,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariates =</span> covars2,       <span class="co"># facility, onset, response, ethnicity, antibiotics</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_ref =</span> <span class="st">"2"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">logistic_lasso =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantile_type =</span> <span class="st">"lasso"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">interplt =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_core =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#E1E4E8">corrected_asv </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> ConQuR_libsize</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  tax_tab        = asv_t,</span></span>
+<span class="line"><span style="color:#E1E4E8">  batchid        = batch_ids,</span></span>
+<span class="line"><span style="color:#E1E4E8">  covariates     = covars2,    </span><span style="color:#6A737D"># facility, onset, response, ethnicity, antibiotics</span></span>
+<span class="line"><span style="color:#E1E4E8">  batch_ref      = </span><span style="color:#9ECBFF">&quot;2&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">  logistic_lasso</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TRUE</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  quantile_type  = </span><span style="color:#9ECBFF">&quot;lasso&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  interplt       = </span><span style="color:#79B8FF">TRUE</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  num_core       = </span><span style="color:#79B8FF">4</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span></code></pre>
 <p>ConQuR explicitly models the batch effect using lasso-regularized quantile regression, adjusting the count table while preserving the covariate structure. We chose ConQuR over ComBat (the more commonly used batch correction tool) because ComBat was designed for continuous data like gene expression microarrays and assumes approximately normal distributions. Microbiome count data is sparse, zero-inflated, and compositional — properties that violate ComBat’s assumptions. ConQuR was built specifically for microbiome count tables and handles the zero-inflation and overdispersion that characterize 16S data.</p>
-</section>
-<section id="beta-diversity-permanova" class="level2">
-<h2 class="anchored" data-anchor-id="beta-diversity-permanova">Beta Diversity &amp; PERMANOVA</h2>
+<h2 id="beta-diversity--permanova">Beta Diversity &amp; PERMANOVA</h2>
 <p>Community-level composition was compared using two complementary distance metrics on the batch-corrected counts:</p>
 <ul>
 <li><strong>Bray-Curtis dissimilarity</strong> (on relative abundances) — captures differences in proportional composition</li>
 <li><strong>Aitchison distance</strong> (on CLR-transformed data) — addresses compositionality of microbiome data</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compositional transform for Bray-Curtis</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>otus.rel <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(phy_batch_corr, <span class="at">method =</span> <span class="st">"compositional"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dist_bray <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(<span class="fu">t</span>(<span class="fu">abundances</span>(otus.rel)), <span class="at">method =</span> <span class="st">"bray"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CLR transform for Aitchison distance</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>otus.clr <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(phy_batch_corr, <span class="at">method =</span> <span class="st">"clr"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>dist_atch <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(<span class="fu">t</span>(<span class="fu">abundances</span>(otus.clr)), <span class="at">method =</span> <span class="st">"robust.aitchison"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># PCoA ordination</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>pcoa_bray <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">pcoa</span>(dist_bray, <span class="at">correction =</span> <span class="st">"cailliez"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>pcoa_atch <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">pcoa</span>(dist_atch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#6A737D"># Compositional transform for Bray-Curtis</span></span>
+<span class="line"><span style="color:#E1E4E8">otus.rel </span><span style="color:#F97583">&lt;-</span><span style="color:#B392F0"> microbiome</span><span style="color:#F97583">::</span><span style="color:#79B8FF">transform</span><span style="color:#E1E4E8">(phy_batch_corr, </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;compositional&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">dist_bray </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> vegdist</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">t</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">abundances</span><span style="color:#E1E4E8">(otus.rel)), </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;bray&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># CLR transform for Aitchison distance</span></span>
+<span class="line"><span style="color:#E1E4E8">otus.clr </span><span style="color:#F97583">&lt;-</span><span style="color:#B392F0"> microbiome</span><span style="color:#F97583">::</span><span style="color:#79B8FF">transform</span><span style="color:#E1E4E8">(phy_batch_corr, </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;clr&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">dist_atch </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> vegdist</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">t</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">abundances</span><span style="color:#E1E4E8">(otus.clr)), </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;robust.aitchison&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># PCoA ordination</span></span>
+<span class="line"><span style="color:#E1E4E8">pcoa_bray </span><span style="color:#F97583">&lt;-</span><span style="color:#B392F0"> ape</span><span style="color:#F97583">::</span><span style="color:#FFAB70">pcoa</span><span style="color:#E1E4E8">(dist_bray, </span><span style="color:#FFAB70">correction</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;cailliez&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">pcoa_atch </span><span style="color:#F97583">&lt;-</span><span style="color:#B392F0"> ape</span><span style="color:#F97583">::</span><span style="color:#FFAB70">pcoa</span><span style="color:#E1E4E8">(dist_atch)</span></span>
+<span class="line"></span></code></pre>
 <p>Statistical testing used PERMANOVA (100,000 permutations) with a betadisper test to confirm that significant results reflected true centroid separation rather than differences in dispersion:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ethnicity — significant separation, no dispersion difference</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vegan<span class="sc">::</span><span class="fu">adonis2</span>(<span class="fu">t</span>(otus.clr2) <span class="sc">~</span> ethnicity, <span class="at">data =</span> pat_d6_ordered,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">permutations =</span> <span class="dv">100000</span>, <span class="at">method =</span> <span class="st">"robust.aitchison"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># p &lt; 0.001, R^2 = 0.029</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">permutest</span>(<span class="fu">betadisper</span>(dist_atch, pat_d6_ordered<span class="sc">$</span>ethnicity),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">permutations =</span> <span class="dv">100000</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion p = 0.463 (not significant — confirms true separation)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#6A737D"># Ethnicity — significant separation, no dispersion difference</span></span>
+<span class="line"><span style="color:#B392F0">vegan</span><span style="color:#F97583">::</span><span style="color:#FFAB70">adonis2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">t</span><span style="color:#E1E4E8">(otus.clr2) </span><span style="color:#F97583">~</span><span style="color:#E1E4E8"> ethnicity, </span><span style="color:#FFAB70">data</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> pat_d6_ordered,</span></span>
+<span class="line"><span style="color:#FFAB70">               permutations</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 100000</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">method</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;robust.aitchison&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D"># p &lt; 0.001, R^2 = 0.029</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">permutest</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">betadisper</span><span style="color:#E1E4E8">(dist_atch, pat_d6_ordered</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">ethnicity),</span></span>
+<span class="line"><span style="color:#FFAB70">          permutations</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 100000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D"># dispersion p = 0.463 (not significant — confirms true separation)</span></span>
+<span class="line"></span></code></pre>
 <p>Key PERMANOVA results:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 35%">
-<col style="width: 22%">
-<col style="width: 20%">
-<col style="width: 22%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Comparison</th>
-<th>Bray-Curtis p</th>
-<th>Aitchison p</th>
-<th>Dispersion p</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ethnicity</td>
-<td><strong>&lt; 0.001</strong></td>
-<td><strong>&lt; 0.001</strong></td>
-<td>0.463 / 0.894</td>
-</tr>
-<tr class="even">
-<td>Onset (EOCRC vs AOCRC)</td>
-<td><strong>0.035</strong></td>
-<td><strong>0.022</strong></td>
-<td>0.383 / 0.548</td>
-</tr>
-<tr class="odd">
-<td>Treatment response</td>
-<td>0.071</td>
-<td>0.111</td>
-<td>0.213 / 0.385</td>
-</tr>
-</tbody>
-</table>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="beta.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption>Beta diversity ordination (PCoA). Community-level separation by ethnicity is visible across both Bray-Curtis and Aitchison distance metrics.</figcaption>
-</figure>
-</div>
-</section>
-<section id="alpha-diversity" class="level2">
-<h2 class="anchored" data-anchor-id="alpha-diversity">Alpha Diversity</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Comparison</th><th>Bray-Curtis p</th><th>Aitchison p</th><th>Dispersion p</th></tr></thead><tbody><tr><td>Ethnicity</td><td><strong>&lt; 0.001</strong></td><td><strong>&lt; 0.001</strong></td><td>0.463 / 0.894</td></tr><tr><td>Onset (EOCRC vs AOCRC)</td><td><strong>0.035</strong></td><td><strong>0.022</strong></td><td>0.383 / 0.548</td></tr><tr><td>Treatment response</td><td>0.071</td><td>0.111</td><td>0.213 / 0.385</td></tr></tbody></table>
+<p><img src="/_astro/beta.D917y9gI_Z19XfnH.webp" alt="Beta diversity ordination (PCoA). Community-level separation by ethnicity is visible across both Bray-Curtis and Aitchison distance metrics." width="848" height="1024" loading="lazy" decoding="async"></p>
+<h2 id="alpha-diversity">Alpha Diversity</h2>
 <p>Within-sample diversity was assessed using Chao1 (richness), Shannon (evenness-weighted), and Simpson (dominance) indices. The key finding: <strong>Shannon diversity was significantly lower in early-onset patients</strong> (p = 0.029), suggesting reduced microbial evenness in younger CRC patients.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alpha_meas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Chao1"</span>, <span class="st">"Shannon"</span>, <span class="st">"Simpson"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot_richness</span>(phy_obj<span class="sc">$</span>unfilt, <span class="st">"ethnicity"</span>, <span class="at">measures =</span> alpha_meas)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>p1b <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ethnicity, <span class="at">y =</span> value, <span class="at">color =</span> ethnicity), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"wilcox.test"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">label =</span> ..p.format..),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label.x.npc =</span> <span class="st">"center"</span>) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#d6604d"</span>, <span class="st">"#4393c3"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="r"><code><span class="line"><span style="color:#E1E4E8">alpha_meas </span><span style="color:#F97583">&lt;-</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Chao1&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Shannon&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;Simpson&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">p1 </span><span style="color:#F97583">&lt;-</span><span style="color:#FFAB70"> plot_richness</span><span style="color:#E1E4E8">(phy_obj</span><span style="color:#F97583">$</span><span style="color:#E1E4E8">unfilt, </span><span style="color:#9ECBFF">&quot;ethnicity&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">measures</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> alpha_meas)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">p1b </span><span style="color:#F97583">&lt;-</span><span style="color:#E1E4E8"> p1 </span><span style="color:#F97583">+</span></span>
+<span class="line"><span style="color:#FFAB70">  geom_boxplot</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    aes</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> ethnicity, </span><span style="color:#FFAB70">y</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> value, </span><span style="color:#FFAB70">color</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> ethnicity),</span></span>
+<span class="line"><span style="color:#FFAB70">    alpha</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.1</span></span>
+<span class="line"><span style="color:#E1E4E8">  ) </span><span style="color:#F97583">+</span></span>
+<span class="line"><span style="color:#FFAB70">  stat_compare_means</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    method      = </span><span style="color:#9ECBFF">&quot;wilcox.test&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    aes</span><span style="color:#E1E4E8">(label   = ..p.format..),</span></span>
+<span class="line"><span style="color:#FFAB70">    label.x.npc</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;center&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  ) </span><span style="color:#F97583">+</span></span>
+<span class="line"><span style="color:#FFAB70">  theme_test</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">+</span></span>
+<span class="line"><span style="color:#FFAB70">  scale_color_manual</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">values</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> c</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;#d6604d&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;#4393c3&quot;</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span></code></pre>
 <p>No significant alpha diversity differences were found by ethnicity or treatment response.</p>
-</section>
-<section id="key-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<h2 id="key-takeaways">Key Takeaways</h2>
 <ul>
 <li><strong>Prevotellaceae enrichment in White Hispanic patients</strong> (fold change ~5x, combined adjusted p = 0.0007) — consistent across two independent DA methods</li>
 <li><strong>Ethnicity drives community-level separation</strong> (PERMANOVA p &lt; 0.001) while treatment response does not</li>
 <li>The <strong>dual-method approach</strong> (LinDA + MaAsLin2 with Cauchy combination) is a practical strategy for reducing false positives in microbiome studies</li>
 <li><strong>Batch correction choice matters for microbiome data</strong> — ConQuR handles zero-inflated count data better than methods designed for continuous data</li>
 </ul>
-</section>
-<section id="what-wed-do-differently" class="level2">
-<h2 class="anchored" data-anchor-id="what-wed-do-differently">What We’d Do Differently</h2>
+<h2 id="what-wed-do-differently">What We’d Do Differently</h2>
 <p>This paper was an absolute slog. Prospective sample collection is slow, and the analytical challenge of small n + many p dimensions (six taxonomic levels, multiple comparisons) meant doing a lot of work to be cautious about results that still can’t be interpreted with much confidence. That’s just the reality of a 64-patient microbiome study.</p>
 <p>The biggest thing I’d change on the methods side is the sequencing approach. 16S rRNA sequencing tells you <em>who is present</em> at the genus or family level but doesn’t give you quantitative abundance information with a reliable denominator. A PCR-based method with a known spike-in control — or shotgun metagenomics — would give much better ability to estimate actual abundances rather than relative proportions, which would make the compositional analysis more interpretable.</p>
 <p>On the study design side, a single pre-treatment timepoint is the minimum viable snapshot. What would actually be interesting is longitudinal sampling — before treatment, partway through chemoradiation, after surgery — to track how the microbiome changes and whether those changes associate with treatment response. That’s a harder study to run, but it’s the question that would actually matter clinically. A dietary questionnaire would also add interpretive value, though with a cohort this size it wouldn’t fully resolve the diet-vs-ancestry confounding question anyway.</p>
-</section>
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p><strong>Hein D</strong>, Coughlin LA, Poulides N, Koh AY, Sanford NN. Assessment of distinct gut microbiome signatures in a diverse cohort of patients undergoing definitive treatment for rectal cancer. <em>Journal of Immunotherapy and Precision Oncology</em>. 7(3):150–158 (2024). <a href="https://doi.org/10.36401/JIPO-23-30" class="uri">https://doi.org/10.36401/JIPO-23-30</a></p>
-
-
-<!-- -->
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-        }
-      }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Gut Microbiome Signatures and the Difficulty of p&gt;&gt;n"</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-08-19"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, Bioinformatics, Oncology]</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "dalle_ecoli.jpg"</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style type="text/css"&gt;</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="in">code.r{</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 14px;</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="in">td {</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 12px;</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="in">pre {</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="in">  font-size: 12px;</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>The gut microbiome varies across individuals in ways that aren't fully understood — shaped by diet, environment, genetics, and a lot of noise. This paper, published in the <span class="co">[</span><span class="ot">*Journal of Immunotherapy and Precision Oncology*</span><span class="co">](https://doi.org/10.36401/JIPO-23-30)</span> (2024), looks at whether rectal cancer patients show distinct microbiome signatures by ethnicity, age of onset, and treatment response — using a prospectively collected cohort where I personally collected every stool sample.</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>Prevotellaceae is a family of gut bacteria that shows up frequently in microbiome research, though its role in colorectal cancer is genuinely unclear. Some studies associate it with certain dietary patterns, others find it elevated in specific cancer cohorts — and with a cohort of 64 patients, we're not in a position to say much about why it's elevated here. What we can say is that the finding was consistent across two independent methods, which is the most we can claim given the sample size.</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>This raises the obvious confounder question: **Is the ethnicity association we found actually a diet association?** Our 16S sequencing captures *who's there* in the gut, not *why* they're there. Disentangling whether ethnicity is proxying for diet, host genetics, or some other environmental exposure isn't possible from this data. That's a real limitation, and it's worth being upfront about it.</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="fu">### On Sample Size and the Noise Floor of Microbiome Studies</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>Sixty-four patients is small, and I won't pretend otherwise. I'll say this much: I collected every single one of those samples myself. I enrolled the patients onto the study, handed them the kits, collected the samples, and put them in the freezer. So I have a personal appreciation for why prospective microbiome cohorts are hard to grow.</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>The pre-treatment timing requirement is the main bottleneck. Antibiotics, bowel prep, and chemoradiation all dramatically disrupt the native microbiome, so samples have to come in before any of that starts — which means a very short window between diagnosis and first treatment. But even setting aside the logistical challenges, the microbiome itself is a noisy measurement. Diet fluctuates day to day. A patient who had a stomach bug last month, or took a course of antibiotics for a dental procedure, or just happened to eat differently the week of collection — all of that shows up in the 16S signal. There's a real noise floor to this kind of data that doesn't go away with better sequencing; it's just inherent to measuring a system that changes constantly in response to things that have nothing to do with cancer.</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>That's the p<span class="sc">\&gt;\&gt;</span>n problem in its most uncomfortable form: you have far more dimensions to test than you have samples to test them on, and the biological system you're measuring is itself a moving target. In this regime, any single analytical method has enough degrees of freedom to find patterns that don't exist. You could pick the right normalization, the right distance metric, the right significance threshold — and still be looking at noise that happened to pass your filters.</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>The dual-method approach and the Cauchy combination of p-values were a direct response to this. Requiring agreement between LinDA and MaAsLin2 — methods with different normalization strategies and different underlying statistical models — isn't just methodological caution. It's a way of being honest with yourself about how much trust any single result deserves. If a finding evaporates when you look at it through a different lens, it probably wasn't real. If it holds up across both, you have something worth reporting — even if you still can't be certain why it's there.</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Publication Link</span><span class="co">](https://doi.org/10.36401/JIPO-23-30)</span></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## 16S rRNA Processing with DADA2</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>Raw paired-end FASTQ files from Illumina MiSeq sequencing were processed through the <span class="co">[</span><span class="ot">DADA2</span><span class="co">](https://benjjneb.github.io/dada2/)</span> pipeline to resolve amplicon sequence variants (ASVs) — the modern replacement for OTU clustering that retains single-nucleotide resolution.</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>The core pipeline: quality filtering, error model learning, denoising, read merging, chimera removal, and taxonomic assignment against the Silva v138.1 database:</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Quality-based filtering and trimming</span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">filterAndTrim</span>(fnFs, filtFs, fnRs, filtRs,</span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>                     <span class="at">truncLen =</span> <span class="fu">c</span>(<span class="dv">220</span>, <span class="dv">200</span>),   <span class="co"># trim forward/reverse</span></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>                     <span class="at">maxN =</span> <span class="dv">0</span>, <span class="at">maxEE =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">truncQ =</span> <span class="dv">2</span>,</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>                     <span class="at">rm.phix =</span> <span class="cn">TRUE</span>, <span class="at">compress =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>                     <span class="at">multithread =</span> <span class="cn">TRUE</span>, <span class="at">trimLeft =</span> <span class="dv">30</span>)</span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Learn error rates for the DADA2 algorithm</span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>errF <span class="ot">&lt;-</span> <span class="fu">learnErrors</span>(filtFs, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>errR <span class="ot">&lt;-</span> <span class="fu">learnErrors</span>(filtRs, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Core denoising</span></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>dadaFs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtFs, <span class="at">err =</span> errF, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>dadaRs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtRs, <span class="at">err =</span> errR, <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge paired reads and remove chimeras</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, dadaRs, filtRs, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>seqtab <span class="ot">&lt;-</span> <span class="fu">makeSequenceTable</span>(mergers)</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>seqtab.nochim <span class="ot">&lt;-</span> <span class="fu">removeBimeraDenovo</span>(seqtab, <span class="at">method =</span> <span class="st">"consensus"</span>,</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Taxonomic assignment with Silva</span></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">assignTaxonomy</span>(seqtab.nochim, <span class="st">"silva_nr99_v138.1_train_set.fa.gz"</span>,</span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>                       <span class="at">multithread =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">addSpecies</span>(taxa, <span class="st">"silva_species_assignment_v138.1.fa.gz"</span>)</span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>The <span class="in">`truncLen`</span> parameters (220 for forward, 200 for reverse) were chosen by inspecting quality profiles — reverse reads typically degrade faster. The <span class="in">`trimLeft = 30`</span> removes primer sequences.</span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phyloseq Object Construction</span></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>All downstream analyses used <span class="co">[</span><span class="ot">phyloseq</span><span class="co">](https://joey711.github.io/phyloseq/)</span> objects that bundle the ASV count matrix, taxonomy table, and clinical metadata. The construction function handles several data quality steps:</span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>build_phylo_obj <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_patients, counts_all) {</span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter to selected patients, remove Archaea, drop zero-count ASVs</span></span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>  counts_all <span class="ot">&lt;-</span> counts_all <span class="sc">%&gt;%</span></span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Kingdom <span class="sc">!=</span> <span class="st">"Archaea"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric))) <span class="sc">!=</span> <span class="dv">0</span>)</span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine identical ASVs by full taxonomic string</span></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>  counts_all_combinedASV <span class="ot">&lt;-</span> counts_all <span class="sc">%&gt;%</span></span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">taxonomy =</span> <span class="fu">paste</span>(Kingdom, Phylum, Class, Order,</span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>                            Family, Genus, Species, <span class="at">sep =</span> <span class="st">";"</span>))</span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>  counts_all_combinedASV3 <span class="ot">&lt;-</span> counts_all_combinedASV2 <span class="sc">%&gt;%</span></span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ddply</span>(<span class="st">"taxonomy"</span>, <span class="fu">numcolwise</span>(sum))</span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Build phyloseq components</span></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>  otu <span class="ot">&lt;-</span> <span class="fu">otu_table</span>(asvs, <span class="at">taxa_are_rows =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>  samples <span class="ot">&lt;-</span> <span class="fu">sample_data</span>(clin)</span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>  tax <span class="ot">&lt;-</span> <span class="fu">tax_table</span>(tax)</span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(otu, samples, tax)</span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 10% prevalence filter for the filtered version</span></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>  obj_filt <span class="ot">&lt;-</span> <span class="fu">filter_taxa</span>(obj, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">&gt;</span> <span class="fu">nrow</span>(clin) <span class="sc">*</span> <span class="fl">0.1</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">unfilt =</span> obj, <span class="at">filt =</span> obj_filt))</span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>We return both filtered and unfiltered versions. The unfiltered object is used for differential abundance testing (which applies its own prevalence filters), while the filtered version is used for diversity analyses where rare taxa add noise.</span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Differential Abundance: Dual-Method with Cauchy Combination</span></span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>Minimizing false positives was the main analytical challenge here. With counts spanning six taxonomic levels and a small cohort, the multiple testing burden is substantial — and there's a published benchmark paper showing that differential abundance methods in microbiome research give wildly different results depending on which one you pick. That's not a minor issue; it means your findings can be a function of your software choice as much as your biology.</span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>The solution was to use **two independent methods** with different normalization strategies and different underlying models, and require agreement between them before reporting anything:</span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**LinDA**: A linear model on the centered log-ratio (CLR) transform — handles compositionality directly, supports mixed effects for batch</span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**MaAsLin2**: CSS normalization with a log transform and mixed-effects linear model — different normalization path to a similar goal</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>Both were run across all taxonomic levels (Phylum through Species) with 20% prevalence filtering and Benjamini-Hochberg FDR correction:</span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>run_mas_all_levels <span class="ot">&lt;-</span> <span class="cf">function</span>(phylo_obj, variable) {</span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>  mas_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>  tax_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tax_level <span class="cf">in</span> tax_levels) {</span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>    obj_sub <span class="ot">&lt;-</span> <span class="fu">aggregate_taxa</span>(phylo_obj, tax_level)</span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>    fit_mas <span class="ot">&lt;-</span> <span class="fu">Maaslin2</span>(</span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>      <span class="at">input_data =</span> <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>otu_table),</span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>      <span class="at">input_metadata =</span> <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>sam_data),</span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>      <span class="at">fixed_effects =</span> <span class="fu">c</span>(variable),</span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>      <span class="at">random_effects =</span> <span class="fu">c</span>(<span class="st">"batch"</span>),</span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a>      <span class="at">min_prevalence =</span> <span class="fl">0.2</span>,</span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a>      <span class="at">normalization =</span> <span class="st">"CSS"</span>,</span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>      <span class="at">transform =</span> <span class="st">"LOG"</span>)</span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>    mas_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mas_results, <span class="fu">data.frame</span>(fit_mas<span class="sc">$</span>results))</span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>  mas_results<span class="sc">$</span>mas_bhcor_p <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(mas_results[, <span class="dv">6</span>], <span class="at">method =</span> <span class="st">"BH"</span>)</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mas_results)</span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>The LinDA wrapper follows the same pattern but uses a formula-based interface with mixed effects:</span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>run_linda_all_levels <span class="ot">&lt;-</span> <span class="cf">function</span>(phylo_obj, variable) {</span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>  lin_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>  tax_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tax_level <span class="cf">in</span> tax_levels) {</span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>    obj_sub <span class="ot">&lt;-</span> <span class="fu">aggregate_taxa</span>(phylo_obj, tax_level)</span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>    fit_lin <span class="ot">&lt;-</span> <span class="fu">linda</span>(</span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>otu_table),</span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(obj_sub<span class="sc">@</span>sam_data),</span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>      <span class="at">formula =</span> <span class="fu">paste0</span>(<span class="st">"~"</span>, variable, <span class="st">"+(1|batch)"</span>),</span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">"count"</span>, <span class="at">prev.cut =</span> <span class="fl">0.2</span>,</span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>      <span class="at">adaptive =</span> <span class="cn">TRUE</span>, <span class="at">pseudo.cnt =</span> <span class="fl">0.5</span>)</span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>    lin_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(lin_results, <span class="fu">data.frame</span>(fit_lin<span class="sc">$</span>output))</span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>  lin_results<span class="sc">$</span>lin_bhcor_p <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(lin_results[, <span class="dv">5</span>], <span class="at">method =</span> <span class="st">"BH"</span>)</span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lin_results)</span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>Results from both methods were combined using the **Cauchy combination test** — a method for merging p-values that is robust to dependence between tests:</span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="co"># Cauchy combination of p-values from LinDA and MaAsLin2</span></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>combined_wp <span class="ot">&lt;-</span> combined2 <span class="sc">%&gt;%</span></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">couchy_t =</span> <span class="fl">0.5</span> <span class="sc">*</span> ((<span class="fu">tan</span>((<span class="fl">0.5</span> <span class="sc">-</span> pvalue_lin) <span class="sc">*</span> pi)) <span class="sc">+</span></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">tan</span>((<span class="fl">0.5</span> <span class="sc">-</span> pvalue_mas) <span class="sc">*</span> pi))) <span class="sc">%&gt;%</span></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">couchy_p =</span> <span class="fl">0.5</span> <span class="sc">-</span> (<span class="fu">atan</span>(couchy_t) <span class="sc">/</span> pi))</span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="co"># Final BH correction on combined p-values</span></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>combined_wp<span class="sc">$</span>comb_bhcor_p <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(combined_wp<span class="sc">$</span>couchy_p, <span class="at">method =</span> <span class="st">"BH"</span>)</span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>We ran models for multiple comparisons — ethnicity, age of onset, treatment response, T-stage, and antibiotics — each adjusting for the others as appropriate.</span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a><span class="al">![Differential abundance results. Prevotellaceae is enriched \~5x in White Hispanic patients relative to White Non-Hispanic patients, consistent across both LinDA and MaAsLin2.](abundance.png)</span>{width="66%"}</span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Batch Correction with ConQuR</span></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>Stool samples were collected across five sequencing batches. For beta diversity analysis, we used the <span class="co">[</span><span class="ot">ConQuR</span><span class="co">](https://github.com/wdl2459/ConQuR)</span> package (quantile regression approach) to remove batch effects while preserving biological signal:</span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>corrected_asv <span class="ot">&lt;-</span> <span class="fu">ConQuR_libsize</span>(</span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">tax_tab =</span> asv_t,</span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">batchid =</span> batch_ids,</span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariates =</span> covars2,       <span class="co"># facility, onset, response, ethnicity, antibiotics</span></span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_ref =</span> <span class="st">"2"</span>,</span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">logistic_lasso =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantile_type =</span> <span class="st">"lasso"</span>,</span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>  <span class="at">interplt =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_core =</span> <span class="dv">4</span>)</span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>ConQuR explicitly models the batch effect using lasso-regularized quantile regression, adjusting the count table while preserving the covariate structure. We chose ConQuR over ComBat (the more commonly used batch correction tool) because ComBat was designed for continuous data like gene expression microarrays and assumes approximately normal distributions. Microbiome count data is sparse, zero-inflated, and compositional — properties that violate ComBat's assumptions. ConQuR was built specifically for microbiome count tables and handles the zero-inflation and overdispersion that characterize 16S data.</span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Beta Diversity &amp; PERMANOVA</span></span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>Community-level composition was compared using two complementary distance metrics on the batch-corrected counts:</span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Bray-Curtis dissimilarity** (on relative abundances) — captures differences in proportional composition</span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Aitchison distance** (on CLR-transformed data) — addresses compositionality of microbiome data</span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a><span class="co"># Compositional transform for Bray-Curtis</span></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>otus.rel <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(phy_batch_corr, <span class="at">method =</span> <span class="st">"compositional"</span>)</span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>dist_bray <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(<span class="fu">t</span>(<span class="fu">abundances</span>(otus.rel)), <span class="at">method =</span> <span class="st">"bray"</span>)</span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a><span class="co"># CLR transform for Aitchison distance</span></span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a>otus.clr <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(phy_batch_corr, <span class="at">method =</span> <span class="st">"clr"</span>)</span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a>dist_atch <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(<span class="fu">t</span>(<span class="fu">abundances</span>(otus.clr)), <span class="at">method =</span> <span class="st">"robust.aitchison"</span>)</span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a><span class="co"># PCoA ordination</span></span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>pcoa_bray <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">pcoa</span>(dist_bray, <span class="at">correction =</span> <span class="st">"cailliez"</span>)</span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>pcoa_atch <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">pcoa</span>(dist_atch)</span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>Statistical testing used PERMANOVA (100,000 permutations) with a betadisper test to confirm that significant results reflected true centroid separation rather than differences in dispersion:</span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a><span class="co"># Ethnicity — significant separation, no dispersion difference</span></span>
-<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>vegan<span class="sc">::</span><span class="fu">adonis2</span>(<span class="fu">t</span>(otus.clr2) <span class="sc">~</span> ethnicity, <span class="at">data =</span> pat_d6_ordered,</span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a>               <span class="at">permutations =</span> <span class="dv">100000</span>, <span class="at">method =</span> <span class="st">"robust.aitchison"</span>)</span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a><span class="co"># p &lt; 0.001, R^2 = 0.029</span></span>
-<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a><span class="fu">permutest</span>(<span class="fu">betadisper</span>(dist_atch, pat_d6_ordered<span class="sc">$</span>ethnicity),</span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a>          <span class="at">permutations =</span> <span class="dv">100000</span>)</span>
-<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion p = 0.463 (not significant — confirms true separation)</span></span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>Key PERMANOVA results:</span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Comparison             <span class="pp">|</span> Bray-Curtis p <span class="pp">|</span> Aitchison p  <span class="pp">|</span> Dispersion p  <span class="pp">|</span></span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------------|---------------|--------------|---------------|</span></span>
-<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ethnicity              <span class="pp">|</span> **\&lt; 0.001**  | **\&lt; 0.001** <span class="pp">|</span> 0.463 / 0.894 <span class="pp">|</span></span>
-<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Onset (EOCRC vs AOCRC) <span class="pp">|</span> **0.035**     | **0.022**    <span class="pp">|</span> 0.383 / 0.548 <span class="pp">|</span></span>
-<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Treatment response     <span class="pp">|</span> 0.071         <span class="pp">|</span> 0.111        <span class="pp">|</span> 0.213 / 0.385 <span class="pp">|</span></span>
-<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a><span class="al">![Beta diversity ordination (PCoA). Community-level separation by ethnicity is visible across both Bray-Curtis and Aitchison distance metrics.](beta.png)</span>{width="75%"}</span>
-<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## Alpha Diversity</span></span>
-<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a>Within-sample diversity was assessed using Chao1 (richness), Shannon (evenness-weighted), and Simpson (dominance) indices. The key finding: **Shannon diversity was significantly lower in early-onset patients** (p = 0.029), suggesting reduced microbial evenness in younger CRC patients.</span>
-<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a>alpha_meas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Chao1"</span>, <span class="st">"Shannon"</span>, <span class="st">"Simpson"</span>)</span>
-<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot_richness</span>(phy_obj<span class="sc">$</span>unfilt, <span class="st">"ethnicity"</span>, <span class="at">measures =</span> alpha_meas)</span>
-<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a>p1b <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
-<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ethnicity, <span class="at">y =</span> value, <span class="at">color =</span> ethnicity), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"wilcox.test"</span>,</span>
-<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">label =</span> ..p.format..),</span>
-<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label.x.npc =</span> <span class="st">"center"</span>) <span class="sc">+</span></span>
-<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span></span>
-<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#d6604d"</span>, <span class="st">"#4393c3"</span>))</span>
-<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a>No significant alpha diversity differences were found by ethnicity or treatment response.</span>
-<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways</span></span>
-<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Prevotellaceae enrichment in White Hispanic patients** (fold change \~5x, combined adjusted p = 0.0007) — consistent across two independent DA methods</span>
-<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ethnicity drives community-level separation** (PERMANOVA p <span class="sc">\&lt;</span> 0.001) while treatment response does not</span>
-<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **dual-method approach** (LinDA + MaAsLin2 with Cauchy combination) is a practical strategy for reducing false positives in microbiome studies</span>
-<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Batch correction choice matters for microbiome data** — ConQuR handles zero-inflated count data better than methods designed for continuous data</span>
-<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## What We'd Do Differently</span></span>
-<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a>This paper was an absolute slog. Prospective sample collection is slow, and the analytical challenge of small n + many p dimensions (six taxonomic levels, multiple comparisons) meant doing a lot of work to be cautious about results that still can't be interpreted with much confidence. That's just the reality of a 64-patient microbiome study.</span>
-<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a>The biggest thing I'd change on the methods side is the sequencing approach. 16S rRNA sequencing tells you *who is present* at the genus or family level but doesn't give you quantitative abundance information with a reliable denominator. A PCR-based method with a known spike-in control — or shotgun metagenomics — would give much better ability to estimate actual abundances rather than relative proportions, which would make the compositional analysis more interpretable.</span>
-<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a>On the study design side, a single pre-treatment timepoint is the minimum viable snapshot. What would actually be interesting is longitudinal sampling — before treatment, partway through chemoradiation, after surgery — to track how the microbiome changes and whether those changes associate with treatment response. That's a harder study to run, but it's the question that would actually matter clinically. A dietary questionnaire would also add interpretive value, though with a cohort this size it wouldn't fully resolve the diet-vs-ancestry confounding question anyway.</span>
-<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
-<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>**Hein D**, Coughlin LA, Poulides N, Koh AY, Sanford NN. Assessment of distinct gut microbiome signatures in a diverse cohort of patients undergoing definitive treatment for rectal cancer. *Journal of Immunotherapy and Precision Oncology*. 7(3):150–158 (2024). <span class="ot">&lt;https://doi.org/10.36401/JIPO-23-30&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
-</div> <!-- /content -->
-
-
-
-
-</body></html>
+<h2 id="citation">Citation</h2>
+<p><strong>Hein D</strong>, Coughlin LA, Poulides N, Koh AY, Sanford NN. Assessment of distinct gut microbiome signatures in a diverse cohort of patients undergoing definitive treatment for rectal cancer. <em>Journal of Immunotherapy and Precision Oncology</em>. 7(3):150–158 (2024). <a href="https://doi.org/10.36401/JIPO-23-30">https://doi.org/10.36401/JIPO-23-30</a></p>  </div> </article> <!-- TOC sidebar (desktop only) --> <nav class="hidden lg:block lg:w-56 xl:w-64 shrink-0"> <div class="sticky top-24"> <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">On this page</p> <ul class="space-y-1 text-sm border-l border-gray-100" id="toc-list"> <li> <a href="#overview" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="overview"> Overview </a> <ul class="toc-children overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out" data-parent="overview"> <li> <a href="#on-sample-size-and-the-noise-floor-of-microbiome-studies" class="toc-link toc-h3 block pl-6 py-0.5 text-xs text-gray-400 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="on-sample-size-and-the-noise-floor-of-microbiome-studies"> On Sample Size and the Noise Floor of Microbiome Studies </a> </li> </ul> </li><li> <a href="#16s-rrna-processing-with-dada2" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="16s-rrna-processing-with-dada2"> 16S rRNA Processing with DADA2 </a>  </li><li> <a href="#phyloseq-object-construction" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="phyloseq-object-construction"> Phyloseq Object Construction </a>  </li><li> <a href="#differential-abundance-dual-method-with-cauchy-combination" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="differential-abundance-dual-method-with-cauchy-combination"> Differential Abundance: Dual-Method with Cauchy Combination </a>  </li><li> <a href="#batch-correction-with-conqur" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="batch-correction-with-conqur"> Batch Correction with ConQuR </a>  </li><li> <a href="#beta-diversity--permanova" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="beta-diversity--permanova"> Beta Diversity &amp; PERMANOVA </a>  </li><li> <a href="#alpha-diversity" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="alpha-diversity"> Alpha Diversity </a>  </li><li> <a href="#key-takeaways" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="key-takeaways"> Key Takeaways </a>  </li><li> <a href="#what-wed-do-differently" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="what-wed-do-differently"> What We’d Do Differently </a>  </li><li> <a href="#citation" class="toc-link toc-h2 block pl-3 py-0.5 text-gray-600 border-l-2 -ml-px border-transparent transition-colors duration-150 hover:text-accent hover:border-accent" data-slug="citation"> Citation </a>  </li> </ul> </div> </nav> </div>    </main> <footer class="bg-gray-50 border-t border-gray-100 py-10"> <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500"> <p>Dave Hein &mdash; Data Scientist, UT Southwestern</p> <div class="flex items-center gap-5"> <a href="https://github.com/DavidHein96" target="_blank" rel="noopener" class="hover:text-[#333] transition-colors">GitHub</a> <a href="https://linkedin.com/in/david-hein-utsw" target="_blank" rel="noopener" class="hover:text-[#0a66c2] transition-colors">LinkedIn</a> <a href="https://orcid.org/0000-0002-8625-9528" target="_blank" rel="noopener" class="hover:text-[#a6ce39] transition-colors">ORCID</a> <a href="https://drive.google.com/file/d/1-hG0LbWs_FAlrGV50Poghw5XS7he_vEL/view?usp=sharing" target="_blank" rel="noopener" class="hover:text-accent transition-colors">Resume</a> </div> </div> </footer> </body></html>

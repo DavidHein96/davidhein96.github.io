@@ -1,0 +1,202 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const publications = [
+  {
+    authors:
+      "<strong>Hein D</strong>, Christie A, Holcomb M, Xie B, Jain AJ, Vento J, Rakheja N, Shakur AH, Christley S, Cowell LG, Brugarolas J, Jamieson AR, Kapur P.",
+    title:
+      "Iterative refinement and goal articulation to optimize large language models for clinical information extraction.",
+    journal: "npj Digital Medicine",
+    year: "2025",
+    href: "/projects",
+  },
+  {
+    authors: "Sanford NN, Shi Q, <strong>Hein D</strong>, Hall WA.",
+    title:
+      "Benchmarks of success in radiotherapy vs systemic therapy: National Clinical Trials Network (NCTN) randomized controlled trials sponsored by the National Cancer Institute (NCI).",
+    journal: "JNCI: Journal of the National Cancer Institute",
+    year: "2025",
+    href: null,
+  },
+  {
+    authors:
+      "Jamieson AR, Holcomb MJ, Dalton TO, Campbell KK, Vedovato S, Shakur AH, Kang S, <strong>Hein D</strong>, Lawson J, Danuser G, Scott DJ.",
+    title:
+      "Rubrics to prompts: assessing medical student post-encounter notes with AI.",
+    journal: "NEJM AI",
+    year: "2024",
+    href: null,
+  },
+  {
+    authors:
+      "Rhead B, <strong>Hein D</strong>*, Pouliot Y, Guinney J, De La Vega FM, Sanford NN.",
+    title:
+      "Association of genetic ancestry with molecular tumor profiles in colorectal cancer.",
+    journal: "Genome Medicine",
+    year: "2024",
+    note: "*co-first author",
+    href: "/projects",
+  },
+  {
+    authors: "Lin G, <strong>Hein D</strong>, Liu P, Singal AG, Sanford NN.",
+    title:
+      "Screening implications for Distribution of Colorectal Cancer Subsite by Age and Role of Flexible Sigmoidoscopy.",
+    journal: "Cancers",
+    year: "2024",
+    href: "/projects",
+  },
+  {
+    authors:
+      "<strong>Hein D</strong>, Coughlin LA, Poulides N, Koh AY, Sanford NN.",
+    title:
+      "Assessment of distinct gut microbiome signatures in a diverse cohort of patients undergoing definitive treatment for rectal cancer.",
+    journal: "Journal of Immunotherapy and Precision Oncology",
+    year: "2024",
+    href: "/projects",
+  },
+  {
+    authors:
+      "<strong>Hein D</strong>, Deng W, Bleile M, Kazmi SA, Rhead B, De La Vega FM, Jones AL, Kainthla R, Jiang W, Cantarel B, Sanford NN.",
+    title:
+      "Racial and ethnic differences in genomic profiling of early onset colorectal cancer.",
+    journal: "JNCI: Journal of the National Cancer Institute",
+    year: "2022",
+    href: null,
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="About Dave Hein — background, publications, and open source work"
+>
+  <div class="max-w-3xl mx-auto px-6 py-14">
+    <!-- Bio -->
+    <section class="prose-body mb-2">
+      <h2>Bio</h2>
+      <p>
+        As far as labels go, Data Scientist is the one that fits best, although
+        my day-to-day work spans quite a bit: building LLM apps for clinical
+        NLP, designing databases and ETL pipelines, managing DevOps
+        infrastructure, and occasionally doing something that actually looks
+        like machine learning — all in the context of medical research at UT
+        Southwestern.
+      </p>
+      <p>
+        I like working at the intersection of messy real-world data, scientific
+        questions, and systems that actually have to run in production. This
+        site is a place where I collect projects, experiments, and ideas that
+        sit in that overlap.
+      </p>
+      <p>
+        When I started college, I was the prototypical premed — mostly because
+        "being a doctor sounds cool." Then I remembered that in fifth grade I
+        had to leave class during a lesson on the circulatory system because I
+        nearly passed out. Medicine might not have been my calling, but science
+        definitely was.
+      </p>
+      <p>
+        I majored in chemistry, which I loved, but in my final semester I took
+        an informatics course and discovered something magical: results at the
+        click of a button instead of a five-hour organic synthesis. The joy of
+        being able to rapidly iterate with software led me to my first role at
+        UTSW, in the radiation oncology department as a "clinical data
+        specialist" — my first experience with a job title not matching what I
+        actually did. In practice, I was mostly doing bioinformatics, analyzing
+        RNA-seq and microbiome data.
+      </p>
+      <p>
+        After completing my Master's degree in Data Science, I moved to my
+        current role. Ironically, despite being in the bioinformatics
+        department, I now do considerably less bioinformatics and considerably
+        more systems, infrastructure, and applied AI.
+      </p>
+      <p>
+        What I've realized over the years is that my north star is understanding
+        — or occasionally uncovering — how the hotdog is made. I'm happiest when
+        I can peel back abstractions, trace systems to their roots, and figure
+        out what's really going on under the hood, whether that's a statistical
+        method, a production pipeline, or a messy real-world dataset<a
+          href="/cats"
+          class="text-gray-700 hover:text-accent transition-colors no-underline font-bold"
+          >.</a
+        >
+      </p>
+    </section>
+
+    <!-- Quick Facts -->
+    <section class="prose-body mb-2">
+      <h2>Quick Facts</h2>
+
+      <h3>Education</h3>
+      <ul>
+        <li><em>Master of Science in Data Science</em></li>
+        <li><em>Bachelor of Science in Chemistry</em></li>
+        <li>Both from the University of Texas at Austin</li>
+      </ul>
+
+      <h3>Experience</h3>
+      <ul>
+        <li>Data Scientist, Bioinformatics &mdash; Sep 2023 &ndash; Present</li>
+        <li>
+          Clinical Data Specialist, Radiation Oncology &mdash; Feb 2020 &ndash;
+          Aug 2023
+        </li>
+        <li>Both at the University of Texas Southwestern Medical Center</li>
+      </ul>
+
+      <h3>Public Service</h3>
+      <ul>
+        <li>
+          Designed and maintain the website for a regional food bank,
+          <a
+            href="https://feedingfamiliesal.org/"
+            target="_blank"
+            rel="noopener"
+          >
+            Feeding Families of Alabama
+          </a>
+          (WordPress)
+        </li>
+      </ul>
+    </section>
+
+    <!-- Publications -->
+    <section class="mb-2">
+      <h2
+        class="text-xl font-semibold text-gray-900 mt-10 mb-5 pb-2 border-b border-gray-100"
+      >
+        Publication Highlights
+      </h2>
+      <div class="space-y-5">
+        {
+          publications.map((pub) => (
+            <div class="text-sm leading-relaxed">
+              <p class="text-gray-700 mb-0.5" set:html={pub.authors} />
+              <p class="text-gray-900 font-medium mb-0.5">{pub.title}</p>
+              <p class="text-gray-500">
+                <em>{pub.journal}</em>
+                {pub.note && (
+                  <span class="ml-1 text-accent text-xs">({pub.note})</span>
+                )}
+                &mdash; {pub.year}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="text-sm text-gray-500 mt-6">
+        Full record:
+        <a
+          href="https://orcid.org/0000-0002-8625-9528"
+          target="_blank"
+          rel="noopener"
+          class="text-accent hover:text-accent-dark transition-colors"
+        >
+          ORCID 0000-0002-8625-9528
+        </a>
+      </p>
+    </section>
+  </div>
+</BaseLayout>

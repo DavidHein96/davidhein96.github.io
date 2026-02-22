@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dave Hein">
+<meta name="dcterms.date" content="2026-02-21">
+
+<title>No More Mr.&nbsp;Nice Prompt: Three Eras of AI Clinical Data Extraction – David Hein</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6b2306b05fee0b85d8c2d824c36e28c3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-688493dc04a5a5e3335eb5a7a13a4394.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">David Hein</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">My Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/DavidHein96"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/david-hein-utsw"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">No More Mr.&nbsp;Nice Prompt: Three Eras of AI Clinical Data Extraction</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">LLMs</div>
+                <div class="quarto-category">Clinical NLP</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Dave Hein </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 21, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#three-approaches-three-different-ways-to-fail" id="toc-three-approaches-three-different-ways-to-fail" class="nav-link active" data-scroll-target="#three-approaches-three-different-ways-to-fail">Three Approaches, Three Different Ways to Fail</a></li>
+  <li><a href="#act-1-ask-nicely-for-reasoning-json" id="toc-act-1-ask-nicely-for-reasoning-json" class="nav-link" data-scroll-target="#act-1-ask-nicely-for-reasoning-json">Act 1: “Ask Nicely for Reasoning &amp; JSON”</a>
+  <ul class="collapse">
+  <li><a href="#the-approach" id="toc-the-approach" class="nav-link" data-scroll-target="#the-approach">The Approach</a></li>
+  <li><a href="#where-it-breaks" id="toc-where-it-breaks" class="nav-link" data-scroll-target="#where-it-breaks">Where It Breaks</a></li>
+  <li><a href="#what-we-learned" id="toc-what-we-learned" class="nav-link" data-scroll-target="#what-we-learned">What We Learned</a></li>
+  </ul></li>
+  <li><a href="#act-2-structured-output-json-mode" id="toc-act-2-structured-output-json-mode" class="nav-link" data-scroll-target="#act-2-structured-output-json-mode">Act 2: Structured Output / JSON Mode</a>
+  <ul class="collapse">
+  <li><a href="#the-approach-1" id="toc-the-approach-1" class="nav-link" data-scroll-target="#the-approach-1">The Approach</a></li>
+  <li><a href="#the-new-problems" id="toc-the-new-problems" class="nav-link" data-scroll-target="#the-new-problems">The New Problems</a></li>
+  <li><a href="#what-we-learned-1" id="toc-what-we-learned-1" class="nav-link" data-scroll-target="#what-we-learned-1">What We Learned</a></li>
+  </ul></li>
+  <li><a href="#act-3-function-calling-pydantic-validation" id="toc-act-3-function-calling-pydantic-validation" class="nav-link" data-scroll-target="#act-3-function-calling-pydantic-validation">Act 3: Function Calling + Pydantic Validation</a>
+  <ul class="collapse">
+  <li><a href="#the-approach-2" id="toc-the-approach-2" class="nav-link" data-scroll-target="#the-approach-2">The Approach</a></li>
+  <li><a href="#the-modularity-win" id="toc-the-modularity-win" class="nav-link" data-scroll-target="#the-modularity-win">The Modularity Win</a></li>
+  <li><a href="#validation-as-a-catch-not-a-guarantee" id="toc-validation-as-a-catch-not-a-guarantee" class="nav-link" data-scroll-target="#validation-as-a-catch-not-a-guarantee">Validation as a Catch, Not a Guarantee</a></li>
+  <li><a href="#act-4-real-function-in-memory-sql-as-a-state-layer" id="toc-act-4-real-function-in-memory-sql-as-a-state-layer" class="nav-link" data-scroll-target="#act-4-real-function-in-memory-sql-as-a-state-layer">Act 4: Real Function &amp; In-Memory SQL as a State Layer</a></li>
+  </ul></li>
+  <li><a href="#side-by-side-three-approaches" id="toc-side-by-side-three-approaches" class="nav-link" data-scroll-target="#side-by-side-three-approaches">Side-by-Side: Three Approaches</a></li>
+  <li><a href="#what-i-still-get-wrong" id="toc-what-i-still-get-wrong" class="nav-link" data-scroll-target="#what-i-still-get-wrong">What I Still Get Wrong</a></li>
+  <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work">Related Work</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="three-approaches-three-different-ways-to-fail" class="level2">
+<h2 class="anchored" data-anchor-id="three-approaches-three-different-ways-to-fail">Three Approaches, Three Different Ways to Fail</h2>
+<p>If you’ve read <a href="../../posts/npj_llm_extraction/index.html">my earlier post on the npj Digital Medicine paper</a>, you know the pipeline we built for extracting structured data from kidney cancer pathology reports. In that post, I hint at the actual python code / prompting methods are quite outdated- by the time of publication (Spring 2025). As you may imagine, as of writing (February 2026) my personal favorite paper’s methods are actually now eligible for medicare.</p>
+<p>I thought in this post I’d quickly showcase how our extraction approach evolved across three major eras: from asking the model nicely to return JSON, to constrained decoding with JSON mode, to function calling with Pydantic validation. Each transition was driven by both wall hitting with the previous approach, and the rapidly evolving field.</p>
+<hr>
+</section>
+<section id="act-1-ask-nicely-for-reasoning-json" class="level2">
+<h2 class="anchored" data-anchor-id="act-1-ask-nicely-for-reasoning-json">Act 1: “Ask Nicely for Reasoning &amp; JSON”</h2>
+<section id="the-approach" class="level3">
+<h3 class="anchored" data-anchor-id="the-approach">The Approach</h3>
+<p>The original setup was straightforward: craft a detailed system prompt telling the model exactly what fields you want and what format to use, then call <code>json.loads()</code> on the response. To handle complex reports — multiple specimens (say a lung biopsy and a lymph node biopsy in the same report), multiple IHC tests (sometimes the same test but with different results depending on the specimen) — we broke extraction into a multi-step chain: first prompt to organize raw test results, second to group by specimen, third to structure by individual test result. The outputs of each step fed into the next. Below is a <strong>very</strong> simplified version of the last prompt in that chain, note that this is based on a jinja template, so the {{}} indicates where you would inject text into this template at runtime from python before sending it off to the LLM.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="an">system:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>You are a clinical data extraction assistant.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Your task is to process text from electronic medical records into structured JSONs</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>user:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Background</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>An LLM has processed and organized relevant text from a pathology report </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You are being provided these segments based on specimens &amp; IHC / FISH results</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Your role is to convert this segmented text into labeled, standardized structured data</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Naming conventions</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Standardize test names to those in the following list:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>{{panel_test_names}}</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Standardize test results to those in the following list:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>{{panel_test_results}}</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Instructions</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task 1, Reasoning</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Review segmented text to standardize test names and results. And consider the following...</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task 2, standardize and organize test names and results</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Return a JSON first with a summary of your reasoning</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Then with standardized test names and results for each specimen</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Follow this template:</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>"reasoning_summary": "summary of your reasoning",</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>"specimen_X_TESTNAME": "RESULT",</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>"specimen_Y_TESTNAME": "RESULT"</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>It is vital that the entirety of the returned text is a valid JSON</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu"># Segmented Text</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Finally, here is the text you will be working with</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>{{segmented_text}}</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>"""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And then at the end, manually parsing the chained outputs into your final data structure. Please note the very obnoxious key creation with the underscores, I did’nt want to do this. But what I found was that models of the day (early GPT-4) had tremendous issues with nested JSONs, so I had to rely on the keys containing multiple indicators, the specimen name and the test name.</p>
+</section>
+<section id="where-it-breaks" class="level3">
+<h3 class="anchored" data-anchor-id="where-it-breaks">Where It Breaks</h3>
+<p><strong>Malformed JSON.</strong> Every developer who’s done this knows the feeling of <code>json.loads()</code> raising a <code>JSONDecodeError</code> on a response that <em>looks</em> fine. Missing closing braces, trailing commas after the last item, unescaped quotes inside string values — these showed up constantly, with no pattern that made them predictable.</p>
+<p><strong>Conversational wrapping.</strong> Despite “Return only the JSON. No explanatory text.” being in the prompt, the model frequently added a preamble. “Based on the pathology report, here is the extracted data:” followed by the JSON. <code>json.loads()</code> does not appreciate this. I had to code a cleaner step first to strip these out.</p>
+<p><strong>Vocabulary drift.</strong> This one matters more than it sounds. The prompt specified <code>"Diffuse"</code> as a valid result value. The model returned <code>"Diffusely"</code> — grammatically reasonable, programmatically wrong. Or <code>"diffuse positive"</code> instead of <code>"Diffuse"</code>. Or <code>"positive, diffusely"</code>. Every variant that wasn’t in your exact vocabulary required manual cleanup or a post-processing normalization step. And this isn’t academic: this was one of the most persistent failure modes documented in <a href="../../posts/npj_llm_extraction/index.html">the npj paper</a>. The root cause was that we were <em>instructing</em> the model to use controlled vocabulary rather than <em>constraining</em> it to do so.</p>
+<p><strong>The parsing tax.</strong> The multi-step chain solved the complexity problem — big reports broken into manageable extractions — but it meant writing substantial custom parsing code at the end to reassemble the pieces. Every new report type or schema change meant updating that parser.</p>
+</section>
+<section id="what-we-learned" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-learned">What We Learned</h3>
+<p>Free-text prompting worked because at the time, its all we had. At scale, the combination of malformed output, vocabulary drift, and manual parsing means you’re spending engineering time on glue code rather than on improving extraction quality. The insight: <em>instruction</em> isn’t the same as <em>constraint</em>. You need the model’s output to be mechanically valid, not just instructed toward validity. No more asking nicely.</p>
+<hr>
+</section>
+</section>
+<section id="act-2-structured-output-json-mode" class="level2">
+<h2 class="anchored" data-anchor-id="act-2-structured-output-json-mode">Act 2: Structured Output / JSON Mode</h2>
+<section id="the-approach-1" class="level3">
+<h3 class="anchored" data-anchor-id="the-approach-1">The Approach</h3>
+<p>The obvious next step: use constrained decoding to <em>guarantee</em> valid JSON. OpenAI’s <code>response_format={"type": "json_object"}</code> and vLLM’s guided decoding via grammar constraints both operate at the token level — the model can only produce tokens that form valid JSON matching your schema.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> enum <span class="im">import</span> Enum</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultPrimary(<span class="bu">str</span>, Enum):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    POSITIVE <span class="op">=</span> <span class="st">"Positive"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    NEGATIVE <span class="op">=</span> <span class="st">"Negative"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"Other"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultModifier(<span class="bu">str</span>, Enum):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    DIFFUSE <span class="op">=</span> <span class="st">"Diffuse"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    BOX_LIKE <span class="op">=</span> <span class="st">"Box like"</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    CUP_LIKE <span class="op">=</span> <span class="st">"Cup like"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTestName(<span class="bu">str</span>, Enum):</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    BAP1 <span class="op">=</span> <span class="st">"BAP1"</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    CA_IX <span class="op">=</span> <span class="st">"CA-IX"</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"OTHER"</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTest(BaseModel):</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    specimen: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Specimen used for test"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    test_name: IHCTestName <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Name of test"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    test_name_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Name of test if not in options"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    test_result: IHCResultPrimary <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Test Result"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    test_result_modifier: IHCResultModifier <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Test Result modifier if applicable"</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    test_result_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"result if not in options"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCReport(BaseModel):</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    reasoning: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Summary of reasoning"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    test_and_results: <span class="bu">list</span>[IHCTest] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"List of tests and results"</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we use the handy OpenAI parse which lets us pass the pydantic model directly, for vllm we would dump it first</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.beta.chat.completions.parse(</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    response_format<span class="op">=</span>IHCReport</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-new-problems" class="level3">
+<h3 class="anchored" data-anchor-id="the-new-problems">The New Problems</h3>
+<p><strong>It’s slow.</strong> Constrained decoding has real latency overhead compared to unconstrained generation. For batch processing hundreds of reports, this adds up quickly.</p>
+<p><strong>Local models get stuck.</strong> When running open-source models on vLLM with grammar-based structured output, we hit cases where the model would enter a loop — continuously generating tokens but never completing. Reports would never finish processing. This wasn’t a fringe case.</p>
+<p><strong>The monolithic schema problem.</strong> With structured output, you have to write out the full schema upfront with every valid option enumerated. For complex pathology reports, that means one giant schema that every report gets forced through — whether the relevant fields appear in the report or not.</p>
+<p><strong>No built-in error recovery.</strong> When constrained decoding produces semantically wrong output (valid JSON, wrong values), there’s no natural mechanism for catching it and retrying with context about what went wrong. The model gave you valid JSON — as far as the framework is concerned, the job is done.</p>
+<p><strong>Model alignment is moving on.</strong> The post-training regimes for frontier models are increasingly oriented toward function calling and tool use, not schema-constrained generation. Using structured output started to feel like swimming against the current. Additionally, here we are still explicitly having the model fill out a reasoning field, but these days reasoning is built into models we don’t need to ask for it anymore.</p>
+</section>
+<section id="what-we-learned-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-learned-1">What We Learned</h3>
+<p>Structured output solves the syntax problem but not the semantics problem. Valid JSON can still be wrong. And the operational costs — latency, local model instability, monolithic schemas — made it harder to work with than the theoretical cleanliness suggested. The deeper issue is that you’re still fundamentally asking the model to fill out a form; you haven’t given it a more natural interface for expressing what it knows.</p>
+<hr>
+</section>
+</section>
+<section id="act-3-function-calling-pydantic-validation" class="level2">
+<h2 class="anchored" data-anchor-id="act-3-function-calling-pydantic-validation">Act 3: Function Calling + Pydantic Validation</h2>
+<section id="the-approach-2" class="level3">
+<h3 class="anchored" data-anchor-id="the-approach-2">The Approach</h3>
+<p>Function calling inverts the dynamic: instead of telling the model “return this JSON shape,” you define tools the model can call, and the model decides when and how to call them. The model’s post-training makes this feel natural — it reasons about what information it has and selects the appropriate tool to record it.</p>
+<p>Pydantic models define the function arguments. This is where the vocabulary drift problem gets solved properly: enums constrain the model to exact valid values, not as an instruction but as a type system. We don’t have to literally force the model to output our correct terms, we can just raise validation errors and recover.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, Field, field_validator</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional, Literal</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> enum <span class="im">import</span> Enum</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultPrimary(<span class="bu">str</span>, Enum):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    POSITIVE <span class="op">=</span> <span class="st">"Positive"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    NEGATIVE <span class="op">=</span> <span class="st">"Negative"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"Other"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultModifier(<span class="bu">str</span>, Enum):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    DIFFUSE <span class="op">=</span> <span class="st">"Diffuse"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    BOX_LIKE <span class="op">=</span> <span class="st">"Box like"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    CUP_LIKE <span class="op">=</span> <span class="st">"Cup like"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTestName(<span class="bu">str</span>, Enum):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    BAP1 <span class="op">=</span> <span class="st">"BAP1"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    CA_IX <span class="op">=</span> <span class="st">"CA-IX"</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"OTHER"</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTest(BaseModel):</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    specimen: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Specimen used for test"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    test_name: IHCTestName <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Name of test"</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    test_name_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Name of test if not in options"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    test_result: IHCResultPrimary <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Test Result"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    test_result_modifier: IHCResultModifier <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Test Result modifier if applicable"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    test_result_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"result if not in options"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_ihc_test(<span class="op">**</span>kwargs) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">str</span>, IHCTest]:</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    ihc_test <span class="op">=</span> IHCTest(<span class="op">**</span>kwargs)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json.dumps({<span class="st">"ok"</span>:<span class="va">True</span>}), ihc_test</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Now a tool calling loop, ill just do pseudo code since its kinda long...</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(...)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    perform_tool_calls(...)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> ValidationError()</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    append_error_and_retry(...) <span class="co"># You'd have a limit on the number of retries</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>save_final_result(...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The model calls <code>record_ihc_test(specimen="A", test_name="...", ...)</code> and Pydantic validates the arguments. <code>"Diffusely"</code> is simply not a valid <code>IHCResult</code> — the model has to pick from the enum or the call fails, but we can just append the error message and retry!</p>
+</section>
+<section id="the-modularity-win" class="level3">
+<h3 class="anchored" data-anchor-id="the-modularity-win">The Modularity Win</h3>
+<p>The other big improvement: instead of one schema for the whole report, you define small tools that can be called once, many times, or not at all. A tool for recording specimen-level diagnoses. A separate tool for IHC results. A tool specifically for noting ambiguous findings. The model calls them in the order that makes sense for the report it’s actually looking at.</p>
+<p>This ends up being a cleaner version of what the multi-step prompt chain in Act 1 was trying to accomplish — except the model orchestrates it rather than you hard-coding the sequence.</p>
+</section>
+<section id="validation-as-a-catch-not-a-guarantee" class="level3">
+<h3 class="anchored" data-anchor-id="validation-as-a-catch-not-a-guarantee">Validation as a Catch, Not a Guarantee</h3>
+<p>Pydantic validation catches structural and type-level errors automatically. But semantic errors — where the model extracts the wrong value from a genuinely ambiguous report — still happen. The retry loop handles the structural cases:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_with_retry(report_text: <span class="bu">str</span>, max_retries: <span class="bu">int</span> <span class="op">=</span> <span class="dv">2</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM_PROMPT},</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: report_text}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> attempt <span class="kw">in</span> <span class="bu">range</span>(max_retries <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            model<span class="op">=</span><span class="st">"gpt-5"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            tools<span class="op">=</span>EXTRACTION_TOOLS,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            tool_choice<span class="op">=</span><span class="st">"required"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            messages<span class="op">=</span>messages</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> parse_tool_calls(response)  <span class="co"># Pydantic validation here</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> result</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> ValidationError <span class="im">as</span> e:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> attempt <span class="op">==</span> max_retries:</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Feed validation error back to the model</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: <span class="bu">str</span>(response.choices[<span class="dv">0</span>].message)})</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            messages.append({</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: <span class="ss">f"The previous extraction failed validation: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">. Please correct and retry."</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The model gets told exactly what was wrong and can fix it. Structural errors (wrong enum value, missing required field) almost always get corrected on retry. Semantic errors — the model genuinely interpreted an ambiguous finding differently — the retry won’t fix, and you need a human review flag.</p>
+</section>
+<section id="act-4-real-function-in-memory-sql-as-a-state-layer" class="level3">
+<h3 class="anchored" data-anchor-id="act-4-real-function-in-memory-sql-as-a-state-layer">Act 4: Real Function &amp; In-Memory SQL as a State Layer</h3>
+<p>Wait what, I thought there were only supposed to be 3 acts? Well that does’nt sound as good for a title. Here I show how I’m thinking about actually using function calling to perform more complex operations than just pydantic validation.</p>
+<p>Pydantic validates each function call in isolation. That’s fine for pathology reports, where each document is self-contained. But a lot of clinical extraction involves processing a <em>series of notes across a patient timeline</em> — clinic visits, lab results, treatment records — where what’s valid in note N depends on what was recorded from notes 1 through N-1.</p>
+<p>The canonical example: you’re extracting lines of therapy from oncology notes in chronological order. When the model encounters a note documenting that a patient stopped pembrolizumab, it calls <code>record_therapy_stop(...)</code>. But if note 1 was corrupted, or out of order, or the therapy name was spelled differently — there may be no corresponding start date in your records. Without a state layer, you’d write a stop date with no start date and have no idea until someone noticed the broken timeline downstream.</p>
+<p>The fix is an in-memory SQLite database that gets built up as notes are processed, with referential integrity checks baked into the tool execution layer. The model doesn’t see the SQL — it just knows that calling a tool can fail with a constraint error, the same as any other validation failure, and gets told specifically why.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize in-memory state for this patient's timeline</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">":memory:"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>conn.execute(<span class="st">"""</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">    CREATE TABLE therapy_lines (</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">        patient_id    TEXT NOT NULL,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">        therapy_name  TEXT NOT NULL,</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">        start_date    TEXT,</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">        stop_date     TEXT,</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">        stop_reason   TEXT,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">        PRIMARY KEY (patient_id, therapy_name)</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>conn.commit()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_therapy_start(patient_id: <span class="bu">str</span>, therapy_name: <span class="bu">str</span>, start_date: <span class="bu">str</span>):</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        conn.execute(</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"INSERT INTO therapy_lines (patient_id, therapy_name, start_date) VALUES (?, ?, ?)"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            (patient_id, therapy_name, start_date)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> sqlite3.IntegrityError:</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Already exists — update start date if it was missing</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># TBH in practice I would probably use an Event Sourcing pattern </span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   where it would be a bit more stateless and we wouldnt be updating it quite like this,</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   but that's outside the scope of this post lol</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        conn.execute(</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">"UPDATE therapy_lines SET start_date = ? WHERE patient_id = ? AND therapy_name = ? AND start_date IS NULL"</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            (start_date, patient_id, therapy_name)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_therapy_stop(patient_id: <span class="bu">str</span>, therapy_name: <span class="bu">str</span>, stop_date: <span class="bu">str</span>, stop_reason: <span class="bu">str</span>):</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    cursor <span class="op">=</span> conn.execute(</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"""SELECT start_date FROM therapy_lines</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="st">           WHERE patient_id = ? AND therapy_name = ? AND start_date IS NOT NULL AND stop_date IS NULL"""</span>,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>        (patient_id, therapy_name)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> cursor.fetchone()</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># No active (started, not yet stopped) therapy found — raise a constraint error</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># that gets fed back to the model the same as any Pydantic ValidationError</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Cannot record stop for '</span><span class="sc">{</span>therapy_name<span class="sc">}</span><span class="ss">': no active therapy start found for "</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"patient </span><span class="sc">{</span>patient_id<span class="sc">}</span><span class="ss">. Either the therapy was never started in the notes "</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"processed so far, or the therapy name does not match an existing record. "</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Existing therapy lines: </span><span class="sc">{</span>_get_active_therapies(patient_id)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    conn.execute(</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"UPDATE therapy_lines SET stop_date = ?, stop_reason = ? WHERE patient_id = ? AND therapy_name = ?"</span>,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        (stop_date, stop_reason, patient_id, therapy_name)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    conn.commit()</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _get_active_therapies(patient_id: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">str</span>]:</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    cursor <span class="op">=</span> conn.execute(</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SELECT therapy_name FROM therapy_lines WHERE patient_id = ? AND start_date IS NOT NULL AND stop_date IS NULL"</span>,</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>        (patient_id,)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [row[<span class="dv">0</span>] <span class="cf">for</span> row <span class="kw">in</span> cursor.fetchall()]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The error message deliberately includes the list of active therapies the model <em>can</em> legally stop. A common failure mode is a name mismatch — note 1 says “pembrolizumab,” note 4 says “Keytruda” — and showing the model what names exist in state gives it the context to recognize the conflict and either reconcile the names or flag the ambiguity rather than guessing.</p>
+<p>This constraint error flows back through the same retry loop as Pydantic errors:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> execute_tool_call(tool_name: <span class="bu">str</span>, tool_args: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> tool_name <span class="op">==</span> <span class="st">"record_therapy_start"</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            record_therapy_start(<span class="op">**</span>tool_args)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"OK"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> tool_name <span class="op">==</span> <span class="st">"record_therapy_stop"</span>:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            record_therapy_stop(<span class="op">**</span>tool_args)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"OK"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... other tools</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (<span class="pp">ValueError</span>, ValidationError) <span class="im">as</span> e:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return error string — caller feeds this back to the model</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"CONSTRAINT_ERROR: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The broader pattern here is that the in-memory DB is doing what a stateless validator can’t: enforcing <em>temporal consistency</em> across a patient record. You could extend this to other constraints — a response assessment requires a prior imaging record, a dose reduction requires an active regimen, a second-line therapy start requires a first-line stop. Each constraint is a SQL check that runs before the function call succeeds, and any violation becomes structured feedback the model can act on.</p>
+<hr>
+</section>
+</section>
+<section id="side-by-side-three-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="side-by-side-three-approaches">Side-by-Side: Three Approaches</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Free-text JSON</th>
+<th>Structured Output</th>
+<th>Function Calling + Pydantic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Valid syntax</td>
+<td>Sometimes</td>
+<td>Always</td>
+<td>Always</td>
+</tr>
+<tr class="even">
+<td>Controlled vocabulary</td>
+<td>Instructed only</td>
+<td>Schema-level</td>
+<td>Enum-enforced</td>
+</tr>
+<tr class="odd">
+<td>Handles missing fields</td>
+<td>Luck</td>
+<td>Forced nulls</td>
+<td>Tool not called</td>
+</tr>
+<tr class="even">
+<td>Built-in error recovery</td>
+<td>No</td>
+<td>No</td>
+<td>Yes (retry with error)</td>
+</tr>
+<tr class="odd">
+<td>Modular by report structure</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Local model stability</td>
+<td>Good</td>
+<td>Poor (loops)</td>
+<td>Good</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="what-i-still-get-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-still-get-wrong">What I Still Get Wrong</h2>
+<p>Function calling with Pydantic validation is the right approach for production clinical extraction, but it doesn’t close the loop on everything.</p>
+<p><strong>Some semantic errors are invisible to the validator.</strong> Pydantic catches <code>"Diffusely"</code> — that’s a type error. It doesn’t catch the model confidently extracting the wrong diagnosis from a genuinely ambiguous report. Those errors only surface when a human reviews the output. Building good human-in-the-loop review workflows, with the model flagging its own uncertainty via a <code>confidence</code> field, is the part that requires as much design attention as the extraction itself.</p>
+<p><strong>Schema design is still hard.</strong> Defining Pydantic models for complex nested reports — multiple specimens, conditional fields, IHC markers that only apply to certain specimen types — requires careful thought about what you actually want to capture and why. This is the same task specification problem from the npj paper, just expressed in Python types instead of prose instructions.</p>
+<p><strong>Tool design affects model behavior.</strong> How you decompose the extraction into tools matters. A single monolithic tool behaves differently than five small tools covering different parts of the report. Getting the decomposition right for your specific report type requires iteration — which is, again, mostly a problem about clarity of objectives rather than a technical problem. What I’ve found is that if there are too many tools and too much nested types, models can still get over overwhelmed.</p>
+<hr>
+</section>
+<section id="related-work" class="level2">
+<h2 class="anchored" data-anchor-id="related-work">Related Work</h2>
+<p><strong>Hein D</strong> et al.&nbsp;Iterative refinement and goal articulation to optimize large language models for clinical information extraction. <em>npj Digital Medicine</em>. 8, 301 (2025). <a href="https://doi.org/10.1038/s41746-025-01686-z">Paper</a> | <a href="https://github.com/DavidHein96/prompts_to_table">Code</a></p>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "No More Mr. Nice Prompt: Three Eras of AI Clinical Data Extraction"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-02-21"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [Python, LLMs, Clinical NLP]</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "toolbox.jpg"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Three Approaches, Three Different Ways to Fail</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>If you've read <span class="co">[</span><span class="ot">my earlier post on the npj Digital Medicine paper</span><span class="co">](../npj_llm_extraction/index.qmd)</span>, you know the pipeline we built for extracting structured data from kidney cancer pathology reports. In that post, I hint at the actual python code / prompting methods are quite outdated- by the time of publication (Spring 2025). As you may imagine, as of writing (February 2026) my personal favorite paper's methods are actually now eligible for medicare.</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>I thought in this post I'd quickly showcase how our extraction approach evolved across three major eras: from asking the model nicely to return JSON, to constrained decoding with JSON mode, to function calling with Pydantic validation. Each transition was driven by both wall hitting with the previous approach, and the rapidly evolving field.</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Act 1: "Ask Nicely for Reasoning &amp; JSON"</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Approach</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>The original setup was straightforward: craft a detailed system prompt telling the model exactly what fields you want and what format to use, then call <span class="in">`json.loads()`</span> on the response. To handle complex reports — multiple specimens (say a lung biopsy and a lymph node biopsy in the same report), multiple IHC tests (sometimes the same test but with different results depending on the specimen) — we broke extraction into a multi-step chain: first prompt to organize raw test results, second to group by specimen, third to structure by individual test result. The outputs of each step fed into the next. Below is a **very** simplified version of the last prompt in that chain, note that this is based on a jinja template, so the {{}} indicates where you would inject text into this template at runtime from python before sending it off to the LLM.</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="in">``` markdown</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>system:</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>You are a clinical data extraction assistant.</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>Your task is to process text from electronic medical records into structured JSONs</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>user:</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="fu"># Background</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>An LLM has processed and organized relevant text from a pathology report </span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You are being provided these segments based on specimens &amp; IHC / FISH results</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Your role is to convert this segmented text into labeled, standardized structured data</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Naming conventions</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>Standardize test names to those in the following list:</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>{{panel_test_names}}</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>Standardize test results to those in the following list:</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>{{panel_test_results}}</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu"># Instructions</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task 1, Reasoning</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>Review segmented text to standardize test names and results. And consider the following...</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task 2, standardize and organize test names and results</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>Return a JSON first with a summary of your reasoning</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>Then with standardized test names and results for each specimen</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>Follow this template:</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>"reasoning_summary": "summary of your reasoning",</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>"specimen_X_TESTNAME": "RESULT",</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>"specimen_Y_TESTNAME": "RESULT"</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>It is vital that the entirety of the returned text is a valid JSON</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="fu"># Segmented Text</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>Finally, here is the text you will be working with</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>{{segmented_text}}</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>"""</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>And then at the end, manually parsing the chained outputs into your final data structure. Please note the very obnoxious key creation with the underscores, I did'nt want to do this. But what I found was that models of the day (early GPT-4) had tremendous issues with nested JSONs, so I had to rely on the keys containing multiple indicators, the specimen name and the test name.</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### Where It Breaks</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>**Malformed JSON.** Every developer who's done this knows the feeling of <span class="in">`json.loads()`</span> raising a <span class="in">`JSONDecodeError`</span> on a response that *looks* fine. Missing closing braces, trailing commas after the last item, unescaped quotes inside string values — these showed up constantly, with no pattern that made them predictable.</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>**Conversational wrapping.** Despite "Return only the JSON. No explanatory text." being in the prompt, the model frequently added a preamble. "Based on the pathology report, here is the extracted data:" followed by the JSON. <span class="in">`json.loads()`</span> does not appreciate this. I had to code a cleaner step first to strip these out.</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>**Vocabulary drift.** This one matters more than it sounds. The prompt specified <span class="in">`"Diffuse"`</span> as a valid result value. The model returned <span class="in">`"Diffusely"`</span> — grammatically reasonable, programmatically wrong. Or <span class="in">`"diffuse positive"`</span> instead of <span class="in">`"Diffuse"`</span>. Or <span class="in">`"positive, diffusely"`</span>. Every variant that wasn't in your exact vocabulary required manual cleanup or a post-processing normalization step. And this isn't academic: this was one of the most persistent failure modes documented in <span class="co">[</span><span class="ot">the npj paper</span><span class="co">](../npj_llm_extraction/index.qmd)</span>. The root cause was that we were *instructing* the model to use controlled vocabulary rather than *constraining* it to do so.</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>**The parsing tax.** The multi-step chain solved the complexity problem — big reports broken into manageable extractions — but it meant writing substantial custom parsing code at the end to reassemble the pieces. Every new report type or schema change meant updating that parser.</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### What We Learned</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>Free-text prompting worked because at the time, its all we had. At scale, the combination of malformed output, vocabulary drift, and manual parsing means you're spending engineering time on glue code rather than on improving extraction quality. The insight: *instruction* isn't the same as *constraint*. You need the model's output to be mechanically valid, not just instructed toward validity. No more asking nicely.</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Act 2: Structured Output / JSON Mode</span></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Approach</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>The obvious next step: use constrained decoding to *guarantee* valid JSON. OpenAI's <span class="in">`response_format={"type": "json_object"}`</span> and vLLM's guided decoding via grammar constraints both operate at the token level — the model can only produce tokens that form valid JSON matching your schema.</span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> enum <span class="im">import</span> Enum</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultPrimary(<span class="bu">str</span>, Enum):</span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>    POSITIVE <span class="op">=</span> <span class="st">"Positive"</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>    NEGATIVE <span class="op">=</span> <span class="st">"Negative"</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"Other"</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultModifier(<span class="bu">str</span>, Enum):</span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>    DIFFUSE <span class="op">=</span> <span class="st">"Diffuse"</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>    BOX_LIKE <span class="op">=</span> <span class="st">"Box like"</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>    CUP_LIKE <span class="op">=</span> <span class="st">"Cup like"</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTestName(<span class="bu">str</span>, Enum):</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>    BAP1 <span class="op">=</span> <span class="st">"BAP1"</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>    CA_IX <span class="op">=</span> <span class="st">"CA-IX"</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"OTHER"</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTest(BaseModel):</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>    specimen: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Specimen used for test"</span>)</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>    test_name: IHCTestName <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Name of test"</span>)</span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>    test_name_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Name of test if not in options"</span>)</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>    test_result: IHCResultPrimary <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Test Result"</span>)</span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>    test_result_modifier: IHCResultModifier <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Test Result modifier if applicable"</span>)</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>    test_result_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"result if not in options"</span>)</span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCReport(BaseModel):</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>    reasoning: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Summary of reasoning"</span>)</span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>    test_and_results: <span class="bu">list</span>[IHCTest] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"List of tests and results"</span>)</span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we use the handy OpenAI parse which lets us pass the pydantic model directly, for vllm we would dump it first</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.beta.chat.completions.parse(</span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>    response_format<span class="op">=</span>IHCReport</span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="fu">### The New Problems</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>**It's slow.** Constrained decoding has real latency overhead compared to unconstrained generation. For batch processing hundreds of reports, this adds up quickly.</span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>**Local models get stuck.** When running open-source models on vLLM with grammar-based structured output, we hit cases where the model would enter a loop — continuously generating tokens but never completing. Reports would never finish processing. This wasn't a fringe case.</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>**The monolithic schema problem.** With structured output, you have to write out the full schema upfront with every valid option enumerated. For complex pathology reports, that means one giant schema that every report gets forced through — whether the relevant fields appear in the report or not.</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>**No built-in error recovery.** When constrained decoding produces semantically wrong output (valid JSON, wrong values), there's no natural mechanism for catching it and retrying with context about what went wrong. The model gave you valid JSON — as far as the framework is concerned, the job is done.</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>**Model alignment is moving on.** The post-training regimes for frontier models are increasingly oriented toward function calling and tool use, not schema-constrained generation. Using structured output started to feel like swimming against the current. Additionally, here we are still explicitly having the model fill out a reasoning field, but these days reasoning is built into models we don't need to ask for it anymore.</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### What We Learned</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>Structured output solves the syntax problem but not the semantics problem. Valid JSON can still be wrong. And the operational costs — latency, local model instability, monolithic schemas — made it harder to work with than the theoretical cleanliness suggested. The deeper issue is that you're still fundamentally asking the model to fill out a form; you haven't given it a more natural interface for expressing what it knows.</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Act 3: Function Calling + Pydantic Validation</span></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Approach</span></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>Function calling inverts the dynamic: instead of telling the model "return this JSON shape," you define tools the model can call, and the model decides when and how to call them. The model's post-training makes this feel natural — it reasons about what information it has and selects the appropriate tool to record it.</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>Pydantic models define the function arguments. This is where the vocabulary drift problem gets solved properly: enums constrain the model to exact valid values, not as an instruction but as a type system. We don't have to literally force the model to output our correct terms, we can just raise validation errors and recover.</span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, Field, field_validator</span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional, Literal</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> enum <span class="im">import</span> Enum</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultPrimary(<span class="bu">str</span>, Enum):</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>    POSITIVE <span class="op">=</span> <span class="st">"Positive"</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>    NEGATIVE <span class="op">=</span> <span class="st">"Negative"</span></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"Other"</span></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCResultModifier(<span class="bu">str</span>, Enum):</span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a>    DIFFUSE <span class="op">=</span> <span class="st">"Diffuse"</span></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a>    BOX_LIKE <span class="op">=</span> <span class="st">"Box like"</span></span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>    CUP_LIKE <span class="op">=</span> <span class="st">"Cup like"</span></span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTestName(<span class="bu">str</span>, Enum):</span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a>    BAP1 <span class="op">=</span> <span class="st">"BAP1"</span></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>    CA_IX <span class="op">=</span> <span class="st">"CA-IX"</span></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a>    OTHER <span class="op">=</span> <span class="st">"OTHER"</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> IHCTest(BaseModel):</span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a>    specimen: <span class="bu">str</span> <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Specimen used for test"</span>)</span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>    test_name: IHCTestName <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Name of test"</span>)</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>    test_name_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Name of test if not in options"</span>)</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>    test_result: IHCResultPrimary <span class="op">=</span> Field(..., description<span class="op">=</span><span class="st">"Test Result"</span>)</span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a>    test_result_modifier: IHCResultModifier <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"Test Result modifier if applicable"</span>)</span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a>    test_result_other: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> Field(<span class="va">None</span>, description<span class="op">=</span><span class="st">"result if not in options"</span>)</span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_ihc_test(<span class="op">**</span>kwargs) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">str</span>, IHCTest]:</span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a>    ihc_test <span class="op">=</span> IHCTest(<span class="op">**</span>kwargs)</span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json.dumps({<span class="st">"ok"</span>:<span class="va">True</span>}), ihc_test</span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="co"># Now a tool calling loop, ill just do pseudo code since its kinda long...</span></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(...)</span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a>    perform_tool_calls(...)</span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> ValidationError()</span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a>    append_error_and_retry(...) <span class="co"># You'd have a limit on the number of retries</span></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a>save_final_result(...)</span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a>The model calls <span class="in">`record_ihc_test(specimen="A", test_name="...", ...)`</span> and Pydantic validates the arguments. <span class="in">`"Diffusely"`</span> is simply not a valid <span class="in">`IHCResult`</span> — the model has to pick from the enum or the call fails, but we can just append the error message and retry!</span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Modularity Win</span></span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a>The other big improvement: instead of one schema for the whole report, you define small tools that can be called once, many times, or not at all. A tool for recording specimen-level diagnoses. A separate tool for IHC results. A tool specifically for noting ambiguous findings. The model calls them in the order that makes sense for the report it's actually looking at.</span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a>This ends up being a cleaner version of what the multi-step prompt chain in Act 1 was trying to accomplish — except the model orchestrates it rather than you hard-coding the sequence.</span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="fu">### Validation as a Catch, Not a Guarantee</span></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a>Pydantic validation catches structural and type-level errors automatically. But semantic errors — where the model extracts the wrong value from a genuinely ambiguous report — still happen. The retry loop handles the structural cases:</span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_with_retry(report_text: <span class="bu">str</span>, max_retries: <span class="bu">int</span> <span class="op">=</span> <span class="dv">2</span>):</span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [</span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM_PROMPT},</span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: report_text}</span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> attempt <span class="kw">in</span> <span class="bu">range</span>(max_retries <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a>            model<span class="op">=</span><span class="st">"gpt-5"</span>,</span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a>            tools<span class="op">=</span>EXTRACTION_TOOLS,</span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a>            tool_choice<span class="op">=</span><span class="st">"required"</span>,</span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>            messages<span class="op">=</span>messages</span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> parse_tool_calls(response)  <span class="co"># Pydantic validation here</span></span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> result</span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> ValidationError <span class="im">as</span> e:</span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> attempt <span class="op">==</span> max_retries:</span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span></span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Feed validation error back to the model</span></span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: <span class="bu">str</span>(response.choices[<span class="dv">0</span>].message)})</span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a>            messages.append({</span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a>                <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: <span class="ss">f"The previous extraction failed validation: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">. Please correct and retry."</span></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a>The model gets told exactly what was wrong and can fix it. Structural errors (wrong enum value, missing required field) almost always get corrected on retry. Semantic errors — the model genuinely interpreted an ambiguous finding differently — the retry won't fix, and you need a human review flag.</span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a><span class="fu">### Act 4: Real Function &amp; In-Memory SQL as a State Layer</span></span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>Wait what, I thought there were only supposed to be 3 acts? Well that does'nt sound as good for a title. Here I show how I'm thinking about actually using function calling to perform more complex operations than just pydantic validation.</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a>Pydantic validates each function call in isolation. That's fine for pathology reports, where each document is self-contained. But a lot of clinical extraction involves processing a *series of notes across a patient timeline* — clinic visits, lab results, treatment records — where what's valid in note N depends on what was recorded from notes 1 through N-1.</span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a>The canonical example: you're extracting lines of therapy from oncology notes in chronological order. When the model encounters a note documenting that a patient stopped pembrolizumab, it calls <span class="in">`record_therapy_stop(...)`</span>. But if note 1 was corrupted, or out of order, or the therapy name was spelled differently — there may be no corresponding start date in your records. Without a state layer, you'd write a stop date with no start date and have no idea until someone noticed the broken timeline downstream.</span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a>The fix is an in-memory SQLite database that gets built up as notes are processed, with referential integrity checks baked into the tool execution layer. The model doesn't see the SQL — it just knows that calling a tool can fail with a constraint error, the same as any other validation failure, and gets told specifically why.</span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional</span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize in-memory state for this patient's timeline</span></span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">":memory:"</span>)</span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a>conn.execute(<span class="st">"""</span></span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a><span class="st">    CREATE TABLE therapy_lines (</span></span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a><span class="st">        patient_id    TEXT NOT NULL,</span></span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a><span class="st">        therapy_name  TEXT NOT NULL,</span></span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a><span class="st">        start_date    TEXT,</span></span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a><span class="st">        stop_date     TEXT,</span></span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a><span class="st">        stop_reason   TEXT,</span></span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a><span class="st">        PRIMARY KEY (patient_id, therapy_name)</span></span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a>conn.commit()</span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_therapy_start(patient_id: <span class="bu">str</span>, therapy_name: <span class="bu">str</span>, start_date: <span class="bu">str</span>):</span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a>        conn.execute(</span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a>            <span class="st">"INSERT INTO therapy_lines (patient_id, therapy_name, start_date) VALUES (?, ?, ?)"</span>,</span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a>            (patient_id, therapy_name, start_date)</span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> sqlite3.IntegrityError:</span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Already exists — update start date if it was missing</span></span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a>        <span class="co"># TBH in practice I would probably use an Event Sourcing pattern </span></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   where it would be a bit more stateless and we wouldnt be updating it quite like this,</span></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   but that's outside the scope of this post lol</span></span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a>        conn.execute(</span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a>            <span class="st">"UPDATE therapy_lines SET start_date = ? WHERE patient_id = ? AND therapy_name = ? AND start_date IS NULL"</span>,</span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a>            (start_date, patient_id, therapy_name)</span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> record_therapy_stop(patient_id: <span class="bu">str</span>, therapy_name: <span class="bu">str</span>, stop_date: <span class="bu">str</span>, stop_reason: <span class="bu">str</span>):</span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a>    cursor <span class="op">=</span> conn.execute(</span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a>        <span class="st">"""SELECT start_date FROM therapy_lines</span></span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a><span class="st">           WHERE patient_id = ? AND therapy_name = ? AND start_date IS NOT NULL AND stop_date IS NULL"""</span>,</span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a>        (patient_id, therapy_name)</span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> cursor.fetchone()</span>
+<span id="cb7-310"><a href="#cb7-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-311"><a href="#cb7-311" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a>        <span class="co"># No active (started, not yet stopped) therapy found — raise a constraint error</span></span>
+<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>        <span class="co"># that gets fed back to the model the same as any Pydantic ValidationError</span></span>
+<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(</span>
+<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Cannot record stop for '</span><span class="sc">{</span>therapy_name<span class="sc">}</span><span class="ss">': no active therapy start found for "</span></span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"patient </span><span class="sc">{</span>patient_id<span class="sc">}</span><span class="ss">. Either the therapy was never started in the notes "</span></span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"processed so far, or the therapy name does not match an existing record. "</span></span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Existing therapy lines: </span><span class="sc">{</span>_get_active_therapies(patient_id)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a>    conn.execute(</span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a>        <span class="st">"UPDATE therapy_lines SET stop_date = ?, stop_reason = ? WHERE patient_id = ? AND therapy_name = ?"</span>,</span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a>        (stop_date, stop_reason, patient_id, therapy_name)</span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a>    conn.commit()</span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _get_active_therapies(patient_id: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">str</span>]:</span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a>    cursor <span class="op">=</span> conn.execute(</span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SELECT therapy_name FROM therapy_lines WHERE patient_id = ? AND start_date IS NOT NULL AND stop_date IS NULL"</span>,</span>
+<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a>        (patient_id,)</span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [row[<span class="dv">0</span>] <span class="cf">for</span> row <span class="kw">in</span> cursor.fetchall()]</span>
+<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-336"><a href="#cb7-336" aria-hidden="true" tabindex="-1"></a>The error message deliberately includes the list of active therapies the model *can* legally stop. A common failure mode is a name mismatch — note 1 says "pembrolizumab," note 4 says "Keytruda" — and showing the model what names exist in state gives it the context to recognize the conflict and either reconcile the names or flag the ambiguity rather than guessing.</span>
+<span id="cb7-337"><a href="#cb7-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-338"><a href="#cb7-338" aria-hidden="true" tabindex="-1"></a>This constraint error flows back through the same retry loop as Pydantic errors:</span>
+<span id="cb7-339"><a href="#cb7-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-340"><a href="#cb7-340" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb7-341"><a href="#cb7-341" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> execute_tool_call(tool_name: <span class="bu">str</span>, tool_args: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb7-342"><a href="#cb7-342" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb7-343"><a href="#cb7-343" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> tool_name <span class="op">==</span> <span class="st">"record_therapy_start"</span>:</span>
+<span id="cb7-344"><a href="#cb7-344" aria-hidden="true" tabindex="-1"></a>            record_therapy_start(<span class="op">**</span>tool_args)</span>
+<span id="cb7-345"><a href="#cb7-345" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"OK"</span></span>
+<span id="cb7-346"><a href="#cb7-346" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> tool_name <span class="op">==</span> <span class="st">"record_therapy_stop"</span>:</span>
+<span id="cb7-347"><a href="#cb7-347" aria-hidden="true" tabindex="-1"></a>            record_therapy_stop(<span class="op">**</span>tool_args)</span>
+<span id="cb7-348"><a href="#cb7-348" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"OK"</span></span>
+<span id="cb7-349"><a href="#cb7-349" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... other tools</span></span>
+<span id="cb7-350"><a href="#cb7-350" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (<span class="pp">ValueError</span>, ValidationError) <span class="im">as</span> e:</span>
+<span id="cb7-351"><a href="#cb7-351" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return error string — caller feeds this back to the model</span></span>
+<span id="cb7-352"><a href="#cb7-352" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"CONSTRAINT_ERROR: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-353"><a href="#cb7-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-354"><a href="#cb7-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-355"><a href="#cb7-355" aria-hidden="true" tabindex="-1"></a>The broader pattern here is that the in-memory DB is doing what a stateless validator can't: enforcing *temporal consistency* across a patient record. You could extend this to other constraints — a response assessment requires a prior imaging record, a dose reduction requires an active regimen, a second-line therapy start requires a first-line stop. Each constraint is a SQL check that runs before the function call succeeds, and any violation becomes structured feedback the model can act on.</span>
+<span id="cb7-356"><a href="#cb7-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-357"><a href="#cb7-357" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb7-358"><a href="#cb7-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-359"><a href="#cb7-359" aria-hidden="true" tabindex="-1"></a><span class="fu">## Side-by-Side: Three Approaches</span></span>
+<span id="cb7-360"><a href="#cb7-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-361"><a href="#cb7-361" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aspect <span class="pp">|</span> Free-text JSON <span class="pp">|</span> Structured Output <span class="pp">|</span> Function Calling + Pydantic <span class="pp">|</span></span>
+<span id="cb7-362"><a href="#cb7-362" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------|------------------|------------------|------------------|</span></span>
+<span id="cb7-363"><a href="#cb7-363" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Valid syntax <span class="pp">|</span> Sometimes <span class="pp">|</span> Always <span class="pp">|</span> Always <span class="pp">|</span></span>
+<span id="cb7-364"><a href="#cb7-364" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Controlled vocabulary <span class="pp">|</span> Instructed only <span class="pp">|</span> Schema-level <span class="pp">|</span> Enum-enforced <span class="pp">|</span></span>
+<span id="cb7-365"><a href="#cb7-365" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Handles missing fields <span class="pp">|</span> Luck <span class="pp">|</span> Forced nulls <span class="pp">|</span> Tool not called <span class="pp">|</span></span>
+<span id="cb7-366"><a href="#cb7-366" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Built-in error recovery <span class="pp">|</span> No <span class="pp">|</span> No <span class="pp">|</span> Yes (retry with error) <span class="pp">|</span></span>
+<span id="cb7-367"><a href="#cb7-367" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Modular by report structure <span class="pp">|</span> No <span class="pp">|</span> No <span class="pp">|</span> Yes <span class="pp">|</span></span>
+<span id="cb7-368"><a href="#cb7-368" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Local model stability <span class="pp">|</span> Good <span class="pp">|</span> Poor (loops) <span class="pp">|</span> Good <span class="pp">|</span></span>
+<span id="cb7-369"><a href="#cb7-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-370"><a href="#cb7-370" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb7-371"><a href="#cb7-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-372"><a href="#cb7-372" aria-hidden="true" tabindex="-1"></a><span class="fu">## What I Still Get Wrong</span></span>
+<span id="cb7-373"><a href="#cb7-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-374"><a href="#cb7-374" aria-hidden="true" tabindex="-1"></a>Function calling with Pydantic validation is the right approach for production clinical extraction, but it doesn't close the loop on everything.</span>
+<span id="cb7-375"><a href="#cb7-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-376"><a href="#cb7-376" aria-hidden="true" tabindex="-1"></a>**Some semantic errors are invisible to the validator.** Pydantic catches <span class="in">`"Diffusely"`</span> — that's a type error. It doesn't catch the model confidently extracting the wrong diagnosis from a genuinely ambiguous report. Those errors only surface when a human reviews the output. Building good human-in-the-loop review workflows, with the model flagging its own uncertainty via a <span class="in">`confidence`</span> field, is the part that requires as much design attention as the extraction itself.</span>
+<span id="cb7-377"><a href="#cb7-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-378"><a href="#cb7-378" aria-hidden="true" tabindex="-1"></a>**Schema design is still hard.** Defining Pydantic models for complex nested reports — multiple specimens, conditional fields, IHC markers that only apply to certain specimen types — requires careful thought about what you actually want to capture and why. This is the same task specification problem from the npj paper, just expressed in Python types instead of prose instructions.</span>
+<span id="cb7-379"><a href="#cb7-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-380"><a href="#cb7-380" aria-hidden="true" tabindex="-1"></a>**Tool design affects model behavior.** How you decompose the extraction into tools matters. A single monolithic tool behaves differently than five small tools covering different parts of the report. Getting the decomposition right for your specific report type requires iteration — which is, again, mostly a problem about clarity of objectives rather than a technical problem. What I've found is that if there are too many tools and too much nested types, models can still get over overwhelmed.</span>
+<span id="cb7-381"><a href="#cb7-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-382"><a href="#cb7-382" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb7-383"><a href="#cb7-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-384"><a href="#cb7-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## Related Work</span></span>
+<span id="cb7-385"><a href="#cb7-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-386"><a href="#cb7-386" aria-hidden="true" tabindex="-1"></a>**Hein D** et al. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. *npj Digital Medicine*. 8, 301 (2025). <span class="co">[</span><span class="ot">Paper</span><span class="co">](https://doi.org/10.1038/s41746-025-01686-z)</span> <span class="sc">\|</span> <span class="co">[</span><span class="ot">Code</span><span class="co">](https://github.com/DavidHein96/prompts_to_table)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

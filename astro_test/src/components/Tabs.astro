@@ -1,0 +1,59 @@
+---
+interface Props {
+  labels: string[];
+}
+const { labels } = Astro.props;
+---
+
+<div class="tab-group my-6 rounded-xl border border-gray-200 overflow-hidden not-prose">
+  <div class="flex border-b border-gray-200 bg-gray-50">
+    {labels.map((label, i) => (
+      <button
+        class:list={[
+          "tab-btn px-4 py-2 text-sm font-medium transition-colors cursor-pointer",
+          i === 0 ? "text-accent border-b-2 border-accent bg-white" : "text-gray-400 hover:text-gray-600"
+        ]}
+        data-tab-index={i}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+  <div class="tab-panels">
+    <div class="tab-panel" data-panel-index="0">
+      <slot name="first" />
+    </div>
+    {labels.length > 1 && (
+      <div class="tab-panel hidden" data-panel-index="1">
+        <slot name="second" />
+      </div>
+    )}
+  </div>
+</div>
+
+<script>
+  function initTabs() {
+    document.querySelectorAll('.tab-group').forEach(group => {
+      const buttons = group.querySelectorAll('.tab-btn');
+      const panels = group.querySelectorAll('.tab-panel');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-tab-index');
+
+          buttons.forEach(b => {
+            b.classList.remove('text-accent', 'border-b-2', 'border-accent', 'bg-white');
+            b.classList.add('text-gray-400');
+          });
+          btn.classList.add('text-accent', 'border-b-2', 'border-accent', 'bg-white');
+          btn.classList.remove('text-gray-400');
+
+          panels.forEach(p => p.classList.add('hidden'));
+          const target = group.querySelector(`[data-panel-index="${index}"]`);
+          if (target) target.classList.remove('hidden');
+        });
+      });
+    });
+  }
+  initTabs();
+</script>

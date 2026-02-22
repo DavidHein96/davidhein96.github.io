@@ -1,0 +1,125 @@
+---
+title: "InstaWell: Open-Source Thermal Shift Assay Analysis in Python"
+date: "2026-02-11"
+categories: [Python, "Open Source"]
+description: "An open-source Python package that automates thermal shift assay analysis — born from watching a collaborator spend an afternoon manually copying plate reader data into Excel. Available on PyPI."
+cover: ./instawell_cover.jpg
+---
+
+## How This Started
+
+This project was born from watching a collaborator spend an entire afternoon copying fluorescence readings from a plate reader export into Excel, manually removing background controls, calculating derivatives, and then doing it all again for the next plate. I'd been working in clinical data science — building pipelines that process thousands of records automatically — and thought I could do the same for this project (despite not knowing very much about the biochemistry behind the scenes haha).
+
+The tool started as a quick script to help that one collaborator, then grew as I realized the problem was universal: every lab doing thermal shift assays has their own ad-hoc Excel workflow, and none of them are reproducible. InstaWell makes this process explicit and auditable.
+
+## What It Does
+
+[**InstaWell**](https://davidhein96.github.io/InstaWell/) is an open-source Python package that automates the analysis of thermal shift assay (TSA/DSF) data. Thermal shift assays are a workhorse technique in drug discovery and protein biochemistry — they measure how a protein's thermal stability changes in the presence of ligands or buffer conditions. The raw instrument output is just a big matrix of fluorescence readings across dozens of wells and temperatures.
+
+The manual Excel approach looks something like: export CSV from instrument, copy into a template, manually subtract background wells, normalize each trace by hand, compute numerical derivatives in a separate column, scan for the minimum by eye, and paste the result into a summary table. For a 96-well plate with replicates, that's an hour of tedious, error-prone work — and it leaves no audit trail.
+
+InstaWell replaces that with a reproducible, auditable pipeline that goes from raw instrument files to publication-quality figures and clean CSV summaries.
+
+[**Documentation**](https://davidhein96.github.io/InstaWell/) | [**GitHub**](https://github.com/DavidHein96/InstaWell) | [**PyPI**](https://pypi.org/project/instawell/)
+
+## Installation
+
+```bash
+pip install instawell              # core package
+pip install 'instawell[notebook]'  # + Jupyter widget support
+pip install 'instawell[dash]'      # + web UI
+```
+
+## The Pipeline
+
+InstaWell follows an 8-step sequential pipeline, generating numbered CSV files at each stage for full traceability:
+
+1. **Raw organization** — wide-to-long transformation with flexible condition parsing from your plate layout
+2. **Well filtering** — exclude problematic wells
+3. **Replicate averaging** — group by unique conditions and compute means
+4. **Background subtraction** — NPC-aware signal correction
+5. **Min-max scaling** — normalize traces to \[0, 1\] for comparison
+6. **Derivative computation** — rate-of-change analysis across temperatures
+7. **Tm extraction** — identify minimum derivative temperatures
+8. **Curve fitting** — 4-parameter logistic (4PL) regression in log10 dose space
+
+Every intermediate result is saved as a numbered CSV, so you can inspect or branch off at any point.
+
+## Flexible Condition Parsing
+
+One of the design goals was supporting arbitrary experimental layouts. Your plate layout file maps wells to any combination of condition fields — concentration, ligand, protein, buffer, etc. — using a configurable delimiter:
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>A</strong></td>
+      <td>0um|DMSO|NPC|PBS</td>
+      <td>1.5um|DrugX|ProteinA|PBS</td>
+      <td>6um|DrugX|ProteinA|PBS</td>
+    </tr>
+  </tbody>
+</table>
+
+The `ExperimentContext` class manages all pipeline settings including field names, delimiters, NPC markers, and the temperature column.
+
+## Three Ways to Use It
+
+### Python API
+
+The core pipeline is designed for scripting and Jupyter notebooks. Each step is a function call that reads the previous CSV and writes the next:
+
+```python
+from instawell import ExperimentContext
+
+ctx = ExperimentContext(
+    condition_fields=("concentration", "ligand", "protein", "buffer"),
+    condition_separator="|",
+    non_protein_control_marker="NPC",
+)
+```
+
+### Jupyter Widgets
+
+Built-in widget functions let you interactively browse generated figures directly in notebooks:
+
+- `raw_figures_widget()` — browse raw per-well traces
+- `processed_figures_widget()` — view normalized and derivative curves
+- `min_temp_figures_widget()` — inspect Tm extraction results
+
+### Dash Web App
+
+For users who prefer a GUI, InstaWell includes a full Dash web interface for uploading data, designing plate layouts, running the pipeline, and browsing interactive Plotly figures — no coding required:
+
+```bash
+instawell-dash --port 8050 --experiments-root experiments
+```
+
+## Tech Stack
+
+- **pandas / NumPy** for data manipulation
+- **SciPy** for 4PL curve fitting
+- **Plotly** for interactive visualizations
+- **Dash** for the optional web UI
+- **Quarto** for documentation
+- **pytest** for the test suite (unit, integration, fuzz testing)
+- **uv** for package management
+
+## Current Status
+
+The core data pipeline is stable, well-tested, and has an official release on PyPI — this is well past beta at this point. If you want to stress-test something, the Dash web app is the most likely place to find edge cases with unusual plate layouts or instrument export formats. Additionally, the actual task of manually creating the plate layouts seems like it could be improved.
+
+If your lab does thermal shift assays and you're tired of Excel, I'd love to hear what breaks. File an issue on GitHub or reach out directly.
+
+## Links
+
+- [**Full documentation**](https://davidhein96.github.io/InstaWell/)
+- [**GitHub repository**](https://github.com/DavidHein96/InstaWell)
+- [**PyPI package**](https://pypi.org/project/instawell/)
