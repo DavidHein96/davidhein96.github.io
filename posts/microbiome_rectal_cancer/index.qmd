@@ -1,5 +1,5 @@
 ---
-title: "Gut Microbiome Signatures in a Diverse Rectal Cancer Cohort"
+title: "Gut Microbiome Signatures and the Difficulty of p>>n"
 author: "Dave Hein"
 date: "2024-08-19"
 categories: [R, Bioinformatics, Oncology]
@@ -41,7 +41,9 @@ Sixty-four patients is small, and I won't pretend otherwise. I'll say this much:
 
 The pre-treatment timing requirement is the main bottleneck. Antibiotics, bowel prep, and chemoradiation all dramatically disrupt the native microbiome, so samples have to come in before any of that starts — which means a very short window between diagnosis and first treatment. But even setting aside the logistical challenges, the microbiome itself is a noisy measurement. Diet fluctuates day to day. A patient who had a stomach bug last month, or took a course of antibiotics for a dental procedure, or just happened to eat differently the week of collection — all of that shows up in the 16S signal. There's a real noise floor to this kind of data that doesn't go away with better sequencing; it's just inherent to measuring a system that changes constantly in response to things that have nothing to do with cancer.
 
-That's part of why the dual-method approach and the Cauchy combination of p-values mattered so much here. With a small sample and noisy measurements, requiring agreement across independent methods is one of the few levers you have for distinguishing real signal from lucky noise.
+That's the p\>\>n problem in its most uncomfortable form: you have far more dimensions to test than you have samples to test them on, and the biological system you're measuring is itself a moving target. In this regime, any single analytical method has enough degrees of freedom to find patterns that don't exist. You could pick the right normalization, the right distance metric, the right significance threshold — and still be looking at noise that happened to pass your filters.
+
+The dual-method approach and the Cauchy combination of p-values were a direct response to this. Requiring agreement between LinDA and MaAsLin2 — methods with different normalization strategies and different underlying statistical models — isn't just methodological caution. It's a way of being honest with yourself about how much trust any single result deserves. If a finding evaporates when you look at it through a different lens, it probably wasn't real. If it holds up across both, you have something worth reporting — even if you still can't be certain why it's there.
 
 [Publication Link](https://doi.org/10.36401/JIPO-23-30)
 
@@ -187,7 +189,7 @@ combined_wp$comb_bhcor_p <- p.adjust(combined_wp$couchy_p, method = "BH")
 
 We ran models for multiple comparisons — ethnicity, age of onset, treatment response, T-stage, and antibiotics — each adjusting for the others as appropriate.
 
-![Differential abundance results. Prevotellaceae is enriched ~5x in White Hispanic patients relative to White Non-Hispanic patients, consistent across both LinDA and MaAsLin2.](abundance.png){width=66%}
+![Differential abundance results. Prevotellaceae is enriched \~5x in White Hispanic patients relative to White Non-Hispanic patients, consistent across both LinDA and MaAsLin2.](abundance.png){width="66%"}
 
 ## Batch Correction with ConQuR
 
@@ -249,7 +251,7 @@ Key PERMANOVA results:
 | Onset (EOCRC vs AOCRC) | **0.035**     | **0.022**    | 0.383 / 0.548 |
 | Treatment response     | 0.071         | 0.111        | 0.213 / 0.385 |
 
-![Beta diversity ordination (PCoA). Community-level separation by ethnicity is visible across both Bray-Curtis and Aitchison distance metrics.](beta.png){width=75%}
+![Beta diversity ordination (PCoA). Community-level separation by ethnicity is visible across both Bray-Curtis and Aitchison distance metrics.](beta.png){width="75%"}
 
 ## Alpha Diversity
 
@@ -276,11 +278,10 @@ No significant alpha diversity differences were found by ethnicity or treatment 
 -   **Ethnicity drives community-level separation** (PERMANOVA p \< 0.001) while treatment response does not
 -   The **dual-method approach** (LinDA + MaAsLin2 with Cauchy combination) is a practical strategy for reducing false positives in microbiome studies
 -   **Batch correction choice matters for microbiome data** — ConQuR handles zero-inflated count data better than methods designed for continuous data
--   **Shannon diversity is reduced in early-onset CRC** patients, warranting investigation into whether reduced microbial evenness contributes to early carcinogenesis
 
 ## What We'd Do Differently
 
-This paper was an absolute slog. Prospective sample collection is slow, and the analytical challenge of small n + many dimensions (six taxonomic levels, multiple comparisons) meant doing a lot of work to be cautious about results that still can't be interpreted with much confidence. That's just the reality of a 64-patient microbiome study.
+This paper was an absolute slog. Prospective sample collection is slow, and the analytical challenge of small n + many p dimensions (six taxonomic levels, multiple comparisons) meant doing a lot of work to be cautious about results that still can't be interpreted with much confidence. That's just the reality of a 64-patient microbiome study.
 
 The biggest thing I'd change on the methods side is the sequencing approach. 16S rRNA sequencing tells you *who is present* at the genus or family level but doesn't give you quantitative abundance information with a reliable denominator. A PCR-based method with a known spike-in control — or shotgun metagenomics — would give much better ability to estimate actual abundances rather than relative proportions, which would make the compositional analysis more interpretable.
 

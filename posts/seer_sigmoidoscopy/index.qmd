@@ -1,5 +1,5 @@
 ---
-title: "Sigmoidoscopy Screening & Survival Analysis with Adjusted RMST"
+title: "Good Enough vs. Gold Standard: Survival Analsysis with RMST in the NordICC Era"
 author: "Dave Hein"
 date: "2024-03-13"
 categories: [R, Survival Analysis, Oncology]
@@ -185,6 +185,10 @@ surv_dist_old    <- get_adjusted_surv("over50",  "Distant",   new_data6)
 ```
 
 ## Adjusted RMST
+
+There's a question that doesn't get asked enough in survival analysis: *what are you actually trying to summarize?* A hazard ratio and an RMST difference are both valid summaries of the same underlying survival data, but they answer genuinely different questions. The hazard ratio asks about instantaneous event rates — it's a mechanistic quantity, useful if you're trying to understand the biology of why one group does better than another. RMST asks how many months of life one group gained over a fixed horizon — it's a practical quantity, useful if you're trying to communicate what the difference actually means for patients or for policy.
+
+The choice of which one to report isn't neutral. It's a decision about what question matters. And in a screening policy context, the practical question is almost always the right one: not "what is the instantaneous risk ratio" but "how much longer does a screened patient live."
 
 I chose RMST for two reasons. First, the proportional hazards assumption was formally violated — the KM curves crossed, making a standard Cox hazard ratio inappropriate. You can see the crossing clearly in the adjusted survival curves below.
 

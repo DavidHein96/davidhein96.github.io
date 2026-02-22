@@ -9,7 +9,7 @@
 <meta name="author" content="Dave Hein">
 <meta name="dcterms.date" content="2024-03-13">
 
-<title>Sigmoidoscopy Screening &amp; Survival Analysis with Adjusted RMST – David Hein</title>
+<title>Good Enough vs.&nbsp;Gold Standard: Survival Analsysis with RMST in the NordICC Era – David Hein</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Sigmoidoscopy Screening &amp; Survival Analysis with Adjusted RMST</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Good Enough vs.&nbsp;Gold Standard: Survival Analsysis with RMST in the NordICC Era</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                                 <div class="quarto-categories">
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">Survival Analysis</div>
@@ -367,6 +367,8 @@ pre {
 </section>
 <section id="adjusted-rmst" class="level2">
 <h2 class="anchored" data-anchor-id="adjusted-rmst">Adjusted RMST</h2>
+<p>There’s a question that doesn’t get asked enough in survival analysis: <em>what are you actually trying to summarize?</em> A hazard ratio and an RMST difference are both valid summaries of the same underlying survival data, but they answer genuinely different questions. The hazard ratio asks about instantaneous event rates — it’s a mechanistic quantity, useful if you’re trying to understand the biology of why one group does better than another. RMST asks how many months of life one group gained over a fixed horizon — it’s a practical quantity, useful if you’re trying to communicate what the difference actually means for patients or for policy.</p>
+<p>The choice of which one to report isn’t neutral. It’s a decision about what question matters. And in a screening policy context, the practical question is almost always the right one: not “what is the instantaneous risk ratio” but “how much longer does a screened patient live.”</p>
 <p>I chose RMST for two reasons. First, the proportional hazards assumption was formally violated — the KM curves crossed, making a standard Cox hazard ratio inappropriate. You can see the crossing clearly in the adjusted survival curves below.</p>
 <p><img src="survival_curves.png" class="img-fluid" alt="IPTW-adjusted survival curves by tumor location (sigmoid-visible vs.&nbsp;requires colonoscopy), stratified by age group and stage. Note the crossing curves in several subgroups, which motivated the use of RMST over a standard Cox model."> But second, and more importantly, RMST is just more interpretable. A hazard ratio is a ratio of instantaneous event rates averaged over the follow-up period — clinically, that’s hard to explain to anyone. RMST gives you the average number of months survived up to a specified time horizon, which is something you can actually put in a sentence: “patients with sigmoid-visible tumors survived an average of X months longer over 10 years.” That directness was appealing, and the violated PH assumption made it the right call methodologically too.</p>
 <p>We calculated RMST at 2, 5, and 10 years for each age–stage subgroup, with Bonferroni correction for the 27 comparisons:</p>
@@ -914,7 +916,7 @@ pre {
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Sigmoidoscopy Screening &amp; Survival Analysis with Adjusted RMST"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Good Enough vs. Gold Standard: Survival Analsysis with RMST in the NordICC Era"</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-03-13"</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, Survival Analysis, Oncology]</span></span>
@@ -1101,105 +1103,109 @@ pre {
 <span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adjusted RMST</span></span>
 <span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>I chose RMST for two reasons. First, the proportional hazards assumption was formally violated — the KM curves crossed, making a standard Cox hazard ratio inappropriate. You can see the crossing clearly in the adjusted survival curves below.</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>There's a question that doesn't get asked enough in survival analysis: *what are you actually trying to summarize?* A hazard ratio and an RMST difference are both valid summaries of the same underlying survival data, but they answer genuinely different questions. The hazard ratio asks about instantaneous event rates — it's a mechanistic quantity, useful if you're trying to understand the biology of why one group does better than another. RMST asks how many months of life one group gained over a fixed horizon — it's a practical quantity, useful if you're trying to communicate what the difference actually means for patients or for policy.</span>
 <span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="al">![IPTW-adjusted survival curves by tumor location (sigmoid-visible vs. requires colonoscopy), stratified by age group and stage. Note the crossing curves in several subgroups, which motivated the use of RMST over a standard Cox model.](survival_curves.png)</span> But second, and more importantly, RMST is just more interpretable. A hazard ratio is a ratio of instantaneous event rates averaged over the follow-up period — clinically, that's hard to explain to anyone. RMST gives you the average number of months survived up to a specified time horizon, which is something you can actually put in a sentence: "patients with sigmoid-visible tumors survived an average of X months longer over 10 years." That directness was appealing, and the violated PH assumption made it the right call methodologically too.</span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>The choice of which one to report isn't neutral. It's a decision about what question matters. And in a screening policy context, the practical question is almost always the right one: not "what is the instantaneous risk ratio" but "how much longer does a screened patient live."</span>
 <span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>We calculated RMST at 2, 5, and 10 years for each age–stage subgroup, with Bonferroni correction for the 27 comparisons:</span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>I chose RMST for two reasons. First, the proportional hazards assumption was formally violated — the KM curves crossed, making a standard Cox hazard ratio inappropriate. You can see the crossing clearly in the adjusted survival curves below.</span>
 <span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>get_rmst <span class="ot">&lt;-</span> <span class="cf">function</span>(adj_surv, age_group, stage, months) {</span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bonferroni correction for 27 tests</span></span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>  alpha_corrected <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">27</span>)</span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>  rmst_results <span class="ot">&lt;-</span> <span class="fu">adjusted_rmst</span>(</span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>    adj_surv,</span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> months,</span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>    <span class="at">difference =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>    <span class="at">conf_int =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_1 =</span> <span class="st">"not_see"</span>,</span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_2 =</span> <span class="st">"can_see"</span>,</span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>    <span class="at">conf_level =</span> alpha_corrected)</span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>  rmst_tidy <span class="ot">&lt;-</span> rmst_results <span class="sc">%&gt;%</span></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age_group =</span> age_group, <span class="at">stage =</span> stage, <span class="at">time_p =</span> months)</span>
+<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="al">![IPTW-adjusted survival curves by tumor location (sigmoid-visible vs. requires colonoscopy), stratified by age group and stage. Note the crossing curves in several subgroups, which motivated the use of RMST over a standard Cox model.](survival_curves.png)</span> But second, and more importantly, RMST is just more interpretable. A hazard ratio is a ratio of instantaneous event rates averaged over the follow-up period — clinically, that's hard to explain to anyone. RMST gives you the average number of months survived up to a specified time horizon, which is something you can actually put in a sentence: "patients with sigmoid-visible tumors survived an average of X months longer over 10 years." That directness was appealing, and the violated PH assumption made it the right call methodologically too.</span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a>We calculated RMST at 2, 5, and 10 years for each age–stage subgroup, with Bonferroni correction for the 27 comparisons:</span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>get_rmst <span class="ot">&lt;-</span> <span class="cf">function</span>(adj_surv, age_group, stage, months) {</span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bonferroni correction for 27 tests</span></span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>  alpha_corrected <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">27</span>)</span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>  rmst_results <span class="ot">&lt;-</span> <span class="fu">adjusted_rmst</span>(</span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>    adj_surv,</span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> months,</span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>    <span class="at">difference =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>    <span class="at">conf_int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_1 =</span> <span class="st">"not_see"</span>,</span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_2 =</span> <span class="st">"can_see"</span>,</span>
+<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>    <span class="at">conf_level =</span> alpha_corrected)</span>
 <span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(rmst_tidy)</span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>  rmst_tidy <span class="ot">&lt;-</span> rmst_results <span class="sc">%&gt;%</span></span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age_group =</span> age_group, <span class="at">stage =</span> stage, <span class="at">time_p =</span> months)</span>
 <span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a>The results were then computed across all 9 survival curves at 3 time horizons (24, 60, and 120 months):</span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>stages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Localized"</span>, <span class="st">"Regional"</span>, <span class="st">"Distant"</span>)</span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>ages   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"under45"</span>, <span class="st">"45-50"</span>, <span class="st">"over50"</span>)</span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a>survs  <span class="ot">&lt;-</span> <span class="fu">list</span>(surv_local_young, surv_local_mid, surv_local_old,</span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>               surv_reg_young, surv_reg_mid, surv_reg_old,</span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a>               surv_dist_young, surv_dist_mid, surv_dist_old)</span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>all_rmsts <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (surv <span class="cf">in</span> survs) {</span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (m <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">60</span>, <span class="dv">120</span>)) {</span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a>    all_rmsts <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_rmsts,</span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">get_rmst</span>(surv, ages[<span class="dv">1</span> <span class="sc">+</span> i <span class="sc">%%</span> <span class="dv">3</span>],</span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>                               stages[<span class="fu">ceiling</span>((i <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">3</span>)], m))</span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## RMST Forest Plot</span></span>
-<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a>The final figure is a point-range (forest) plot showing the RMST estimates with 99.8% CIs (Bonferroni-adjusted) for each subgroup, colored by tumor location and follow-up time:</span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(rmst_tidy)</span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>The results were then computed across all 9 survival curves at 3 time horizons (24, 60, and 120 months):</span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a>stages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Localized"</span>, <span class="st">"Regional"</span>, <span class="st">"Distant"</span>)</span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a>ages   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"under45"</span>, <span class="st">"45-50"</span>, <span class="st">"over50"</span>)</span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>survs  <span class="ot">&lt;-</span> <span class="fu">list</span>(surv_local_young, surv_local_mid, surv_local_old,</span>
+<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>               surv_reg_young, surv_reg_mid, surv_reg_old,</span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>               surv_dist_young, surv_dist_mid, surv_dist_old)</span>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>all_rmsts <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (surv <span class="cf">in</span> survs) {</span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (m <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">60</span>, <span class="dv">120</span>)) {</span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>    all_rmsts <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_rmsts,</span>
+<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">get_rmst</span>(surv, ages[<span class="dv">1</span> <span class="sc">+</span> i <span class="sc">%%</span> <span class="dv">3</span>],</span>
+<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a>                               stages[<span class="fu">ceiling</span>((i <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">3</span>)], m))</span>
+<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_rmst3, <span class="fu">aes</span>(<span class="at">y =</span> rmst, <span class="at">x =</span> stage, <span class="at">color =</span> color_var,</span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ymin =</span> rmst <span class="sc">-</span> <span class="fl">2.58</span> <span class="sc">*</span> se, <span class="at">ymax =</span> rmst <span class="sc">+</span> <span class="fl">2.58</span> <span class="sc">*</span> se,</span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a>                             <span class="at">group =</span> group)) <span class="sc">+</span></span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group2, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Requires Colonoscopy: 10 years"</span>, <span class="st">"Requires Colonoscopy: 5 years"</span>,</span>
-<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Requires Colonoscopy: 2 years"</span>,</span>
-<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Sigmoidoscopy: 10 years"</span>, <span class="st">"Sigmoidoscopy: 5 years"</span>,</span>
-<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Sigmoidoscopy: 2 years"</span>),</span>
-<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#b2182b"</span>, <span class="st">"#d6604d"</span>, <span class="st">"#f4a582"</span>, <span class="st">"#2166ac"</span>, <span class="st">"#4393c3"</span>, <span class="st">"#92c5de"</span>),</span>
-<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Tumor location </span><span class="sc">\n</span><span class="st">and RMST follow up time"</span>) <span class="sc">+</span></span>
-<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">122</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">24</span>, <span class="dv">60</span>, <span class="dv">120</span>),</span>
-<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"2"</span>, <span class="st">"5"</span>, <span class="st">"10"</span>)) <span class="sc">+</span></span>
-<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Years of Follow Up"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>)</span>
-<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a><span class="al">![RMST forest plot with Bonferroni-adjusted 99.8% confidence intervals, stratified by age group, stage, and tumor location. Overlapping intervals for localized disease indicate comparable survival; divergence at regional and distant stages favors sigmoid-visible tumors.](forest.png)</span>{width="75%"}</span>
-<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a>For localized disease, survival was comparable regardless of tumor location across all age groups. For regional and distant disease, sigmoid-visible tumors showed improved RMST — meaning that the cancers sigmoidoscopy *can* detect not only represent the majority of cases in younger patients, but also tend to have equivalent or better survival outcomes.</span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## RMST Forest Plot</span></span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>The final figure is a point-range (forest) plot showing the RMST estimates with 99.8% CIs (Bonferroni-adjusted) for each subgroup, colored by tumor location and follow-up time:</span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_rmst3, <span class="fu">aes</span>(<span class="at">y =</span> rmst, <span class="at">x =</span> stage, <span class="at">color =</span> color_var,</span>
+<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ymin =</span> rmst <span class="sc">-</span> <span class="fl">2.58</span> <span class="sc">*</span> se, <span class="at">ymax =</span> rmst <span class="sc">+</span> <span class="fl">2.58</span> <span class="sc">*</span> se,</span>
+<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>                             <span class="at">group =</span> group)) <span class="sc">+</span></span>
+<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group2, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Requires Colonoscopy: 10 years"</span>, <span class="st">"Requires Colonoscopy: 5 years"</span>,</span>
+<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Requires Colonoscopy: 2 years"</span>,</span>
+<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Sigmoidoscopy: 10 years"</span>, <span class="st">"Sigmoidoscopy: 5 years"</span>,</span>
+<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Sigmoidoscopy: 2 years"</span>),</span>
+<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#b2182b"</span>, <span class="st">"#d6604d"</span>, <span class="st">"#f4a582"</span>, <span class="st">"#2166ac"</span>, <span class="st">"#4393c3"</span>, <span class="st">"#92c5de"</span>),</span>
+<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Tumor location </span><span class="sc">\n</span><span class="st">and RMST follow up time"</span>) <span class="sc">+</span></span>
+<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">122</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">24</span>, <span class="dv">60</span>, <span class="dv">120</span>),</span>
+<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"2"</span>, <span class="st">"5"</span>, <span class="st">"10"</span>)) <span class="sc">+</span></span>
+<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">linetype =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Years of Follow Up"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>)</span>
+<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Policy Argument</span></span>
+<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a><span class="al">![RMST forest plot with Bonferroni-adjusted 99.8% confidence intervals, stratified by age group, stage, and tumor location. Overlapping intervals for localized disease indicate comparable survival; divergence at regional and distant stages favors sigmoid-visible tumors.](forest.png)</span>{width="75%"}</span>
 <span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a>The paper is careful not to claim sigmoidoscopy is superior to colonoscopy — colonoscopy can detect proximal tumors and remove precancerous lesions in one procedure, and for high-risk individuals it's the right choice. The argument is narrower: for newly eligible, average-risk patients aged 45–49 who are hesitant about colonoscopy, the "colonoscopy or nothing" framing may be doing more harm than good.</span>
+<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a>For localized disease, survival was comparable regardless of tumor location across all age groups. For regional and distant disease, sigmoid-visible tumors showed improved RMST — meaning that the cancers sigmoidoscopy *can* detect not only represent the majority of cases in younger patients, but also tend to have equivalent or better survival outcomes.</span>
 <span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a>A few things make the case:</span>
+<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Policy Argument</span></span>
 <span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**73% of CRC in patients under 50** arises in sigmoidoscopy-reachable locations — the additional coverage from full colonoscopy doesn't translate to 66% of tumors</span>
-<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Screening completion** for sigmoidoscopy was 63–83% in RCTs vs. 42% in NordICC and 50–60% in US population data for colonoscopy</span>
-<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Survival for sigmoid-visible tumors** is comparable or better than for proximal tumors after IPTW adjustment — the tumors sigmoidoscopy catches aren't the "easy" ones</span>
-<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The rise in early-onset CRC has been **driven largely by rectal and sigmoid cancers** — exactly the locations sigmoidoscopy reaches</span>
-<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a>There's also a disparity angle: studies have shown that racial and ethnic minorities have greater acceptance of less invasive screening options, and a public health message that pushes colonoscopy as the only legitimate choice could widen existing gaps in screening uptake.</span>
-<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a>The conclusion in the paper is measured: these findings "call into question the advantages and disadvantages of a colonoscopy-first public health recommendation" and support "considering flexible sigmoidoscopy as an additional initial option." That's the right framing — not replacing colonoscopy, but expanding the menu for a population that currently isn't getting screened at all.</span>
+<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a>The paper is careful not to claim sigmoidoscopy is superior to colonoscopy — colonoscopy can detect proximal tumors and remove precancerous lesions in one procedure, and for high-risk individuals it's the right choice. The argument is narrower: for newly eligible, average-risk patients aged 45–49 who are hesitant about colonoscopy, the "colonoscopy or nothing" framing may be doing more harm than good.</span>
+<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a>A few things make the case:</span>
+<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**73% of CRC in patients under 50** arises in sigmoidoscopy-reachable locations — the additional coverage from full colonoscopy doesn't translate to 66% of tumors</span>
+<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Screening completion** for sigmoidoscopy was 63–83% in RCTs vs. 42% in NordICC and 50–60% in US population data for colonoscopy</span>
+<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Survival for sigmoid-visible tumors** is comparable or better than for proximal tumors after IPTW adjustment — the tumors sigmoidoscopy catches aren't the "easy" ones</span>
+<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The rise in early-onset CRC has been **driven largely by rectal and sigmoid cancers** — exactly the locations sigmoidoscopy reaches</span>
 <span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
+<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a>There's also a disparity angle: studies have shown that racial and ethnic minorities have greater acceptance of less invasive screening options, and a public health message that pushes colonoscopy as the only legitimate choice could widen existing gaps in screening uptake.</span>
 <span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a>Lin G, **Hein D**, Liu PH, Singal AG, Sanford NN. Screening Implications for Distribution of Colorectal Cancer Subsite by Age and Role of Flexible Sigmoidoscopy. *Cancers*. 2024; 16(6):1110. <span class="ot">&lt;https://doi.org/10.3390/cancers16061110&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a>The conclusion in the paper is measured: these findings "call into question the advantages and disadvantages of a colonoscopy-first public health recommendation" and support "considering flexible sigmoidoscopy as an additional initial option." That's the right framing — not replacing colonoscopy, but expanding the menu for a population that currently isn't getting screened at all.</span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a>Lin G, **Hein D**, Liu PH, Singal AG, Sanford NN. Screening Implications for Distribution of Colorectal Cancer Subsite by Age and Role of Flexible Sigmoidoscopy. *Cancers*. 2024; 16(6):1110. <span class="ot">&lt;https://doi.org/10.3390/cancers16061110&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

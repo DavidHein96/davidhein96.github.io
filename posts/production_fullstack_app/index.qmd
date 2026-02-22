@@ -1,8 +1,8 @@
 ---
-title: "Building a Production-Ready Full Stack App: A Guided Tour"
+title: "Good Vibes: A Full Stack Template for AI-Assisted Development"
 author: "Dave Hein"
 date: "2026-02-20"
-categories: [Python, Software Engineering, FastAPI, Docker, CI/CD, DevOps, Open Source]
+categories: [Software Engineering, DevOps]
 image: "goodvibes.jpg"
 format:
   html:
@@ -12,477 +12,239 @@ format:
 draft: true
 ---
 
-```{=html}
-<!-- DRAFT: You'll need a cover image. Could be a system architecture diagram you
-     actually use, or something abstract. A clean diagram of the stack would double
-     as useful content and a cover image. -->
-```
+## The Problem with Vibe Coding
 
-```{=html}
-<!-- DRAFT: OVERALL NOTE — This post fills the biggest gap in your portfolio.
-     Right now everything says "I can analyze data." This says "I can ship software."
-     The tone should be different from the research posts — more opinionated,
-     more "here's what I chose and why", less "here's what the paper found."
+AI coding tools are genuinely good at generating features fast. The problem is they have no opinion about whether the feature they just wrote introduced a SQL injection, broke your TypeScript types, shipped a 2GB container image, or quietly removed the security header you spent an afternoon configuring. The model's job is to make the code work. Keeping the code safe, correct, and maintainable is still your job.
 
-     Key decision before writing: Do you already have a repo for this, or are you
-     building one? The post works best as a tour of a REAL repo you maintain,
-     not a hypothetical. If you need to build the repo first, do that, then write the post.
+The answer isn't to avoid AI-assisted coding. It's to build a harness that catches what the model misses — automatically, on every change, before anything hits production.
 
-     Also: consider whether this is one long post or a mini-series.
-     If it gets past ~2500 words, split it. -->
-```
+This post is a tour of [**fullstackvibe**](https://github.com/DavidHein96/fullstackvibe), a full stack reference template I maintain as a starting point for new projects. The stack is FastAPI + React + PostgreSQL, packaged as containers. But the interesting part isn't the stack choices — it's the CI/CD harness that enforces correctness and security regardless of how the code was written.
 
-## Why Another "Full Stack" Post?
-
-```{=html}
-<!-- DRAFT: Open with what's wrong with the existing tutorials/templates out there.
-     You've probably seen plenty of "build a todo app with FastAPI" posts.
-     What's missing from them? Some angles:
-     - They skip everything that makes prod hard (auth, migrations, CI, observability)
-     - They use flat file structures that fall apart at scale
-     - They don't show testing beyond a single happy-path example
-     - They never show deployment or containerization
-
-     Or open with your own angle: why did YOU need to build this?
-     Was it for a work project? To prove a point? To learn?
--->
-```
-
-\[Opening — why this exists, what gap it fills, who it's for.\]
-
-\[Link to the repo here.\]
-
-```{=html}
-<!-- DRAFT: Be specific about what this is NOT:
-     - Not a step-by-step tutorial (it's a tour of decisions)
-     - Not a framework comparison
-     - Not production-grade for YOUR specific domain (clinical/healthcare)
-       unless you want it to be — probably cleaner to keep it domain-agnostic
--->
-```
+[GitHub Repository](https://github.com/DavidHein96/fullstackvibe)
 
 ------------------------------------------------------------------------
 
-## The Stack at a Glance
+## The Stack
 
-```{=html}
-<!-- DRAFT: Fill this in once you've made your choices. This should be a quick
-     scannable overview so readers know if the post is relevant to them. -->
-```
-
-| Layer             | Choice                    | Why         |
-|-------------------|---------------------------|-------------|
-| Backend framework | FastAPI                   | \[fill in\] |
-| Database          | PostgreSQL                | \[fill in\] |
-| ORM / query layer | SQLAlchemy 2.0            | \[fill in\] |
-| Migrations        | Alembic                   | \[fill in\] |
-| Auth              | \[JWT / session / OAuth\] | \[fill in\] |
-| Testing           | pytest                    | \[fill in\] |
-| CI/CD             | GitHub Actions            | \[fill in\] |
-| Containerization  | Docker + Compose          | \[fill in\] |
-| Frontend          | \[your choice\]           | \[fill in\] |
-
-```{=html}
-<!-- DRAFT: The "Why" column is what makes this post different from a README.
-     Don't just say "it's popular" — say what you tried before, what tradeoffs you weighed,
-     what you'd pick differently for a different project. -->
-```
-
-## Project Structure
-
-```{=html}
-<!-- DRAFT: Show the actual directory tree and explain the reasoning.
-     This is one of the highest-value sections — most tutorials skip it
-     or use a flat structure. Show how you organize for a project that
-     has 20+ files, not 3. -->
-```
-
-```         
-# PLACEHOLDER — replace with your actual tree
-project-root/
-├── app/
-│   ├── api/
-│   │   ├── routes/
-│   │   │   ├── __init__.py
-│   │   │   ├── auth.py
-│   │   │   ├── users.py
-│   │   │   └── items.py           # or whatever your domain is
-│   │   └── dependencies.py         # shared deps (get_db, get_current_user)
-│   ├── core/
-│   │   ├── config.py               # settings via pydantic-settings
-│   │   ├── security.py             # password hashing, JWT logic
-│   │   └── database.py             # engine, session factory
-│   ├── models/                     # SQLAlchemy models
-│   ├── schemas/                    # Pydantic request/response models
-│   ├── repositories/               # data access layer
-│   ├── services/                   # business logic
-│   └── main.py
-├── migrations/                     # Alembic
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── conftest.py                 # fixtures, factories, test db
-├── docker-compose.yml
-├── Dockerfile
-├── .github/workflows/
-└── pyproject.toml
-```
-
-```{=html}
-<!-- DRAFT: Explain the key structural decisions:
-     - Why separate models/ from schemas/? (DB representation vs API contract)
-     - Why repositories/? (Testability, swappable data layer)
-     - Why services/? (Business logic shouldn't live in route handlers)
-     - How does dependency injection wire these together?
-
-     If you DON'T use this exact structure, show what you actually use.
-     The point is the reasoning, not the specific layout.
--->
-```
+| Layer             | Choice                                   |
+|-------------------|------------------------------------------|
+| Backend           | FastAPI + SQLAlchemy 2.0 + Alembic       |
+| Database          | PostgreSQL (testcontainers for testing)  |
+| Frontend          | React + Vite + TypeScript + Tailwind     |
+| Containerization  | Docker (two Dockerfiles) + Compose       |
+| CI/CD             | GitHub Actions (3 workflows)             |
+| Monorepo          | Turborepo + pnpm workspaces              |
+| Python tooling    | uv + ruff + ty                           |
+| Security scanning | Semgrep + Trivy + pip-audit + pnpm audit |
 
 ------------------------------------------------------------------------
 
-## Backend: FastAPI Patterns That Matter
+## The Makefile Is the Source of Truth
 
-```{=html}
-<!-- DRAFT: Pick 3-4 patterns that you think are important and that tutorials skip.
-     Don't try to cover everything — this isn't docs. Show the patterns
-     that cost you time to figure out or that you've seen done wrong.
-     Delete/add subsections below as needed. -->
+The most important architectural decision in this template isn't a framework choice — it's that the Makefile and the GitHub Actions workflows run the same commands. When `make ci-fast` passes locally, CI passes. No surprises.
+
+``` makefile
+ci-fast: fix typecheck generate-openapi   ## Run fast CI checks (no tests)
+
+ci-test: test                             ## Run all tests
+
+ci-security: security security-container-all  ## Run security scans
 ```
 
-### Dependency Injection
+Each of those targets composes smaller ones:
 
-```{=html}
-<!-- DRAFT: FastAPI's Depends() system is powerful but under-explained.
-     Show how you use it for:
-     - Database sessions (with proper cleanup)
-     - Current user resolution
-     - Permission checking
-     What pattern do you use? Class-based deps? Generator deps? -->
+``` makefile
+fix: fix-python fix-frontend
+
+fix-python:
+    uv run ruff format apps/backend/src
+    uv run ruff check --fix apps/backend/src
+
+fix-frontend:
+    pnpm prettier --write .
+    pnpm eslint --fix .
+
+typecheck: typecheck-python typecheck-frontend
+
+typecheck-python:
+    uv run ty check apps/backend/src
+
+typecheck-frontend:
+    pnpm tsc --noEmit
 ```
 
-``` python
-# PLACEHOLDER — show your actual dependency injection pattern
-```
-
-### Middleware and Request Lifecycle
-
-```{=html}
-<!-- DRAFT: What middleware do you use? Candidates:
-     - CORS
-     - Request ID injection
-     - Timing / logging
-     - Error handling (turning exceptions into proper HTTP responses)
-     Show the stack, explain the order. -->
-```
-
-``` python
-# PLACEHOLDER — middleware setup
-```
-
-### Configuration Management
-
-```{=html}
-<!-- DRAFT: How do you handle config across environments (local, test, prod)?
-     pydantic-settings? .env files? Environment variables?
-     Show the config class and explain what NOT to put in it. -->
-```
-
-``` python
-# PLACEHOLDER — config pattern
-```
+The pattern: before you open a PR, you run `make ci-fast`. If it passes, CI passes. If the model generated something that fails a type check or lint rule, you find out immediately at your terminal rather than in a CI failure fifteen minutes later. When I'm using an AI tool to generate a chunk of code, `make fix && make typecheck` is the first thing I run — it's the fastest filter for catching obvious issues.
 
 ------------------------------------------------------------------------
 
-## Database: Migrations, Pooling, and the Repository Pattern
+## Security Scanning: The Part Everyone Skips
 
-```{=html}
-<!-- DRAFT: This section is where "toy app" vs "real app" diverges the most.
-     Most tutorials create tables with Base.metadata.create_all() and call it a day.
-     Show what you actually need. -->
-```
+Most "production-ready" templates treat security as an afterthought. This one runs four independent security checks on every PR and on a weekly schedule regardless of changes.
 
-### Alembic Migrations
+### SAST with Semgrep
 
-```{=html}
-<!-- DRAFT: Show:
-     - How you set up Alembic with async SQLAlchemy (if applicable)
-     - A real migration example (not just autogenerate — show a data migration or
-       a migration that required manual editing)
-     - How you handle migrations in CI and deployment
-     - The first time a migration went wrong and what you learned
--->
-```
-
-``` python
-# PLACEHOLDER — example migration
-```
-
-### Connection Pooling
-
-```{=html}
-<!-- DRAFT: This matters in prod and nobody talks about it in tutorials.
-     - What pool settings do you use? (pool_size, max_overflow, pool_recycle)
-     - Have you hit pool exhaustion? What happened?
-     - Async vs sync sessions — which do you use and why? -->
-```
-
-``` python
-# PLACEHOLDER — engine/session configuration
-```
-
-### Repository Pattern
-
-```{=html}
-<!-- DRAFT: This is opinionated — some people hate repositories over SQLAlchemy.
-     Make your case:
-     - What does a repository buy you? (Testability? Abstraction?)
-     - Show a concrete repository class
-     - Show how it gets injected into route handlers
-     - If you DON'T use repositories, explain what you do instead
--->
-```
-
-``` python
-# PLACEHOLDER — repository example
-```
-
-------------------------------------------------------------------------
-
-## Auth
-
-```{=html}
-<!-- DRAFT: Pick ONE auth approach and explain it well. Don't try to cover
-     JWT AND sessions AND OAuth. Options:
-     - JWT with refresh tokens (most common for APIs)
-     - Session-based (simpler, better for server-rendered)
-     - OAuth2 with external provider (Google, GitHub)
-
-     Show:
-     - The auth flow end to end
-     - How you store/hash passwords (if applicable)
-     - Role-based access control if you implement it
-     - Token refresh / session invalidation
-     - Common mistakes you've seen or made
--->
-```
-
-### Auth Flow
-
-``` python
-# PLACEHOLDER — auth implementation
-```
-
-### Role-Based Access Control
-
-``` python
-# PLACEHOLDER — RBAC pattern, if applicable
-```
-
-------------------------------------------------------------------------
-
-## Testing: The Part Everyone Skips
-
-```{=html}
-<!-- DRAFT: This could be the best section in the post if you do it right.
-     Most "full stack" posts have zero tests or one trivial test.
-     Show the real testing setup:
-     - How you create a test database (in-memory? Docker? testcontainers?)
-     - Fixtures and factories for generating test data
-     - Unit tests (testing services/repos in isolation)
-     - Integration tests (testing API endpoints with a real DB)
-     - What you DON'T test and why
-
-     The conftest.py is often the most valuable file in a test suite.
-     Show yours.
--->
-```
-
-### Test Infrastructure
-
-``` python
-# PLACEHOLDER — conftest.py / test database setup
-```
-
-### Factories
-
-```{=html}
-<!-- DRAFT: Do you use factory_boy? Faker? Hand-rolled fixtures?
-     Show how you generate test data that's realistic but deterministic. -->
-```
-
-``` python
-# PLACEHOLDER — test data factories
-```
-
-### Unit vs Integration: Where to Draw the Line
-
-```{=html}
-<!-- DRAFT: What's your actual testing philosophy? Be opinionated:
-     - Do you mock the database or use a real one?
-     - Do you test routes directly or through the FastAPI TestClient?
-     - What's your coverage target? Do you even track coverage?
-     - What tests have caught real bugs vs. what tests are just ceremony?
--->
-```
-
-``` python
-# PLACEHOLDER — example unit test and integration test side by side
-```
-
-------------------------------------------------------------------------
-
-## CI/CD: GitHub Actions Pipeline
-
-```{=html}
-<!-- DRAFT: Show the actual workflow YAML and walk through it.
-     What runs on every PR? What runs on merge to main?
-     - Linting (ruff? black? isort?)
-     - Type checking (mypy? pyright?)
-     - Tests (which ones? parallelized?)
-     - Build + push Docker image
-     - Deploy (where? how?)
-
-     If your deploy target is Azure (from your work), say so.
-     If it's something simpler for this project, that's fine too.
--->
-```
+Semgrep scans for known vulnerability patterns across the whole codebase — Python, JavaScript, React, Docker, GitHub Actions. It runs with both the standard policy packs and custom rules written for this specific stack:
 
 ``` yaml
-# PLACEHOLDER — .github/workflows/ci.yml
+# semgrep.yml — custom rules
+rules:
+  - id: frontend-no-raw-innerhtml
+    severity: HIGH
+    message: "Use safeSetHTML() instead of direct innerHTML assignment"
+    patterns:
+      - pattern: $EL.innerHTML = $X
+      - pattern: document.write($X)
+
+  - id: frontend-no-insecure-tls-toggle
+    severity: MEDIUM
+    message: "TLS verification must not be disabled"
+    patterns:
+      - pattern: process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+      - pattern: |
+          {rejectUnauthorized: false}
 ```
 
-```{=html}
-<!-- DRAFT: Call out anything non-obvious:
-     - How you handle secrets
-     - How you run migrations in the deploy step
-     - Caching strategies for faster CI
-     - Any jobs that run on a schedule (dependency updates, etc.)
--->
+The `frontend-no-raw-innerhtml` rule exists because React's `dangerouslySetInnerHTML` is already linted, but direct DOM manipulation in utility functions is easy to miss. `frontend-no-insecure-tls-toggle` catches a surprisingly common shortcut in development code that occasionally slips into production.
+
+### Dependency Auditing
+
+Both package ecosystems get scanned separately:
+
+``` makefile
+security-deps:
+    uv run pip-audit                  # Python dependencies
+    pnpm audit --audit-level moderate  # Node dependencies
 ```
+
+This runs on every PR and on a cron schedule every Sunday. Dependency vulnerabilities show up between PRs — a Sunday scan catches CVEs that landed during the week against your pinned versions.
+
+### Container Scanning with Trivy
+
+Three levels of Trivy scanning, each catching different things:
+
+``` makefile
+security-container-backend:
+    trivy image --severity CRITICAL,HIGH ghcr.io/$(REPO)/backend:latest
+
+security: security-sast security-deps
+
+ci-security: security security-container-all
+```
+
+-   **Filesystem scan**: checks for vulnerabilities in the source code and lockfiles
+-   **Config scan**: checks Dockerfiles, docker-compose, and GitHub Actions for misconfigurations (CRITICAL, HIGH, and MEDIUM)
+-   **Container image scan**: scans the built image for OS-level vulnerabilities
+
+Container scans only run on the main, dev, and nightly branches — they require a built image, so they're gated on the Docker build workflow completing.
+
+### ESLint Secrets Detection
+
+The frontend ESLint config includes `eslint-plugin-no-secrets` with a tolerance threshold, which flags strings that look like API keys, tokens, or credentials accidentally committed to frontend code. It's not a substitute for a proper secrets scanner, but it's caught things.
 
 ------------------------------------------------------------------------
 
-## Containerization
+## Two Dockerfiles
 
-```{=html}
-<!-- DRAFT: Show TWO Dockerfiles if they differ:
-     1. Local dev (docker-compose with hot reload, local DB, etc.)
-     2. Production (multi-stage build, non-root user, minimal image)
+Development and production have meaningfully different requirements, and trying to serve both with one Dockerfile produces something that's bad for both. This template maintains two:
 
-     Most tutorials show one Dockerfile that's bad for both purposes.
-     The docker-compose.yml for local dev is usually more interesting than the Dockerfile.
--->
+**`Dockerfile.dev`** (Debian-based): - Hot reload via `uvicorn --reload` with the source code mounted as a volume — the container doesn't need to be rebuilt on every code change - Runs as root (dev convenience)
+
+**`Dockerfile`** (Alpine multi-stage, production): - Stage 1 builds the virtualenv with `uv`, installs only non-dev dependencies - Stage 2 copies only the venv — no build tools, no source code - Validates OpenSSL version ≥ 3.0.0 at container startup - Non-root user (uid 1000) - Healthcheck hits `/health`
+
+The Alpine base keeps the image small. The non-root user and the OpenSSL version check at startup are basic hardening that many templates skip — the runtime assertion catches cases where a base image update quietly downgrades a security dependency.
+
+For local development, a `docker-compose.yml` wires together the dev backend, a local PostgreSQL container, and the Vite dev frontend with a proxy to the backend API.
+
+------------------------------------------------------------------------
+
+## Testing with Testcontainers
+
+The application uses PostgreSQL. Most tutorials solve the test database problem by switching to SQLite — which is fine until you hit a query that uses a Postgres-specific feature and your tests pass but production breaks.
+
+This template uses [testcontainers](https://testcontainers-python.readthedocs.io/) to spin up a real PostgreSQL container for every test run:
+
+``` python
+# The test setup spins up a real PostgreSQL container
+# Alembic migrations run against it before tests start
+# Torn down after the session
 ```
 
-### Local Development
+In GitHub Actions, a PostgreSQL service container runs alongside the test job, with health checks to wait for the database to be ready before tests start:
 
 ``` yaml
-# PLACEHOLDER — docker-compose.yml
+services:
+  postgres:
+    image: postgres:16
+    env:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: testdb
+    ports:
+      - 5432:5432
+    options: >-
+      --health-cmd "pg_isready -U test"
+      --health-interval 10s
+      --health-timeout 5s
+      --health-retries 5
 ```
 
-### Production Dockerfile
-
-``` dockerfile
-# PLACEHOLDER — multi-stage Dockerfile
-```
-
-```{=html}
-<!-- DRAFT: Tips from your experience:
-     - Image size optimization (what base image? what do you exclude?)
-     - Build cache busting (when do you invalidate?)
-     - Health check configuration
-     - Any gotchas with Python + Docker you've hit?
--->
-```
+Tests are marked with `unit`, `integration`, or `e2e` markers. Unit tests don't touch the database. Integration tests use the container. The separation matters when you want to run only fast tests in a tight feedback loop.
 
 ------------------------------------------------------------------------
 
-## Observability
+## The Type Generation Pipeline
 
-```{=html}
-<!-- DRAFT: This section separates "I've deployed something" from "I've run something
-     in production." Cover whatever you actually use:
-     - Structured logging (structlog? python-json-logger? just logging.config?)
-     - Health check endpoints (what do they actually check?)
-     - Error tracking (Sentry? custom?)
-     - Metrics (if applicable)
+One of the more useful features for a project with a separate frontend and backend: the OpenAPI schema generated by FastAPI becomes the TypeScript type definitions used by the frontend. `make check-types-sync` validates that they're in sync and fails CI if they're not.
 
-     Even if your setup is simple, showing that you THINK about observability matters.
--->
+``` makefile
+generate-openapi:
+    uv run python -c "import json; from backend.main import app; \
+        print(json.dumps(app.openapi()))" > packages/api-types/openapi.json
+
+generate-types:
+    pnpm openapi-typescript packages/api-types/openapi.json \
+        -o packages/api-types/src/generated.ts
+
+check-types-sync: generate-openapi generate-types
+    git diff --exit-code packages/api-types/
 ```
 
-### Structured Logging
-
-``` python
-# PLACEHOLDER — logging configuration
-```
-
-### Health Checks
-
-``` python
-# PLACEHOLDER — health check endpoint that actually checks dependencies
-```
+If a backend route changes its response schema and the developer doesn't regenerate types, `check-types-sync` fails in CI. The frontend TypeScript compiler then catches any call sites that are now passing wrong types. This catches a category of integration bug — backend and frontend disagreeing on the shape of data — that usually only shows up in manual testing or production.
 
 ------------------------------------------------------------------------
 
-## Frontend
+## GitHub Actions: Three Workflows
 
-```{=html}
-<!-- DRAFT: This is the section where you need to make a choice.
-     Options:
-     (a) Full SPA (React/Vue/Svelte) with API client generation from OpenAPI spec
-     (b) HTMX + Jinja2 templates (simpler, trendy, good for a data-focused app)
-     (c) Minimal — just document the API and skip frontend
-     (d) Dash (you already know it from InstaWell)
+### `ci.yml` — Continuous Integration
 
-     If frontend isn't your strongest area, be honest about it.
-     "I chose X because it was the simplest thing that worked" is a valid answer.
+Path-based change detection (via `dorny/paths-filter`) means frontend checks only run when frontend files changed, backend checks only run when backend files changed. On a monorepo with separate apps, running everything on every commit is wasteful and slow.
 
-     Whatever you pick, show:
-     - How the frontend talks to the backend (API client gen? manual fetch?)
-     - State management approach
-     - How auth tokens are stored/managed on the client side
--->
-```
+Concurrency cancels in-progress runs on the same branch — opening a PR, pushing a fixup commit, and pushing another fixup doesn't leave three CI runs running simultaneously.
 
-\[Frontend section — fill in based on your choice.\]
+A `ci-success` job aggregates the results of all conditional jobs into a single status that branch protection can require, solving the problem where conditional jobs show as "skipped" rather than "passed."
+
+### `security.yml` — Security Scanning
+
+Runs on push/PR, but also on a cron schedule every Sunday regardless of changes. The schedule matters because new CVEs land against your pinned dependencies without you changing anything.
+
+### `build_docker.yml` — Docker Build and Push
+
+Change detection determines which apps to build, then a matrix job builds and pushes to GitHub Container Registry. Tagged with both the git SHA and an environment name, so you can trace any deployed image back to the exact commit.
 
 ------------------------------------------------------------------------
 
-## What I'd Do Differently
+## What I Still Skip
 
-```{=html}
-<!-- DRAFT: This is the section that will get the most engagement.
-     Be honest about the tradeoffs and mistakes. Ideas:
-     - "I over-engineered X and it wasn't worth it"
-     - "I should have started with Y instead of Z"
-     - "The repository pattern adds boilerplate that I'm not sure pays off at this scale"
-     - "I spent too long on auth and should have just used [library]"
-     - "If this were a real production app with a team, I'd add [thing I skipped]"
-     - "My test coverage is good but my tests are too coupled to implementation"
+**Auth is intentionally absent.** Auth is the most context-dependent layer in any web app — whether you reach for Clerk, Auth0, Supabase Auth, or roll your own JWT depends on your team size, compliance requirements, and how much you want to own. Baking a specific auth choice into a template locks in an opinion that's likely wrong for half the people using it. The FastAPI dependency injection structure is there to plug auth in, but the template doesn't prescribe what goes there.
 
-     3-5 honest bullets is better than a polished retrospective.
--->
-```
+**Pre-commit hooks.** The Makefile covers everything, but hooks would catch issues before a commit rather than before a push. I've found that the CI feedback loop is fast enough that hooks feel like friction during active development, but for a team setting they'd be worth adding.
 
-\[Honest retrospective — what worked, what didn't, what you'd change.\]
+**Observability.** The template has `structlog` wired up for structured logging, but there's no Sentry integration, no distributed tracing, no dashboards. That's mostly a matter of it being a template rather than a running production system — the hooks are there, but the specific monitoring stack depends too much on where you're deploying.
+
+**E2E tests.** The `e2e` pytest marker is defined, but there are no E2E tests yet. Integration tests cover the API surface, but full browser-level testing would require Playwright or similar, and that's a bigger lift to set up correctly.
 
 ------------------------------------------------------------------------
 
 ## Links
 
--   [GitHub Repository](#) <!-- DRAFT: replace with real repo link -->
--   [Live Demo](#) <!-- DRAFT: if applicable, otherwise remove -->
-
-```{=html}
-<!-- DRAFT: BEFORE PUBLISHING checklist:
-     [ ] Repo is public and README is solid
-     [ ] All placeholder code replaced with real code from the repo
-     [ ] Cover image added
-     [ ] Tested that all code snippets are accurate to the actual repo
-     [ ] Read through once for tone — should sound like an engineer's notes, not a tutorial
-     [ ] Consider: is this one post or should it be split into 2-3?
--->
-```
+-   [GitHub Repository](https://github.com/DavidHein96/fullstackvibe)

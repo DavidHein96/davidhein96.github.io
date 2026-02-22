@@ -128,7 +128,7 @@ Rather than picking a single gene set testing method, I ran two independent work
 
 ### mROAST (self-contained test)
 
-ROAST asks whether genes in a pathway are collectively differentially expressed — it tests only within the gene set, without comparing to genes outside of it. This makes it more powerful for detecting subtle but consistent changes within a specific biological program. Computationally, it's intensive: 20,000 rotations per test, across 4 ancestry contrasts and ~250 gene sets, which required parallelization.
+ROAST asks whether genes in a pathway are collectively differentially expressed — it tests only within the gene set, without comparing to genes outside of it. This makes it more powerful for detecting subtle but consistent changes within a specific biological program. Computationally, it's intensive: 20,000 rotations per test, across 4 ancestry contrasts and \~250 gene sets, which required parallelization.
 
 We used socket-based parallelization (not forking) with explicit seed-setting on each worker — a detail that matters a lot for reproducibility in permutation-based tests:
 
@@ -177,7 +177,7 @@ summary(decideTests(fit_set_scores_crc_discrete))
 
 ### Requiring agreement across both
 
-Both methods were tested on the Hallmark and BioCarta C2 gene sets (342 total), run separately on colon/rectum and liver subsets, and with both discrete and continuous ancestry representations. A finding was only reported if it was significant (BH-corrected p < 0.05) in **both** mROAST and GSVA. This is conservative, but it substantially reduces the chance of chasing a result that was an artifact of one method's assumptions.
+Both methods were tested on the Hallmark and BioCarta C2 gene sets (342 total), run separately on colon/rectum and liver subsets, and with both discrete and continuous ancestry representations. A finding was only reported if it was significant (BH-corrected p \< 0.05) in **both** mROAST and GSVA. This is conservative, but it substantially reduces the chance of chasing a result that was an artifact of one method's assumptions.
 
 **Key finding**: Non-Hispanic Black ancestry and higher AFR proportion were consistently associated with underexpression of coagulation and complement pathways in colon/rectum tumors — replicated across both independent workflows.
 
@@ -220,7 +220,7 @@ for (i in 1:5) {
 
 **Key findings**: CMS was significantly associated with race and ethnicity (p = 0.004). NH Black patients had more CMS3 than expected (66 observed vs. 46 expected) and less CMS1 (18 vs. 30). Hispanic/Latino patients had elevated rates of indeterminate CMS — concentrated specifically in the early-onset group. When analyzed by continuous ancestry proportions, greater AFR ancestry was associated with higher odds of CMS3. All of the NH Black / CMS1 and CMS3 associations were only statistically significant in the average-onset group, while the Hispanic/Latino indeterminate finding was only present in early-onset. Both imputed race/ethnicity and continuous ancestry proportions were tested separately.
 
-![Expected vs. observed CMS subtype distributions by imputed racial/ethnic category. Panel area is proportional to patient counts; findings with absolute standardized residuals > 1.96 are marked with *.](cms.png)
+![Expected vs. observed CMS subtype distributions by imputed racial/ethnic category. Panel area is proportional to patient counts; findings with absolute standardized residuals \> 1.96 are marked with \*.](cms.png)
 
 The elevated indeterminate classification rate in Hispanic/Latino patients is worth flagging: it raises the question of whether the CMS classifier itself performs less reliably in non-European-ancestry populations, since the framework was largely developed and validated in predominantly European cohorts.
 

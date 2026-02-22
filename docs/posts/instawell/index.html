@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dave Hein">
-<meta name="dcterms.date" content="2025-06-01">
+<meta name="dcterms.date" content="2026-02-11">
 
 <title>InstaWell: Open-Source Thermal Shift Assay Analysis in Python – David Hein</title>
 <style>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 1, 2025</p>
+        <p class="date">February 11, 2026</p>
       </div>
     </div>
     
@@ -202,35 +202,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="how-this-started" class="level2">
 <h2 class="anchored" data-anchor-id="how-this-started">How This Started</h2>
-<!-- DRAFT: HIGH PRIORITY — this is the most fabricated section across all posts.
-     I invented the entire origin story. Key things to replace with reality:
-     - "watching a collaborator spend an entire afternoon" — did this happen? Who was it?
-       Or did the project start some completely different way?
-     - "I'd been working in clinical data science" — this framing is true but was it
-       actually what you were thinking at the time?
-     - "quick script to help that one collaborator" — is this the real origin or not?
-     - "every lab doing thermal shift assays has their own ad-hoc Excel workflow" —
-       is this actually true from your I-Corps customer discovery, or am I assuming?
-     - The air bubble detail is me trying to sound like I know benchwork. Cut if fake.
--->
-<p>This project was born from watching a collaborator spend an entire afternoon copying fluorescence readings from a plate reader export into Excel, manually calculating derivatives, eyeballing melting temperatures, and then doing it all again for the next plate. I’d been working in clinical data science — building pipelines that process thousands of records automatically — and it was jarring to see bench scientists still doing this by hand in 2024.</p>
-<p>The tool started as a quick script to help that one collaborator, then grew as I realized the problem was universal: every lab doing thermal shift assays has their own ad-hoc Excel workflow, and none of them are reproducible. Two people analyzing the same plate can get different Tm values depending on how they smooth the curves, where they draw the baseline, and whether they caught that one well that had an air bubble.</p>
-<!-- DRAFT: The I-Corps paragraph — verify:
-     - "talking to 30+ potential users" — is that the right number?
-     - "simplicity for non-coders, full traceability, messy plate layouts" —
-       are these the actual priorities that came out of customer discovery?
-     - Was InstaWell the focus of I-Corps, or was it a different tool/suite?
-     - What was the most surprising thing you learned during I-Corps?
--->
-<p>InstaWell is also connected to our team’s NIH I-Corps experience — I led a team through the entrepreneurial training program focused on our lab’s suite of scientific tools, and the process of customer discovery (talking to 30+ potential users about their pain points) directly shaped InstaWell’s design priorities: simplicity for non-coders, full traceability for publications, and the ability to handle messy real-world plate layouts.</p>
+<p>This project was born from watching a collaborator spend an entire afternoon copying fluorescence readings from a plate reader export into Excel, manually removing background controls, calculating derivatives, and then doing it all again for the next plate. I’d been working in clinical data science — building pipelines that process thousands of records automatically — and thought I could do the same for this project (despite not knowing very much about the biochemistry behind the scenes haha).</p>
+<p>The tool started as a quick script to help that one collaborator, then grew as I realized the problem was universal: every lab doing thermal shift assays has their own ad-hoc Excel workflow, and none of them are reproducible. InstaWell makes this process explicit and auditable.</p>
 </section>
 <section id="what-it-does" class="level2">
 <h2 class="anchored" data-anchor-id="what-it-does">What It Does</h2>
-<p><a href="https://github.com/DavidHein96/InstaWell"><strong>InstaWell</strong></a> is an open-source Python package that automates the analysis of thermal shift assay (TSA/DSF) data. Thermal shift assays are a workhorse technique in drug discovery and protein biochemistry — they measure how a protein’s thermal stability changes in the presence of ligands or buffer conditions. The raw instrument output is just a big matrix of fluorescence readings across dozens of wells and temperatures.</p>
-<!-- DRAFT: Is this Excel workflow description accurate? I'm guessing based on general knowledge
-     of how people process plate reader data. If you've seen the actual Excel workflows,
-     describe what they really look like. "an hour" — is that right?
--->
+<p><a href="https://davidhein96.github.io/InstaWell/"><strong>InstaWell</strong></a> is an open-source Python package that automates the analysis of thermal shift assay (TSA/DSF) data. Thermal shift assays are a workhorse technique in drug discovery and protein biochemistry — they measure how a protein’s thermal stability changes in the presence of ligands or buffer conditions. The raw instrument output is just a big matrix of fluorescence readings across dozens of wells and temperatures.</p>
 <p>The manual Excel approach looks something like: export CSV from instrument, copy into a template, manually subtract background wells, normalize each trace by hand, compute numerical derivatives in a separate column, scan for the minimum by eye, and paste the result into a summary table. For a 96-well plate with replicates, that’s an hour of tedious, error-prone work — and it leaves no audit trail.</p>
 <p>InstaWell replaces that with a reproducible, auditable pipeline that goes from raw instrument files to publication-quality figures and clean CSV summaries.</p>
 <p><a href="https://davidhein96.github.io/InstaWell/">Documentation</a> | <a href="https://github.com/DavidHein96/InstaWell">GitHub</a> | <a href="https://pypi.org/project/instawell/">PyPI</a></p>
@@ -298,22 +275,15 @@ A, 0|DMSO|NPC|PBS, 1.5|DrugX|ProteinA|PBS, 6|DrugX|ProteinA|PBS</code></pre>
 <li><strong>SciPy</strong> for 4PL curve fitting</li>
 <li><strong>Plotly</strong> for interactive visualizations</li>
 <li><strong>Dash</strong> for the optional web UI</li>
-<li><strong>MkDocs</strong> for documentation</li>
+<li><strong>Quarto</strong> for documentation</li>
 <li><strong>pytest</strong> for the test suite (unit, integration, fuzz testing)</li>
 <li><strong>uv</strong> for package management</li>
 </ul>
 </section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
-<!-- DRAFT: I made up the planned features. Replace with your actual roadmap:
-     - "currently optimized for Bio-Rad and generic CSV" — is that right?
-     - "multi-plate experiments" and "dose-response fitting" — are these real plans?
-     - Is it actually in beta? What's the real status?
-     - Has anyone outside your team actually used it yet? If so, what happened?
-     - The "I'd love to hear what breaks" call to action is fine if you mean it.
--->
-<p>InstaWell is currently in beta — the core pipeline is stable and tested, but I’m actively looking for early adopters to stress-test it with different instruments and experimental designs. If your lab does thermal shift assays and you’re tired of Excel, I’d love to hear what breaks. File an issue on GitHub or reach out directly.</p>
-<p>On the development side, the next features are: support for additional instrument export formats (currently optimized for Bio-Rad and generic CSV), multi-plate experiments with automatic cross-plate normalization, and a dose-response fitting module that generates IC50/EC50 curves directly from the Tm shifts.</p>
+<section id="current-status" class="level2">
+<h2 class="anchored" data-anchor-id="current-status">Current Status</h2>
+<p>The core data pipeline is stable, well-tested, and has an official release on PyPI — this is well past beta at this point. If you want to stress-test something, the Dash web app is the most likely place to find edge cases with unusual plate layouts or instrument export formats. Additionally, the actual task of manually creating the plate layouts seems like it could be improved.</p>
+<p>If your lab does thermal shift assays and you’re tired of Excel, I’d love to hear what breaks. File an issue on GitHub or reach out directly.</p>
 </section>
 <section id="links" class="level2">
 <h2 class="anchored" data-anchor-id="links">Links</h2>

@@ -2,46 +2,36 @@
 title: "About"
 ---
 
-# Education
+# Bio
 
-**University of Texas at Austin**
+As far as labels go, Data Scientist is the one that fits best, although my day-to-day work spans quite a bit: building LLM apps for clinical NLP, designing databases and ETL pipelines, managing DevOps infrastructure, and occasionally doing something that actually looks like machine learning — all in the context of medical research at UT Southwestern.
 
-*Master of Science in Data Science* \| May 2023
+I like working at the intersection of messy real-world data, scientific questions, and systems that actually have to run in production. This site is a place where I collect projects, experiments, and ideas that sit in that overlap.
 
--   Coursework in deep learning, reinforcement learning, causal inference, data structures & algorithms
+When I started college, I was the prototypical premed — mostly because "being a doctor sounds cool." Then I remembered that in fifth grade I had to leave class during a lesson on the circulatory system because I nearly passed out. Medicine might not have been my calling, but science definitely was.
 
-*Bachelor of Science in Chemistry* \| December 2019
+I majored in chemistry, which I loved, but in my final semester I took an informatics course and discovered something magical: results at the click of a button instead of after a five-hour organic synthesis. The joy of being able to rapidly iterate with software led me to my first role at UTSW, in the radiation oncology department as a "clinical data specialist" — my first experience with a job title not matching what I actually did. In practice, I was mostly doing bioinformatics, analyzing RNA-seq and microbiome data.
 
--   McCombs Business Foundations Certificate
--   High Honors & recipient of department academic scholarship
+After completing my Master's degree in Data Science, I moved to my current role. Ironically, despite being in the bioinformatics department, I now do considerably less bioinformatics and considerably more systems, infrastructure, and applied AI.
 
-# Experience
+What I've realized over the years is that my north star is understanding — or occasionally uncovering — how the hotdog is made. I'm happiest when I can peel back abstractions, trace systems to their roots, and figure out what's really going on under the hood, whether that's a statistical method, a production pipeline, or a messy real-world dataset.
 
-**University of Texas Southwestern Medical Center**
+# Quick Facts
 
-Data Scientist, Bioinformatics \| Sep 2023 -- Present
+## Education
+- *Master of Science in Data Science* 
+- *Bachelor of Science in Chemistry*
+- Both from the University of Texas at Austin 
+  
+## Experience
+- Data Scientist, Bioinformatics \| Sep 2023 -- Present
+- Clinical Data Specialist, Radiation Oncology \| Feb 2020 -- Aug 2023
+- Both at the University of Texas Southwestern Medical Center
 
--   Developed a novel, human-in-the-loop error ontology framework to categorize LLM failure modes in real-world clinical data extraction, enabling collaborative refinement that reduced clinically significant error rates to less than 1%
 
--   Engineer agentic workflows to transform long EHR histories into structured timelines of key events in the metastatic RCC setting, allowing for robust calculations of progression-free survival (PFS) and adherence to treatment guidelines (NCCN)
+# Publication Highlights
 
--   Maintain MLOps infrastructure on cloud (Azure) and local infrastructure, deploying LLMs, databases, containerized ML APIs with CI/CD pipelines and traceability tools to ensure reproducible model serving and high availability
-
--   Teach interactive workshops for clinicians and graduate students on AI model bias, failure modes, and interpretation, bridging the gap between technical metrics and clinical applicability
-
-Clinical Data Specialist \| Feb 2020 -- Aug 2023
-
--   Led cross-functional initiatives for the collection, statistical analysis, and visualization/reporting of data from public databases, leading to a publication that utilized time-to-event statistics to recommend flexible sigmoidoscopy for younger individuals
-
--   Optimized parallelization in bioinformatics (NGS) processing pipelines using R, Python, AWS, and high-performance computing environments, achieving an 80% reduction in compute time and cost
-
--   Co-authored, in collaboration with clinicians, multiple publications on colorectal cancer biomarkers, including genomics (driver mutations), gene expression profiles, and microbiome diversity
-
--   Navigated healthcare data governance, ensuring strict compliance with HIPAA, GCP/HSP, and IRB protocols while coordinating data transfers with external Clinical Research Organizations (CROs)
-
-# Publications
-
-**Hein D**, Christie A, Holcomb M, Xie B, Jain AJ, Vento J, Rakheja N, Shakur AH, Christley S, Cowell LG, Brugarolas J. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. *npj Digital Medicine*. 2025 \| [My Projects Link](posts/npj_llm_extraction/index.qmd)
+**Hein D**, Christie A, Holcomb M, Xie B, Jain AJ, Vento J, Rakheja N, Shakur AH, Christley S, Cowell LG, Brugarolas J, Jamieson AR, Kapur P. Iterative refinement and goal articulation to optimize large language models for clinical information extraction. *npj Digital Medicine*. 2025 \| [My Projects Link](posts/npj_llm_extraction/index.qmd)
 
 Sanford NN, Shi Q, **Hein D**, Hall WA. Benchmarks of success in radiotherapy vs systemic therapy: National Clinical Trials Network (NCTN) randomized controlled trials sponsored by the National Cancer Institute (NCI). *JNCI: Journal of the National Cancer Institute*. 2025
 
@@ -57,11 +47,7 @@ Lin G, **Hein D**, Liu P, Singal AG, Sanford NN. Screening implications for Dist
 
 Full publication record: [ORCID 0000-0002-8625-9528](https://orcid.org/0000-0002-8625-9528)
 
-# Awards
-
--   Received \$15,000 in funding from the UTSW Office of Tech Dev to lead a team in an entrepreneurial training program (NIH I-Corps) based on our lab's suite of medical education AI tools
-
 # Public Service & Open Source
 
--   Designed and maintain the website for a regional food bank, Feeding Families of Alabama (WordPress)
--   Currently in the beta phase of releasing [InstaWell](https://github.com/DavidHein96/InstaWell), an open-source Dash + Plotly python toolkit for analyzing thermal shift assay data
+-   Designed and maintain the website for a regional food bank, [Feeding Families of Alabama](https://feedingfamiliesal.org/) (WordPress)
+-   Developed and maintain [InstaWell](https://github.com/DavidHein96/InstaWell), an open-source Python package for analyzing thermal shift assay data, available on PyPI

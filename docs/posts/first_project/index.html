@@ -9,7 +9,7 @@
 <meta name="author" content="Dave Hein">
 <meta name="dcterms.date" content="2023-06-11">
 
-<title>My First Paper: Trends and Associations in Rectal Cancer Treatment – David Hein</title>
+<title>My First Paper: A Chemistry Major’s Folly – David Hein</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -162,15 +162,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">My First Paper: Trends and Associations in Rectal Cancer Treatment</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">My First Paper: A Chemistry Major’s Folly</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                                 <div class="quarto-categories">
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">Python</div>
-                <div class="quarto-category">Synthetic Data</div>
-                <div class="quarto-category">Logistic Regression</div>
-                <div class="quarto-category">NCDB</div>
-                <div class="quarto-category">Rectal Cancer</div>
-                <div class="quarto-category">Treatment Trends</div>
+                <div class="quarto-category">Oncology</div>
               </div>
                   </div>
   </div>
@@ -254,12 +250,10 @@ pre {
 <p>The standard of care for stage II-III rectal cancer is <strong>neoadjuvant therapy</strong> — chemotherapy and/or radiation <em>before</em> surgery — which improves outcomes by shrinking the tumor and reducing recurrence risk. Not everyone gets it. Some patients go straight to surgery (“upfront surgery”), and we wanted to understand who, why, and whether the trend was improving over time.</p>
 <p>Figuring out what all the column codes actually meant was the real hurdle early on. The NCDB is not self-documenting — there’s a lot of time spent in the data dictionary, mapping numeric codes to clinical concepts before you can write a single line of analysis. Once I had the codebook figured out, actual data cleaning was maybe a week.</p>
 <p>Looking at this cleaning code now, I can already see things I’d do differently. There’s a <em>lot</em> of filtering and row-dropping — unknown treatment codes filtered out, ambiguous sequences excluded, complete case analysis at the end — without much consideration of whether missingness was random or whether the resulting sample was still representative. Heavy filtering can introduce selection bias that’s genuinely hard to detect after the fact, and I don’t think I was fully appreciating that at the time.</p>
-<p>I also did not use git for this project. Version control wasn’t really on my radar yet. Recreating it here for the blog was partly an exercise in doing things more properly the second time around.</p>
-<p>Here’s a link to the <a href="https://pubmed.ncbi.nlm.nih.gov/33710137/">abstract.</a></p>
 </section>
 <section id="project-setup" class="level2">
 <h2 class="anchored" data-anchor-id="project-setup">Project Setup</h2>
-<p>This blog was created with Quarto in R Studio, so to include Python versions of analysis and graphics I needed to specify an Anaconda environment in the setup chunk.</p>
+<p>When I first wrote this code (many years ago) I was very much an R guy. I wanted to learn python, so I decided to try running python from R Studio. The idea is that these code chunks would actually execute when the blog rendered to show the output. This would come back to bite me today, more on that later.</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
@@ -286,10 +280,10 @@ pre {
 <h2 class="anchored" data-anchor-id="creating-synthetic-data">Creating Synthetic Data</h2>
 <p>The original paper uses data from the National Cancer Database. This data is not public, so I created a synthetic dataset that attempts to recreate the characteristics of the original data but with much greater anonymization.</p>
 <p>I’ll be honest: I ran this synthesis script a while ago and I don’t fully remember every choice I made. I know I stratified by race/ethnicity and median income — and in retrospect that makes sense, since minority subgroups can get smoothed out in synthetic data without explicit stratification — but I apparently didn’t write down why I made those specific choices at the time. That’s the kind of thing that seems obvious in the moment and mysterious 4 years later. Lesson learned about documenting your decisions while you’re making them.</p>
-<p>The approach uses the R package <code>synthpop</code>, which generates synthetic records using <strong>classification and regression trees (CART)</strong> with bootstrapping. CART models are fit sequentially to each variable, conditional on the previously synthesized variables. Bootstrapping (the <code>proper = TRUE</code> flag) adds an extra layer of uncertainty by resampling the original data before fitting each tree, which helps prevent overfitting to specific individuals. The quality of the synthetic data was evaluated using pairwise utility tables (comparing two-way contingency tables between real and synthetic data via pMSE), and all replicated rows — records that happened to exactly match an original patient — were removed.</p>
+<p>The approach uses the R package <code>synthpop</code>, which generates synthetic records using <strong>classification and regression trees (CART)</strong> with bootstrapping. CART models are fit sequentially to each variable, conditional on the previously synthesized variables. Bootstrapping (the <code>proper = TRUE</code> flag) adds an extra layer of uncertainty by resampling the original data before fitting each tree, which helps prevent overfitting to specific individuals. The quality of the synthetic data was apparently evaluated by comparing two-way contingency tables between real and synthetic data via pMSE. However, I have since lost these tables, and in fact lost the synthetic data tsv! So I can’t really comment on the quality of the synthetic data…</p>
 <section id="clean-and-prep-original-data" class="level3">
 <h3 class="anchored" data-anchor-id="clean-and-prep-original-data">Clean and Prep Original Data</h3>
-<p>First step was to clean and engineer variables as in the original paper. The source file is retained on a secure server and these code chunks were only ran once (<code>eval=FALSE</code>)</p>
+<p>The first step was to clean and engineer variables as in the original paper (this was done back when I still had access to the original data).</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
@@ -358,7 +352,7 @@ pre {
 </section>
 <section id="generate-synthetic-data" class="level3">
 <h3 class="anchored" data-anchor-id="generate-synthetic-data">Generate Synthetic Data</h3>
-<p>I now use the package <code>synthpop</code> to create a synthetic data set using bootstrapping and classification and regression trees. I utilized stratification and changed the order of variables used in the synthesis process to create a data set with lower mean square error. Finally I remove all rows that happen to be identical to rows in the original data to ensure every row is synthetic.</p>
+<p>I now used the package <code>synthpop</code> to create a synthetic data set using bootstrapping and classification and regression trees. As an additional final step, I removed all rows that happen to be identical to rows in the original data to ensure every row is synthetic.</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
@@ -397,8 +391,9 @@ pre {
 <p>Looking at this section is where the cringing starts. The approach — throw every covariate into a single logistic regression and interpret the coefficients — is a classic early-career move that I’d handle differently now.</p>
 <p>The core problem is <strong>non-collapsibility of the odds ratio</strong>. When you adjust for many covariates in a logistic model, the coefficient for a given predictor isn’t a clean marginal effect — it’s a conditional association that shifts as you add more variables, even when those variables aren’t confounders. That’s a mathematical property of odds ratios in nonlinear models, not evidence of confounding being controlled. With as many adjustment terms as this model has, it’s genuinely hard to say what any individual OR is actually telling you about the population-level effect.</p>
 <p>What I’d do today: fit the same outcome model, but then use it to compute a <strong>marginal estimand</strong> via standardization (sometimes called g-computation). After fitting the model, create two copies of the dataset — one where everyone’s exposure is set to 1, one where it’s set to 0 — use the model to predict outcome probabilities for every individual under each scenario, then average those predictions across the sample. The difference between those averages is a risk difference: a number that actually means something. “Being treated at a community cancer program was associated with a 12 percentage point lower probability of receiving neoadjuvant therapy” is interpretable in a way that a conditional OR from a 10-variable logistic model isn’t.</p>
-<p>That said, doing the side-by-side in R and Python was a useful exercise. R’s <code>glm</code> formula interface is more natural for this kind of work — write the formula, factor encoding is handled automatically. Python’s <code>statsmodels</code> requires wrapping each categorical with <code>C()</code>, which is more verbose but more explicit. For a first exploratory pass, I still tend to reach for R.</p>
+<p>That said, doing the side-by-side in R and Python was a useful exercise for myself at the time. R’s <code>glm</code> formula interface is more natural for this kind of work — write the formula, factor encoding is handled automatically. Python’s <code>statsmodels</code> requires wrapping each categorical with <code>C()</code>, which is more verbose but more explicit. For a first exploratory pass, I still tend to reach for R.</p>
 <p>The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper.</p>
+<p>As alluded to earlier, the idea back in the day was to execute these chunks when the blog renders. As I have since lost the original synthetic data, I had to have Claude figure out how to grab the frozen html.json from the commit history and inject the old code chunk execution outputs into the new blog post. I’m not sure how Claude actually did that…</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Using R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Using Python</a></li></ul>
 <div class="tab-content">
@@ -1119,7 +1114,7 @@ C(treatnotatdiag)[T.Switched]  0.4072    0.029  14.121  0.000   0.351   0.464</c
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My First Paper: Trends and Associations in Rectal Cancer Treatment"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My First Paper: A Chemistry Major's Folly"</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Dave Hein"</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-06-11"</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, Python, Oncology]</span></span>
@@ -1164,347 +1159,345 @@ C(treatnotatdiag)[T.Switched]  0.4072    0.029  14.121  0.000   0.351   0.464</c
 <span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>Looking at this cleaning code now, I can already see things I'd do differently. There's a *lot* of filtering and row-dropping — unknown treatment codes filtered out, ambiguous sequences excluded, complete case analysis at the end — without much consideration of whether missingness was random or whether the resulting sample was still representative. Heavy filtering can introduce selection bias that's genuinely hard to detect after the fact, and I don't think I was fully appreciating that at the time.</span>
 <span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>I also did not use git for this project. Version control wasn't really on my radar yet. Recreating it here for the blog was partly an exercise in doing things more properly the second time around.</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Setup</span></span>
 <span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>Here's a link to the <span class="co">[</span><span class="ot">abstract.</span><span class="co">](https://pubmed.ncbi.nlm.nih.gov/33710137/)</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>When I first wrote this code (many years ago) I was very much an R guy. I wanted to learn python, so I decided to try running python from R Studio. The idea is that these code chunks would actually execute when the blog rendered to show the output. This would come back to bite me today, more on that later.</span>
 <span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Project Setup</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>This blog was created with Quarto in R Studio, so to include Python versions of analysis and graphics I needed to specify an Anaconda environment in the setup chunk.</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE, eval=FALSE}</span></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE, eval=FALSE}</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">".venv"</span>), <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">python.reticulate =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">".venv"</span>), <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">python.reticulate =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Synthetic Data</span></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>The original paper uses data from the National Cancer Database. This data is not public, so I created a synthetic dataset that attempts to recreate the characteristics of the original data but with much greater anonymization.</span>
 <span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Synthetic Data</span></span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>I'll be honest: I ran this synthesis script a while ago and I don't fully remember every choice I made. I know I stratified by race/ethnicity and median income — and in retrospect that makes sense, since minority subgroups can get smoothed out in synthetic data without explicit stratification — but I apparently didn't write down why I made those specific choices at the time. That's the kind of thing that seems obvious in the moment and mysterious 4 years later. Lesson learned about documenting your decisions while you're making them.</span>
 <span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>The original paper uses data from the National Cancer Database. This data is not public, so I created a synthetic dataset that attempts to recreate the characteristics of the original data but with much greater anonymization.</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>The approach uses the R package <span class="in">`synthpop`</span>, which generates synthetic records using **classification and regression trees (CART)** with bootstrapping. CART models are fit sequentially to each variable, conditional on the previously synthesized variables. Bootstrapping (the <span class="in">`proper = TRUE`</span> flag) adds an extra layer of uncertainty by resampling the original data before fitting each tree, which helps prevent overfitting to specific individuals. The quality of the synthetic data was apparently evaluated by comparing two-way contingency tables between real and synthetic data via pMSE. However, I have since lost these tables, and in fact lost the synthetic data tsv! So I can't really comment on the quality of the synthetic data...</span>
 <span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>I'll be honest: I ran this synthesis script a while ago and I don't fully remember every choice I made. I know I stratified by race/ethnicity and median income — and in retrospect that makes sense, since minority subgroups can get smoothed out in synthetic data without explicit stratification — but I apparently didn't write down why I made those specific choices at the time. That's the kind of thing that seems obvious in the moment and mysterious 4 years later. Lesson learned about documenting your decisions while you're making them.</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### Clean and Prep Original Data</span></span>
 <span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>The approach uses the R package <span class="in">`synthpop`</span>, which generates synthetic records using **classification and regression trees (CART)** with bootstrapping. CART models are fit sequentially to each variable, conditional on the previously synthesized variables. Bootstrapping (the <span class="in">`proper = TRUE`</span> flag) adds an extra layer of uncertainty by resampling the original data before fitting each tree, which helps prevent overfitting to specific individuals. The quality of the synthetic data was evaluated using pairwise utility tables (comparing two-way contingency tables between real and synthetic data via pMSE), and all replicated rows — records that happened to exactly match an original patient — were removed.</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>The first step was to clean and engineer variables as in the original paper (this was done back when I still had access to the original data).</span>
 <span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### Clean and Prep Original Data</span></span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>First step was to clean and engineer variables as in the original paper. The source file is retained on a secure server and these code chunks were only ran once (<span class="in">`eval=FALSE`</span>)</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE, tidy=TRUE}</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a><span class="co"># We will use synthpop to generate a synthetic data set</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(synthpop)</span>
 <span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE, tidy=TRUE}</span></span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a><span class="co"># We will use synthpop to generate a synthetic data set</span></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(synthpop)</span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in original data from the NCDB</span></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>RectalData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"ncdb_project_data.dta"</span>)</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> RectalData <span class="sc">%&gt;%</span> <span class="fu">select</span>(RX_SUMM_SYSTEMIC_SUR_SEQ,</span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_RADIATION,</span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURGRAD_SEQ,</span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_CHEMO,</span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>                                 SEX,</span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>                                 MED_INC_QUAR_12,</span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>                                 AGE,</span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>                                 raceb,</span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>                                 TNM_CLIN_STAGE_GROUP,</span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>                                 TNM_PATH_STAGE_GROUP,</span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>                                 SEQUENCE_NUMBER,</span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>                                 HISTOLOGY,</span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURG_PRIM_SITE,</span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>                                 YEAR_OF_DIAGNOSIS,</span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>                                 FACILITY_TYPE_CD,</span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>                                 INSURANCE_STATUS,</span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>                                 CDCC_TOTAL_BEST,</span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>                                 DX_DEFSURG_STARTED_DAYS,</span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>                                 CLASS_OF_CASE</span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unknown sequences, treatments, and keep proper hist codes &amp; primary surgery</span></span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">9</span>),</span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span>RX_SUMM_RADIATION <span class="sc">==</span> <span class="dv">9</span>,</span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span>RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>),</span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span>RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">99</span>,<span class="dv">88</span>),</span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>                      SEQUENCE_NUMBER <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"00"</span>,<span class="st">"01"</span>),</span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>                      HISTOLOGY <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8140</span>, <span class="dv">8210</span>, <span class="dv">8260</span>, <span class="dv">8261</span>, <span class="dv">8262</span>, <span class="dv">8263</span>, <span class="dv">8470</span>, <span class="dv">8480</span>, <span class="dv">8481</span>),</span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>                      RX_SUMM_SURG_PRIM_SITE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>))</span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a simple stage variable and filter to only stage 2 and 3</span></span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(TNM_CLIN_STAGE_GROUP, <span class="at">stage3 =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(TNM_CLIN_STAGE_GROUP,<span class="st">"2"</span>),<span class="st">"2"</span>,<span class="st">"0"</span>))</span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3[<span class="fu">str_detect</span>(df1<span class="sc">$</span>TNM_CLIN_STAGE_GROUP,<span class="st">"3"</span>) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>stage3 <span class="sc">==</span><span class="st">"0"</span>),]</span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a><span class="co"># Define neoadjuvant, rad or chemo before surgery</span></span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="dv">3</span>)</span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">case_when</span>(RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">~</span> <span class="dv">0</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>                                              )) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">!=</span> <span class="dv">3</span>)</span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a><span class="co"># age group under 45, 45-65, 65 and up AGE</span></span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">agegroup=</span> <span class="fu">case_when</span>(AGE<span class="sc">&lt;=</span><span class="dv">45</span> <span class="sc">~</span><span class="dv">0</span>, AGE <span class="sc">&gt;</span><span class="dv">45</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;</span><span class="dv">65</span> <span class="sc">~</span><span class="dv">1</span>, AGE <span class="sc">&gt;=</span> <span class="dv">65</span> <span class="sc">~</span><span class="dv">2</span>))</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in original data from the NCDB</span></span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>RectalData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"ncdb_project_data.dta"</span>)</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> RectalData <span class="sc">%&gt;%</span> <span class="fu">select</span>(RX_SUMM_SYSTEMIC_SUR_SEQ,</span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_RADIATION,</span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURGRAD_SEQ,</span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_CHEMO,</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>                                 SEX,</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>                                 MED_INC_QUAR_12,</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>                                 AGE,</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>                                 raceb,</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>                                 TNM_CLIN_STAGE_GROUP,</span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>                                 TNM_PATH_STAGE_GROUP,</span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>                                 SEQUENCE_NUMBER,</span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>                                 HISTOLOGY,</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>                                 RX_SUMM_SURG_PRIM_SITE,</span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>                                 YEAR_OF_DIAGNOSIS,</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>                                 FACILITY_TYPE_CD,</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>                                 INSURANCE_STATUS,</span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>                                 CDCC_TOTAL_BEST,</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>                                 DX_DEFSURG_STARTED_DAYS,</span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>                                 CLASS_OF_CASE</span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unknown sequences, treatments, and keep proper hist codes &amp; primary surgery</span></span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">9</span>),</span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span>RX_SUMM_RADIATION <span class="sc">==</span> <span class="dv">9</span>,</span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span>RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>),</span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">!</span>RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">99</span>,<span class="dv">88</span>),</span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>                      SEQUENCE_NUMBER <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"00"</span>,<span class="st">"01"</span>),</span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>                      HISTOLOGY <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8140</span>, <span class="dv">8210</span>, <span class="dv">8260</span>, <span class="dv">8261</span>, <span class="dv">8262</span>, <span class="dv">8263</span>, <span class="dv">8470</span>, <span class="dv">8480</span>, <span class="dv">8481</span>),</span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>                      RX_SUMM_SURG_PRIM_SITE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>))</span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a simple stage variable and filter to only stage 2 and 3</span></span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(TNM_CLIN_STAGE_GROUP, <span class="at">stage3 =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(TNM_CLIN_STAGE_GROUP,<span class="st">"2"</span>),<span class="st">"2"</span>,<span class="st">"0"</span>))</span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>stage3[<span class="fu">str_detect</span>(df1<span class="sc">$</span>TNM_CLIN_STAGE_GROUP,<span class="st">"3"</span>) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[<span class="sc">!</span>(df1<span class="sc">$</span>stage3 <span class="sc">==</span><span class="st">"0"</span>),]</span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a><span class="co"># Define neoadjuvant, rad or chemo before surgery</span></span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="dv">3</span>)</span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">case_when</span>(RX_SUMM_SURGRAD_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_CHEMO <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">86</span>, <span class="dv">87</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> df1<span class="sc">$</span>RX_SUMM_RADIATION<span class="sc">==</span><span class="dv">0</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>                                              RX_SUMM_SURGRAD_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> RX_SUMM_SYSTEMIC_SUR_SEQ<span class="sc">==</span><span class="dv">3</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>                                              )) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">!=</span> <span class="dv">3</span>)</span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a><span class="co"># age group under 45, 45-65, 65 and up AGE</span></span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">agegroup=</span> <span class="fu">case_when</span>(AGE<span class="sc">&lt;=</span><span class="dv">45</span> <span class="sc">~</span><span class="dv">0</span>, AGE <span class="sc">&gt;</span><span class="dv">45</span> <span class="sc">&amp;</span> AGE <span class="sc">&lt;</span><span class="dv">65</span> <span class="sc">~</span><span class="dv">1</span>, AGE <span class="sc">&gt;=</span> <span class="dv">65</span> <span class="sc">~</span><span class="dv">2</span>))</span>
+<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a><span class="co"># create a var for switching facility and add the unknown gov insurance to unknown insurance</span></span>
+<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(CLASS_OF_CASE, <span class="at">treatnotatdiag =</span> <span class="fu">ifelse</span>(CLASS_OF_CASE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>),<span class="st">"Switched"</span>,<span class="st">"Stayed"</span>),</span>
+<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>                      <span class="at">INSURANCE_STATUS =</span> <span class="fu">ifelse</span>(INSURANCE_STATUS<span class="sc">==</span><span class="dv">4</span>,<span class="dv">9</span>,INSURANCE_STATUS))</span>
 <span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a><span class="co"># create a var for switching facility and add the unknown gov insurance to unknown insurance</span></span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(CLASS_OF_CASE, <span class="at">treatnotatdiag =</span> <span class="fu">ifelse</span>(CLASS_OF_CASE <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>),<span class="st">"Switched"</span>,<span class="st">"Stayed"</span>),</span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>                      <span class="at">INSURANCE_STATUS =</span> <span class="fu">ifelse</span>(INSURANCE_STATUS<span class="sc">==</span><span class="dv">4</span>,<span class="dv">9</span>,INSURANCE_STATUS))</span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a><span class="co"># Omit NA, this project used complete case analysis</span></span>
-<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df1)</span>
-<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only relevant variables</span></span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(SEX,</span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>                      MED_INC_QUAR_12,</span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a>                      agegroup,</span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a>                      raceb,</span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>                      stage3,</span>
-<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a>                      neoadjuvant,</span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>                      treatnotatdiag,</span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a>                      YEAR_OF_DIAGNOSIS,</span>
-<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a>                      FACILITY_TYPE_CD,</span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a>                      INSURANCE_STATUS,</span>
-<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a>                      CDCC_TOTAL_BEST,</span>
-<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a>                      DX_DEFSURG_STARTED_DAYS</span>
-<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a><span class="co"># Omit NA, this project used complete case analysis</span></span>
+<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df1)</span>
+<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only relevant variables</span></span>
+<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(SEX,</span>
+<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>                      MED_INC_QUAR_12,</span>
+<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>                      agegroup,</span>
+<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>                      raceb,</span>
+<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>                      stage3,</span>
+<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>                      neoadjuvant,</span>
+<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a>                      treatnotatdiag,</span>
+<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a>                      YEAR_OF_DIAGNOSIS,</span>
+<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>                      FACILITY_TYPE_CD,</span>
+<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a>                      INSURANCE_STATUS,</span>
+<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>                      CDCC_TOTAL_BEST,</span>
+<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a>                      DX_DEFSURG_STARTED_DAYS</span>
+<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a><span class="co"># Make variables into factors</span></span>
+<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
+<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="co"># Make variables into factors</span></span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Generate Synthetic Data</span></span>
+<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a>I now used the package <span class="in">`synthpop`</span> to create a synthetic data set using bootstrapping and classification and regression trees. As an additional final step, I removed all rows that happen to be identical to rows in the original data to ensure every row is synthetic.</span>
 <span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Generate Synthetic Data</span></span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>I now use the package <span class="in">`synthpop`</span> to create a synthetic data set using bootstrapping and classification and regression trees. I utilized stratification and changed the order of variables used in the synthesis process to create a data set with lower mean square error. Finally I remove all rows that happen to be identical to rows in the original data to ensure every row is synthetic.</span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE, tidy=TRUE}</span></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a><span class="co"># Make synthetic data using CART and bootstrapping</span></span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder for synthetic data generation</span></span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">relocate</span>(raceb,MED_INC_QUAR_12, neoadjuvant)</span>
+<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE, tidy=TRUE}</span></span>
+<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a><span class="co"># Make synthetic data using CART and bootstrapping</span></span>
+<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder for synthetic data generation</span></span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">relocate</span>(raceb,MED_INC_QUAR_12, neoadjuvant)</span>
+<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a><span class="co"># Strat by race and ethnicity and median income for best overlap</span></span>
+<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>synth_1 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df2<span class="sc">$</span>raceb)</span>
+<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>synth_2 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df3<span class="sc">$</span>MED_INC_QUAR_12)</span>
 <span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a><span class="co"># Strat by race and ethnicity and median income for best overlap</span></span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>synth_1 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df2<span class="sc">$</span>raceb)</span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a>synth_2 <span class="ot">&lt;-</span> <span class="fu">syn.strata</span>(df3, <span class="at">proper =</span> <span class="cn">TRUE</span>, <span class="at">strata =</span> df3<span class="sc">$</span>MED_INC_QUAR_12)</span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a>synth_dat1 <span class="ot">&lt;-</span> synth_1<span class="sc">$</span>syn</span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a>synth_dat2 <span class="ot">&lt;-</span> synth_2<span class="sc">$</span>syn</span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>vars_i_want <span class="ot">&lt;-</span> <span class="fu">colnames</span>(df2)</span>
-<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a>vars_i_want<span class="ot">&lt;-</span>vars_i_want[<span class="sc">!</span>vars_i_want <span class="sc">==</span> <span class="st">"DX_DEFSURG_STARTED_DAYS"</span>]</span>
+<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>synth_dat1 <span class="ot">&lt;-</span> synth_1<span class="sc">$</span>syn</span>
+<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>synth_dat2 <span class="ot">&lt;-</span> synth_2<span class="sc">$</span>syn</span>
+<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a>vars_i_want <span class="ot">&lt;-</span> <span class="fu">colnames</span>(df2)</span>
+<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a>vars_i_want<span class="ot">&lt;-</span>vars_i_want[<span class="sc">!</span>vars_i_want <span class="sc">==</span> <span class="st">"DX_DEFSURG_STARTED_DAYS"</span>]</span>
+<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Heat maps to compare pMSE</span></span>
+<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat1, df3,<span class="at">tables=</span><span class="st">"twoway"</span>,<span class="at">vars =</span> vars_i_want)</span>
+<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat2, df3,<span class="at">tables=</span><span class="st">"twoway"</span>,<span class="at">vars =</span> vars_i_want)</span>
 <span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Heat maps to compare pMSE</span></span>
-<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat1, df3,<span class="at">tables=</span><span class="st">"twoway"</span>,<span class="at">vars =</span> vars_i_want)</span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a>synthpop<span class="sc">::</span><span class="fu">utility.tables</span>(synth_dat2, df3,<span class="at">tables=</span><span class="st">"twoway"</span>,<span class="at">vars =</span> vars_i_want)</span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Replicates &amp; tag for synthetic</span></span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>final_synth_data <span class="ot">&lt;-</span> <span class="fu">sdc</span>(synth_2, df3, <span class="at">label=</span><span class="st">"synthetic"</span>, <span class="at">rm.replicated.uniques =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> final_synth_data<span class="sc">$</span>syn</span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(f, <span class="st">"synthetic_NCDB_data.tsv"</span>)</span>
-<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Replicates &amp; tag for synthetic</span></span>
+<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a>final_synth_data <span class="ot">&lt;-</span> <span class="fu">sdc</span>(synth_2, df3, <span class="at">label=</span><span class="st">"synthetic"</span>, <span class="at">rm.replicated.uniques =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> final_synth_data<span class="sc">$</span>syn</span>
+<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(f, <span class="st">"synthetic_NCDB_data.tsv"</span>)</span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis Using Synthetic Data</span></span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Logistic Regression</span></span>
 <span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis Using Synthetic Data</span></span>
+<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a>Looking at this section is where the cringing starts. The approach — throw every covariate into a single logistic regression and interpret the coefficients — is a classic early-career move that I'd handle differently now.</span>
 <span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="fu">### Logistic Regression</span></span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a>The core problem is **non-collapsibility of the odds ratio**. When you adjust for many covariates in a logistic model, the coefficient for a given predictor isn't a clean marginal effect — it's a conditional association that shifts as you add more variables, even when those variables aren't confounders. That's a mathematical property of odds ratios in nonlinear models, not evidence of confounding being controlled. With as many adjustment terms as this model has, it's genuinely hard to say what any individual OR is actually telling you about the population-level effect.</span>
 <span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a>Looking at this section is where the cringing starts. The approach — throw every covariate into a single logistic regression and interpret the coefficients — is a classic early-career move that I'd handle differently now.</span>
+<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a>What I'd do today: fit the same outcome model, but then use it to compute a **marginal estimand** via standardization (sometimes called g-computation). After fitting the model, create two copies of the dataset — one where everyone's exposure is set to 1, one where it's set to 0 — use the model to predict outcome probabilities for every individual under each scenario, then average those predictions across the sample. The difference between those averages is a risk difference: a number that actually means something. "Being treated at a community cancer program was associated with a 12 percentage point lower probability of receiving neoadjuvant therapy" is interpretable in a way that a conditional OR from a 10-variable logistic model isn't.</span>
 <span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>The core problem is **non-collapsibility of the odds ratio**. When you adjust for many covariates in a logistic model, the coefficient for a given predictor isn't a clean marginal effect — it's a conditional association that shifts as you add more variables, even when those variables aren't confounders. That's a mathematical property of odds ratios in nonlinear models, not evidence of confounding being controlled. With as many adjustment terms as this model has, it's genuinely hard to say what any individual OR is actually telling you about the population-level effect.</span>
+<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>That said, doing the side-by-side in R and Python was a useful exercise for myself at the time. R's <span class="in">`glm`</span> formula interface is more natural for this kind of work — write the formula, factor encoding is handled automatically. Python's <span class="in">`statsmodels`</span> requires wrapping each categorical with <span class="in">`C()`</span>, which is more verbose but more explicit. For a first exploratory pass, I still tend to reach for R.</span>
 <span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>What I'd do today: fit the same outcome model, but then use it to compute a **marginal estimand** via standardization (sometimes called g-computation). After fitting the model, create two copies of the dataset — one where everyone's exposure is set to 1, one where it's set to 0 — use the model to predict outcome probabilities for every individual under each scenario, then average those predictions across the sample. The difference between those averages is a risk difference: a number that actually means something. "Being treated at a community cancer program was associated with a 12 percentage point lower probability of receiving neoadjuvant therapy" is interpretable in a way that a conditional OR from a 10-variable logistic model isn't.</span>
+<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper.</span>
 <span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>That said, doing the side-by-side in R and Python was a useful exercise. R's <span class="in">`glm`</span> formula interface is more natural for this kind of work — write the formula, factor encoding is handled automatically. Python's <span class="in">`statsmodels`</span> requires wrapping each categorical with <span class="in">`C()`</span>, which is more verbose but more explicit. For a first exploratory pass, I still tend to reach for R.</span>
+<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>As alluded to earlier, the idea back in the day was to execute these chunks when the blog renders. As I have since lost the original synthetic data, I had to have Claude figure out how to grab the frozen html.json from the commit history and inject the old code chunk execution outputs into the new blog post. I'm not sure how Claude actually did that...</span>
 <span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper.</span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, message=FALSE, eval=FALSE}</span></span>
-<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a><span class="co"># Load synthetic data</span></span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"synthetic_NCDB_data.tsv"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression</span></span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a>log_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(neoadjuvant <span class="sc">~</span> YEAR_OF_DIAGNOSIS <span class="sc">+</span></span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a>      MED_INC_QUAR_12 <span class="sc">+</span></span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a>      INSURANCE_STATUS <span class="sc">+</span></span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a>      raceb <span class="sc">+</span></span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a>      CDCC_TOTAL_BEST <span class="sc">+</span></span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>      SEX <span class="sc">+</span></span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>      agegroup <span class="sc">+</span></span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>      stage3 <span class="sc">+</span></span>
-<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>      FACILITY_TYPE_CD <span class="sc">+</span></span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a>      treatnotatdiag,</span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> synthetic_NCDB_data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit))</span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidy results</span></span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a>tidy_log_fit <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary</span>(log_fit)<span class="sc">$</span>coefficients)</span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(<span class="fu">round</span>(tidy_log_fit <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(Estimate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="st">`</span><span class="at">Pr...z..</span><span class="st">`</span>),<span class="dv">3</span>))</span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
+<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, message=FALSE, eval=FALSE}</span></span>
+<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a><span class="co"># Load synthetic data</span></span>
+<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"synthetic_NCDB_data.tsv"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>DX_DEFSURG_STARTED_DAYS, as.factor))</span>
+<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression</span></span>
+<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a>log_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(neoadjuvant <span class="sc">~</span> YEAR_OF_DIAGNOSIS <span class="sc">+</span></span>
+<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a>      MED_INC_QUAR_12 <span class="sc">+</span></span>
+<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a>      INSURANCE_STATUS <span class="sc">+</span></span>
+<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a>      raceb <span class="sc">+</span></span>
+<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a>      CDCC_TOTAL_BEST <span class="sc">+</span></span>
+<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a>      SEX <span class="sc">+</span></span>
+<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a>      agegroup <span class="sc">+</span></span>
+<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>      stage3 <span class="sc">+</span></span>
+<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>      FACILITY_TYPE_CD <span class="sc">+</span></span>
+<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>      treatnotatdiag,</span>
+<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> synthetic_NCDB_data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> logit))</span>
+<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidy results</span></span>
+<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a>tidy_log_fit <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">summary</span>(log_fit)<span class="sc">$</span>coefficients)</span>
+<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(<span class="fu">round</span>(tidy_log_fit <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(Estimate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="st">`</span><span class="at">Pr...z..</span><span class="st">`</span>),<span class="dv">3</span>))</span>
+<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
 <span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE}</span></span>
+<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data_py <span class="op">=</span> pd.read_csv(<span class="st">"synthetic_NCDB_data.tsv"</span>, sep <span class="op">=</span> <span class="st">'</span><span class="ch">\t</span><span class="st">'</span>)</span>
 <span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data_py <span class="op">=</span> pd.read_csv(<span class="st">"synthetic_NCDB_data.tsv"</span>, sep <span class="op">=</span> <span class="st">'</span><span class="ch">\t</span><span class="st">'</span>)</span>
-<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic Regression for odds of upfront surgery</span></span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.logit(formula<span class="op">=</span><span class="st">"neoadjuvant~ C(YEAR_OF_DIAGNOSIS) + C(stage3) + C(MED_INC_QUAR_12) + C(INSURANCE_STATUS) + C(raceb) + C(CDCC_TOTAL_BEST) + C(SEX) + C(agegroup) + C(FACILITY_TYPE_CD) + C(treatnotatdiag)"</span>,data <span class="op">=</span> synthetic_NCDB_data_py).fit()</span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a>mod_summary <span class="op">=</span> model.summary()</span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a>mod_summary_table <span class="op">=</span> pd.read_html(mod_summary.tables[<span class="dv">1</span>].as_html(), header<span class="op">=</span><span class="dv">0</span>, index_col<span class="op">=</span><span class="dv">0</span>)[<span class="dv">0</span>]</span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mod_summary_table)</span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic Regression for odds of upfront surgery</span></span>
+<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.logit(formula<span class="op">=</span><span class="st">"neoadjuvant~ C(YEAR_OF_DIAGNOSIS) + C(stage3) + C(MED_INC_QUAR_12) + C(INSURANCE_STATUS) + C(raceb) + C(CDCC_TOTAL_BEST) + C(SEX) + C(agegroup) + C(FACILITY_TYPE_CD) + C(treatnotatdiag)"</span>,data <span class="op">=</span> synthetic_NCDB_data_py).fit()</span>
+<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>mod_summary <span class="op">=</span> model.summary()</span>
+<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>mod_summary_table <span class="op">=</span> pd.read_html(mod_summary.tables[<span class="dv">1</span>].as_html(), header<span class="op">=</span><span class="dv">0</span>, index_col<span class="op">=</span><span class="dv">0</span>)[<span class="dv">0</span>]</span>
+<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mod_summary_table)</span>
+<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a><span class="fu">### Proportions Over Time</span></span>
 <span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a><span class="fu">### Proportions Over Time</span></span>
+<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a>This figure shows the proportion of patients receiving neoadjuvant treatment by facility type and how it changed over time. In retrospect, using an interpolated line graph for annual proportions is a slightly odd choice — a step plot or grouped bar chart would probably communicate the year-to-year changes more honestly. But it gets the point across.</span>
 <span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a>This figure shows the proportion of patients receiving neoadjuvant treatment by facility type and how it changed over time. In retrospect, using an interpolated line graph for annual proportions is a slightly odd choice — a step plot or grouped bar chart would probably communicate the year-to-year changes more honestly. But it gets the point across.</span>
+<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a>There were also some display issues getting the Python figure to render correctly, so I saved it before knitting. Apologies for the colors not matching between versions.</span>
 <span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a>There were also some display issues getting the Python figure to render correctly, so I saved it before knitting. Apologies for the colors not matching between versions.</span>
-<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
-<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8, eval=FALSE}</span></span>
-<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a><span class="co"># Making df of just people who got upfront surg</span></span>
-<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data2 <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">as.numeric</span>(neoadjuvant)<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming the fac type</span></span>
-<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)</span>
-<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span>
-<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
-<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
-<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
-<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a><span class="co"># finding proportion of upfront surg by fac type</span></span>
-<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS, Facility_Type) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio=</span><span class="fu">mean</span>(neoadjuvant))</span>
-<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a><span class="co"># finding overall median per year of upfront surg</span></span>
-<span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span>
-<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
-<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span> <span class="fu">select</span>(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)</span>
-<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging overall and by facility type</span></span>
-<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
-<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
-<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1,year2)</span>
-<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a>mergedyearly<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(mergedyearly<span class="sc">$</span>Facility_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Integrated Network Cancer Program"</span>,</span>
-<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Academic Program"</span>,</span>
-<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Overall Median"</span>,</span>
-<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Comprehensive CC Program"</span>,</span>
-<span id="cb11-293"><a href="#cb11-293" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Community Cancer Program"</span>))</span>
-<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting upfron surg by fac type</span></span>
-<span id="cb11-296"><a href="#cb11-296" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mergedyearly) <span class="sc">+</span></span>
-<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x=</span>YEAR_OF_DIAGNOSIS, <span class="at">y=</span>ratio, <span class="at">group =</span> Facility_Type, <span class="at">color=</span>Facility_Type), <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year of Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span></span>
-<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span>
-<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
+<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, tidy=TRUE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8, eval=FALSE}</span></span>
+<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a><span class="co"># Making df of just people who got upfront surg</span></span>
+<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a>synthetic_NCDB_data2 <span class="ot">&lt;-</span> synthetic_NCDB_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">neoadjuvant =</span> <span class="fu">as.numeric</span>(neoadjuvant)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(neoadjuvant <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming the fac type</span></span>
+<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR_OF_DIAGNOSIS, neoadjuvant, FACILITY_TYPE_CD)</span>
+<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Community Cancer Program"</span></span>
+<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Comprehensive CC Program"</span></span>
+<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"Academic Program"</span></span>
+<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a>dfyear<span class="sc">$</span>Facility_Type[dfyear<span class="sc">$</span>FACILITY_TYPE_CD <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"Integrated Network Cancer Program"</span></span>
+<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a><span class="co"># finding proportion of upfront surg by fac type</span></span>
+<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a>dfyear <span class="ot">&lt;-</span> dfyear <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS, Facility_Type) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio=</span><span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a><span class="co"># finding overall median per year of upfront surg</span></span>
+<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> synthetic_NCDB_data2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(YEAR_OF_DIAGNOSIS) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">mean</span>(neoadjuvant))</span>
+<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a>dfyearavg<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="st">"Overall Median"</span></span>
+<span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a>dfyearavg <span class="ot">&lt;-</span> dfyearavg <span class="sc">%&gt;%</span> <span class="fu">select</span>(YEAR_OF_DIAGNOSIS, Facility_Type, ratio)</span>
+<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging overall and by facility type</span></span>
+<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyear)</span>
+<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a>year2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfyearavg)</span>
+<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a>mergedyearly <span class="ot">&lt;-</span> <span class="fu">rbind</span>(year1,year2)</span>
+<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a>mergedyearly<span class="sc">$</span>Facility_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(mergedyearly<span class="sc">$</span>Facility_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Integrated Network Cancer Program"</span>,</span>
+<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Academic Program"</span>,</span>
+<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Overall Median"</span>,</span>
+<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Comprehensive CC Program"</span>,</span>
+<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="st">"Community Cancer Program"</span>))</span>
+<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-293"><a href="#cb11-293" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting upfron surg by fac type</span></span>
+<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mergedyearly) <span class="sc">+</span></span>
+<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mergedyearly, <span class="fu">aes</span>(<span class="at">x=</span>YEAR_OF_DIAGNOSIS, <span class="at">y=</span>ratio, <span class="at">group =</span> Facility_Type, <span class="at">color=</span>Facility_Type), <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb11-296"><a href="#cb11-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year of Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Proportion Receiving Upfront Surgery"</span>, <span class="at">color =</span> <span class="st">"Facility Type"</span>) <span class="sc">+</span></span>
+<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span>
+<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
 <span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
-<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval = FALSE, tidy = TRUE }</span></span>
-<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphing proportion receiving upfront surg at different facility types over time</span></span>
-<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a>rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> <span class="dv">8</span>,<span class="dv">6</span></span>
-<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a>dfCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==1'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a>dfCCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==2'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a>dfA <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==3'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
-<span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a>dfIN <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==4'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval = FALSE, tidy = TRUE }</span></span>
+<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphing proportion receiving upfront surg at different facility types over time</span></span>
+<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a>rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> <span class="dv">8</span>,<span class="dv">6</span></span>
+<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a>dfCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==1'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a>dfCCC <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==2'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a>dfA <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==3'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a>dfIN <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'FACILITY_TYPE_CD==4'</span>).<span class="bu">filter</span>([<span class="st">'YEAR_OF_DIAGNOSIS'</span>,<span class="st">'neoadjuvant'</span>]).groupby([<span class="st">'YEAR_OF_DIAGNOSIS'</span>]).agg([<span class="st">'mean'</span>])</span>
+<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>,<span class="dv">6</span>))</span>
 <span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>,<span class="dv">6</span>))</span>
-<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCC, label<span class="op">=</span><span class="st">"Community Cancer Center"</span>)</span>
-<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCCC, label<span class="op">=</span><span class="st">"Comprehensive Community Cancer Center"</span>)</span>
-<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a>plt.plot(dfA, label<span class="op">=</span><span class="st">"Academic Program"</span>)</span>
-<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a>plt.plot(dfIN, label<span class="op">=</span><span class="st">"Integrated Cancer Program"</span>)</span>
-<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year of Diagnosis"</span>)</span>
-<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Proportion Receiving Upfront Surgery"</span>)</span>
-<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/overtime.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a><span class="al">![output](overtime.png)</span></span>
-<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCC, label<span class="op">=</span><span class="st">"Community Cancer Center"</span>)</span>
+<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a>plt.plot(dfCCC, label<span class="op">=</span><span class="st">"Comprehensive Community Cancer Center"</span>)</span>
+<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a>plt.plot(dfA, label<span class="op">=</span><span class="st">"Academic Program"</span>)</span>
+<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a>plt.plot(dfIN, label<span class="op">=</span><span class="st">"Integrated Cancer Program"</span>)</span>
+<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year of Diagnosis"</span>)</span>
+<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Proportion Receiving Upfront Surgery"</span>)</span>
+<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/overtime.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a><span class="al">![output](overtime.png)</span></span>
+<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a><span class="fu">### Delays in Surgery and Facility Switching</span></span>
 <span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a><span class="fu">### Delays in Surgery and Facility Switching</span></span>
+<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>This final figure displays the counts of upfront surgery patients by how many days they waited until surgery, colored by whether they switched facilities or not.</span>
 <span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>This final figure displays the counts of upfront surgery patients by how many days they waited until surgery, colored by whether they switched facilities or not.</span>
-<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
-<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, tidy=TRUE, message=FALSE, fig.height=4, fig.width=8, eval=FALSE}</span></span>
-<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a><span class="co">#making three groups for a surgery delay</span></span>
-<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span>
-<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
-<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
-<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)</span>
-<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting surg delay and switching facility</span></span>
-<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x=</span>DX_DEFSURG_STARTED_DAYS,<span class="at">fill=</span>treatnotatdiag)) <span class="sc">+</span></span>
-<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">200</span>) <span class="sc">+</span></span>
-<span id="cb11-346"><a href="#cb11-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Days Until Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Facility Switch"</span>) <span class="sc">+</span></span>
-<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
-<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">28</span>)</span>
-<span id="cb11-349"><a href="#cb11-349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using R</span></span>
+<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, tidy=TRUE, message=FALSE, fig.height=4, fig.width=8, eval=FALSE}</span></span>
+<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a><span class="co">#making three groups for a surgery delay</span></span>
+<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"Day zero"</span></span>
+<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&lt;</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Short delay"</span></span>
+<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup[df2<span class="sc">$</span>DX_DEFSURG_STARTED_DAYS <span class="sc">&gt;=</span> <span class="dv">28</span>] <span class="ot">&lt;-</span> <span class="st">"Long Delay"</span></span>
+<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>surggroup <span class="ot">&lt;-</span> <span class="fu">factor</span>(df2<span class="sc">$</span>surggroup)</span>
+<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting surg delay and switching facility</span></span>
+<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x=</span>DX_DEFSURG_STARTED_DAYS,<span class="at">fill=</span>treatnotatdiag)) <span class="sc">+</span></span>
+<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">200</span>) <span class="sc">+</span></span>
+<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Days Until Surgery From Diagnosis"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Facility Switch"</span>) <span class="sc">+</span></span>
+<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>) <span class="sc">+</span></span>
+<span id="cb11-346"><a href="#cb11-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">28</span>)</span>
+<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-349"><a href="#cb11-349" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
 <span id="cb11-350"><a href="#cb11-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using Python</span></span>
-<span id="cb11-352"><a href="#cb11-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-353"><a href="#cb11-353" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE, tidy = TRUE}</span></span>
-<span id="cb11-354"><a href="#cb11-354" aria-hidden="true" tabindex="-1"></a><span class="co">#Data frame that only includes people who got upfront surg</span></span>
-<span id="cb11-355"><a href="#cb11-355" aria-hidden="true" tabindex="-1"></a>dfsurg <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'neoadjuvant == 0'</span>)</span>
-<span id="cb11-356"><a href="#cb11-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-357"><a href="#cb11-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting surgery delay and switching facility</span></span>
-<span id="cb11-358"><a href="#cb11-358" aria-hidden="true" tabindex="-1"></a>dfsurggraph <span class="op">=</span> dfsurg.<span class="bu">filter</span>([<span class="st">'treatnotatdiag'</span>,<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>]).query(<span class="st">'DX_DEFSURG_STARTED_DAYS&lt;200'</span>)</span>
-<span id="cb11-359"><a href="#cb11-359" aria-hidden="true" tabindex="-1"></a>dfsurggraphswitch <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Switched"'</span>)</span>
-<span id="cb11-360"><a href="#cb11-360" aria-hidden="true" tabindex="-1"></a>dfsurggraphstay <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Stayed"'</span>)</span>
-<span id="cb11-361"><a href="#cb11-361" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
-<span id="cb11-362"><a href="#cb11-362" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphswitch[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>, fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Switched"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb11-363"><a href="#cb11-363" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphstay[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>,fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Stayed"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb11-364"><a href="#cb11-364" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Days Until Surgery From Diagnosis"</span>)</span>
-<span id="cb11-365"><a href="#cb11-365" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb11-366"><a href="#cb11-366" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb11-367"><a href="#cb11-367" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span><span class="dv">28</span>)</span>
-<span id="cb11-368"><a href="#cb11-368" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/switchvstay.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb11-369"><a href="#cb11-369" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-370"><a href="#cb11-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-371"><a href="#cb11-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-372"><a href="#cb11-372" aria-hidden="true" tabindex="-1"></a><span class="al">![output](switchvstay.png)</span></span>
-<span id="cb11-373"><a href="#cb11-373" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, eval=FALSE, tidy = TRUE}</span></span>
+<span id="cb11-352"><a href="#cb11-352" aria-hidden="true" tabindex="-1"></a><span class="co">#Data frame that only includes people who got upfront surg</span></span>
+<span id="cb11-353"><a href="#cb11-353" aria-hidden="true" tabindex="-1"></a>dfsurg <span class="op">=</span> synthetic_NCDB_data_py.query(<span class="st">'neoadjuvant == 0'</span>)</span>
+<span id="cb11-354"><a href="#cb11-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-355"><a href="#cb11-355" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting surgery delay and switching facility</span></span>
+<span id="cb11-356"><a href="#cb11-356" aria-hidden="true" tabindex="-1"></a>dfsurggraph <span class="op">=</span> dfsurg.<span class="bu">filter</span>([<span class="st">'treatnotatdiag'</span>,<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>]).query(<span class="st">'DX_DEFSURG_STARTED_DAYS&lt;200'</span>)</span>
+<span id="cb11-357"><a href="#cb11-357" aria-hidden="true" tabindex="-1"></a>dfsurggraphswitch <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Switched"'</span>)</span>
+<span id="cb11-358"><a href="#cb11-358" aria-hidden="true" tabindex="-1"></a>dfsurggraphstay <span class="op">=</span> dfsurggraph.query(<span class="st">'treatnotatdiag == "Stayed"'</span>)</span>
+<span id="cb11-359"><a href="#cb11-359" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb11-360"><a href="#cb11-360" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphswitch[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>, fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Switched"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-361"><a href="#cb11-361" aria-hidden="true" tabindex="-1"></a>plt.hist(dfsurggraphstay[<span class="st">'DX_DEFSURG_STARTED_DAYS'</span>], bins<span class="op">=</span><span class="dv">40</span>,fill<span class="op">=</span><span class="va">False</span>,histtype<span class="op">=</span><span class="st">'step'</span>,stacked<span class="op">=</span><span class="va">True</span>,label<span class="op">=</span><span class="st">"Stayed"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-362"><a href="#cb11-362" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Days Until Surgery From Diagnosis"</span>)</span>
+<span id="cb11-363"><a href="#cb11-363" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb11-364"><a href="#cb11-364" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-365"><a href="#cb11-365" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span><span class="dv">28</span>)</span>
+<span id="cb11-366"><a href="#cb11-366" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'posts/first_project/switchvstay.png'</span>,bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb11-367"><a href="#cb11-367" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-368"><a href="#cb11-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-369"><a href="#cb11-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-370"><a href="#cb11-370" aria-hidden="true" tabindex="-1"></a><span class="al">![output](switchvstay.png)</span></span>
+<span id="cb11-371"><a href="#cb11-371" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-372"><a href="#cb11-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-373"><a href="#cb11-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reflections</span></span>
 <span id="cb11-374"><a href="#cb11-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-375"><a href="#cb11-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reflections</span></span>
+<span id="cb11-375"><a href="#cb11-375" aria-hidden="true" tabindex="-1"></a>Looking back at this project now, the thing that strikes me most is how little I actually knew at the time. I had just started my first job, I knew how to open a Jupyter notebook, and I was writing my first academic paper. That's a fun combination.</span>
 <span id="cb11-376"><a href="#cb11-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-377"><a href="#cb11-377" aria-hidden="true" tabindex="-1"></a>Looking back at this project now, the thing that strikes me most is how little I actually knew at the time. I had just started my first job, I knew how to open a Jupyter notebook, and I was writing my first academic paper. That's a fun combination.</span>
+<span id="cb11-377"><a href="#cb11-377" aria-hidden="true" tabindex="-1"></a>My PI, Dr. Sanford, was patient with the first draft. Patient might be an understatement — she did a lot of edits. Seeing how a raw first attempt at clinical methods writing gets shaped into something publishable is a hard lesson to learn any other way, and I definitely needed it.</span>
 <span id="cb11-378"><a href="#cb11-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-379"><a href="#cb11-379" aria-hidden="true" tabindex="-1"></a>My PI, Dr. Sanford, was patient with the first draft. Patient might be an understatement — she did a lot of edits. Seeing how a raw first attempt at clinical methods writing gets shaped into something publishable is a hard lesson to learn any other way, and I definitely needed it.</span>
+<span id="cb11-379"><a href="#cb11-379" aria-hidden="true" tabindex="-1"></a>More than anything, though, this project is a big reason I got motivated to go get my master's degree. Working through a logistic regression without fully understanding what the coefficients meant, or what the model was actually assuming about the data — that discomfort was productive. I knew I was using tools I didn't fully understand, and I wanted actual mastery of the fundamentals, not just the ability to run the function. About a year later I found myself applying to programs, and this project is a big part of why.</span>
 <span id="cb11-380"><a href="#cb11-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-381"><a href="#cb11-381" aria-hidden="true" tabindex="-1"></a>More than anything, though, this project is a big reason I got motivated to go get my master's degree. Working through a logistic regression without fully understanding what the coefficients meant, or what the model was actually assuming about the data — that discomfort was productive. I knew I was using tools I didn't fully understand, and I wanted actual mastery of the fundamentals, not just the ability to run the function. About a year later I found myself applying to programs, and this project is a big part of why.</span>
+<span id="cb11-381"><a href="#cb11-381" aria-hidden="true" tabindex="-1"></a>It also got me seriously started learning Python, which turned out to matter a lot for where my career went from here.</span>
 <span id="cb11-382"><a href="#cb11-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-383"><a href="#cb11-383" aria-hidden="true" tabindex="-1"></a>It also got me seriously started learning Python, which turned out to matter a lot for where my career went from here.</span>
+<span id="cb11-383"><a href="#cb11-383" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
 <span id="cb11-384"><a href="#cb11-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-385"><a href="#cb11-385" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
-<span id="cb11-386"><a href="#cb11-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-387"><a href="#cb11-387" aria-hidden="true" tabindex="-1"></a>**Hein D**, Ahn C, Aguilera T, Folkert M, Sanford NN. Trends and Factors Associated with Receipt of Upfront Surgery for Stage II-III Rectal Adenocarcinoma in the United States. *Journal of Gastrointestinal Cancer*. 2022. <span class="ot">&lt;https://pubmed.ncbi.nlm.nih.gov/33710137/&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb11-385"><a href="#cb11-385" aria-hidden="true" tabindex="-1"></a>**Hein D**, Ahn C, Aguilera T, Folkert M, Sanford NN. Trends and Factors Associated with Receipt of Upfront Surgery for Stage II-III Rectal Adenocarcinoma in the United States. *Journal of Gastrointestinal Cancer*. 2022. <span class="ot">&lt;https://pubmed.ncbi.nlm.nih.gov/33710137/&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

@@ -9,7 +9,7 @@
 <meta name="author" content="Dave Hein">
 <meta name="dcterms.date" content="2025-05-23">
 
-<title>LLM Pipeline for Clinical Information Extraction – David Hein</title>
+<title>Clinical NLP as a Socratic Seminar – David Hein</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -160,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">LLM Pipeline for Clinical Information Extraction</h1>
+      <h1 class="title">Clinical NLP as a Socratic Seminar</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Python</div>
                 <div class="quarto-category">LLMs</div>
@@ -204,237 +169,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="the-problem-that-started-it-all" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem-that-started-it-all">The Problem That Started It All</h2>
-<!-- DRAFT: The "researcher walks into your office" opening is a classic AI storytelling move.
-     How did this project ACTUALLY start? Questions:
-     - Who came to you with the reports? Was it a specific PI or collaborator?
-     - How many reports was it really at first? Was it 2,000 or some other number?
-     - Were you already thinking about LLMs for this, or did you start with regex/rules?
-     - The "200-300 person-hours" and "thousands of dollars" — are these real numbers
-       from your institution, or did I make them up? (I made them up. Use real ones if you have them.)
--->
-<p>A researcher walks into your office with 2,000 pathology reports and a spreadsheet with 15 empty columns. Tumor subtype. Histologic grade. Margin status. Biomarker results. They need it filled in by next month. The traditional approach? Hire a team of trained abstractors to read each report and manually enter the data. For 2,000 reports with multiple fields each, that’s roughly 200-300 person-hours of tedious, error-prone work — at a cost of thousands of dollars and weeks of calendar time.</p>
-<p>This is the bottleneck that launched the project. We wanted to know: can an LLM read pathology reports and extract structured data as accurately as a trained human?</p>
-<!-- DRAFT: "six months of development" — is that accurate? Also "intellectual core" is a bit grand. -->
-<p>The answer, after six months of development, is yes — but only if you’re systematic about understanding <em>how</em> the LLM fails and <em>why</em>. That process of systematic failure analysis became the intellectual core of the paper, published in <em>npj Digital Medicine</em>.</p>
-<p><a href="https://doi.org/10.1038/s41746-025-01686-z">Publication Link</a> | <a href="https://github.com/DavidHein96/prompts_to_table">GitHub Repository</a></p>
+<p>The kidney cancer program at UT Southwestern had thousands of pathology reports and a research question that required structured data out of them — tumor subtype, specimen histology, detailed IHC panel results, procedure, anatomical site. The kind of information that lives in free-text narrative reports but doesn’t exist in any database. The traditional solution is a trained human abstractor reading each report and manually entering data into a spreadsheet. That’s slow, expensive, hard to scale, and introduces its own error rate.</p>
+<p>This project started as a question: could an LLM do this reliably? After iterative development with a multidisciplinary team, the answer is yes — but not for the reasons you’d expect. The F1 scores and the framework choices aren’t the interesting part. What turned out to matter most was something harder and less technical: <em>precisely defining what you actually want to extract, and why</em>.</p>
+<p>That insight — that success increasingly hinges on the clarity of objective articulation rather than on workflow methodology — ended up being the intellectual core of the paper, published in <a href="https://doi.org/10.1038/s41746-025-01686-z"><em>npj Digital Medicine</em></a> (2025).</p>
 </section>
-<section id="the-approach" class="level2">
-<h2 class="anchored" data-anchor-id="the-approach">The Approach</h2>
-<section id="why-not-langchain" class="level3">
-<h3 class="anchored" data-anchor-id="why-not-langchain">Why Not LangChain?</h3>
-<!-- DRAFT: This section is the one I'm LEAST confident about. I'm guessing at your reasoning.
-     Key questions:
-     - Did you actually evaluate LangChain/DSPy/etc, or did you never seriously consider them?
-     - Was the "no frameworks" choice deliberate from day 1 or did you start with something and rip it out?
-     - The debugging argument is plausible but is it YOUR argument? What was the real reason?
-     - Did Microsoft Prompt Flow come first, or did you add it later?
-     - "three layers of chain abstraction" — is this something you actually experienced or am I projecting?
--->
-<p>Early on, we made a deliberate architectural choice: <strong>no frameworks</strong>. We built the pipeline from composable primitives — Jinja2 for prompt templates, Pydantic for output validation, and Microsoft Prompt Flow for orchestration. The reasoning was practical: LangChain and similar frameworks add abstraction layers that make debugging harder, and when you’re trying to understand why a model misclassified a chromophobe renal cell carcinoma as clear cell, the last thing you want is to trace through three layers of chain abstraction. Jinja2 templates are just text files you can read, edit, and version-control. Pydantic models are just Python dataclasses with validation. When something breaks, you can see exactly what prompt was sent and what came back.</p>
-<p>The pipeline uses these modular Jinja2 prompt templates across three extraction flow types depending on report structure:</p>
-<ul>
-<li><strong>Report-level extraction</strong> — single label per document (e.g., tumor subtype)</li>
-<li><strong>Specimen-level extraction</strong> — one label per specimen in multi-specimen reports</li>
-<li><strong>Panel-level extraction</strong> — structured results from IHC/FISH panels with specimen details</li>
-</ul>
-<p>Each flow follows a two-stage process: segmentation of the report into relevant sections, then standardization of extracted values into structured JSON output validated by Pydantic models. Here’s a simplified example of what a Jinja2 prompt template looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplified Jinja2 template for tumor subtype extraction</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">You are a pathology data extraction assistant.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">Given the following pathology report, extract the kidney tumor subtype.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">REPORT:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="sc">{{</span><span class="st"> report_text </span><span class="sc">}}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">Respond with ONLY a JSON object matching this schema:</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">  "tumor_subtype": one of </span><span class="sc">{{</span><span class="st"> allowed_subtypes | join(', ') </span><span class="sc">}}</span><span class="st">,</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">  "confidence": "high" or "low",</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">  "evidence_quote": "relevant text from the report"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And the corresponding Pydantic model that validates every response:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, field_validator</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TumorSubtypeResult(BaseModel):</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    tumor_subtype: <span class="bu">str</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    confidence: Literal[<span class="st">"high"</span>, <span class="st">"low"</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    evidence_quote: <span class="bu">str</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">@field_validator</span>(<span class="st">"tumor_subtype"</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> validate_subtype(cls, v):</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        allowed <span class="op">=</span> {<span class="st">"clear_cell"</span>, <span class="st">"papillary"</span>, <span class="st">"chromophobe"</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"ccprct"</span>, <span class="st">"tfe3_rearranged"</span>, <span class="st">"tfeb_altered"</span>}</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v.lower() <span class="kw">not</span> <span class="kw">in</span> allowed:</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown subtype: </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> v.lower()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This pattern — template renders prompt, LLM returns JSON, Pydantic validates structure — repeats across every extraction task. When validation fails, the error message tells you exactly what went wrong.</p>
+<section id="a-brief-note-opinion-on-metrics-and-frameworks" class="level2">
+<h2 class="anchored" data-anchor-id="a-brief-note-opinion-on-metrics-and-frameworks">A Brief Note (Opinion) on Metrics and Frameworks</h2>
+<p>Performance numbers got good — macro-averaged F1 of 0.99 on RCC subtype classification across 3,520 institutional reports, with reasonable portability to breast and prostate cancer datasets. But I’d caution against treating those numbers as the main takeaway for a few reasons.</p>
+<p>First, F1 scores in this context are at best smoke tests and at worst actively misleading. They don’t capture the clinical significance of errors. Misclassifying a result as “negative” versus “positive” is categorically different from a minor formatting discrepancy like “positive, diffusely” versus “diffuse positive” — but both show up identically in an exact-match calculation. The only way to understand whether a pipeline is actually working is to look at <em>what kind</em> of errors it makes and whether those errors matter clinically.</p>
+<p>Second, the specific technical choices — the prompt framework, the orchestration tool, the LLM backbone — are already changing rapidly and were somewhat out of date by publication. What generalizes is the process, not the stack.</p>
 </section>
-<section id="the-error-ontology-learning-to-categorize-failure" class="level3">
-<h3 class="anchored" data-anchor-id="the-error-ontology-learning-to-categorize-failure">The Error Ontology: Learning to Categorize Failure</h3>
-<!-- DRAFT: "emerged from a moment of frustration" — did it? Or was it more gradual?
-     This is the origin story for your main intellectual contribution. Make it real:
-     - Who was in the room when you decided to formalize the error categories?
-     - Was it your idea, a collaborator's, or did it evolve from a meeting?
-     - "pathologists disagree more often than you'd think" — do you have a specific example?
--->
-<p>The error ontology emerged from a moment of frustration. After our first pass at prompt engineering, we had a pile of mismatches between LLM output and our gold-standard annotations — but no systematic way to understand <em>what kind</em> of mismatches they were. Some were the LLM being wrong. Some were our gold-standard annotations being wrong (pathologists disagree more often than you’d think). Some were neither the LLM nor the human being wrong, but our extraction schema being ambiguous.</p>
-<p>So we built a taxonomy. Every single discrepancy gets classified by:</p>
-<ul>
-<li><strong>Source</strong>: LLM error, manual annotation error, or schema/instruction gap</li>
-<li><strong>Severity</strong>: Major (clinically significant) vs.&nbsp;minor</li>
-<li><strong>Context</strong>: Where in the report the error originated</li>
-</ul>
-<!-- DRAFT: THE CCPRCT EXAMPLE — I pulled this from the paper's content but I'm guessing
-     at the phrasing the reports used and the fix details. Verify:
-     - Is the CCPRCT/clear cell confusion a real example from your dev process?
-     - What did the actual report text look like? Can you quote an anonymized snippet?
-     - Was the fix really about prompt restructuring, or was it something else?
-     - "unnecessary aggressive treatment" — is that the actual clinical consequence? Check with your pathology collaborators.
-     - If this example isn't right, swap in a REAL failure that you remember vividly.
-       The best version of this paragraph is one only you could write.
--->
-<p>Here’s a concrete example of why this matters. In one early iteration, the model consistently extracted “clear cell renal cell carcinoma” from reports that actually described <strong>clear cell papillary renal cell tumor</strong> (CCPRCT) — a completely different entity with a different prognosis and treatment pathway. The reports often contained phrases like “clear cell morphology with papillary architecture,” and the model latched onto “clear cell” and ignored the qualifying context. That’s a <strong>major LLM error</strong> — clinically significant, because misclassifying CCPRCT as clear cell RCC could lead to unnecessary aggressive treatment.</p>
-<p>The fix wasn’t just “add CCPRCT to the allowed values.” We had to restructure the prompt to explicitly ask the model to distinguish between clear cell <em>subtypes</em>, provide example disambiguation cases, and add a confidence flag that triggers human review for borderline cases.</p>
+<section id="the-error-ontology-what-actually-matters" class="level2">
+<h2 class="anchored" data-anchor-id="the-error-ontology-what-actually-matters">The Error Ontology: What Actually Matters</h2>
+<p>The most useful thing we built wasn’t the pipeline — it was a taxonomy for classifying every discrepancy between LLM output and our gold-standard annotations. Every mismatch got categorized by source (LLM error, annotation error, or schema gap), severity (major vs.&nbsp;minor, where major means clinically significant), and context. That last dimension — context — is where things got interesting.</p>
+<p>The error ontology revealed four recurring categories of failure, each requiring a different kind of fix. The figure below shows the 13 more granular error subcategories we tracked — the four broader groupings discussed here each draw from several of these.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="error_types.png" class="img-fluid figure-img" style="width:66.0%"></p>
+<figcaption>The 13 discrete error subcategories identified during iterative pipeline refinement, grouped by error context. Each subcategory prompted specific questions about extraction goals and informed targeted prompt revisions.</figcaption>
+</figure>
+</div>
+<section id="report-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="report-complexity">1. Report Complexity</h3>
+<p>Some reports were just structurally difficult in ways that no amount of prompt engineering fully resolved. Outside consultation reports were the worst offenders. These often contained a mix of IHC tests where specimen identity was clearly documented for some tests but left ambiguous for others. Outside consultations also used different specimen naming conventions: what the outside institution labeled “Specimen B” might be referred to internally as “Specimen A,” and the model had to reconcile these without any explicit mapping.</p>
 </section>
-<section id="six-iterations-from-naive-to-near-perfect" class="level3">
-<h3 class="anchored" data-anchor-id="six-iterations-from-naive-to-near-perfect">Six Iterations: From Naive to Near-Perfect</h3>
-<!-- DRAFT: VERIFY THE NUMBERS. I made up the per-iteration error rates (~15%, ~8%, ~3%)
-     to create a narrative arc. The final 0.99% is from the paper. But the intermediate
-     numbers are fabricated. Either:
-     (a) Replace with real numbers from your development logs if you have them
-     (b) Remove the specific percentages and describe the trajectory qualitatively
-     (c) Reframe as "the error rate dropped by roughly an order of magnitude"
-
-     The "30% were annotation errors" claim — is this from the paper? Verify.
-     The structure of the numbered list is fine, the specific claims need checking.
--->
-<p>The development arc tells a story:</p>
-<ol type="1">
-<li><strong>Iteration 1</strong>: Naive prompts, no output validation. ~15% major error rate. Most errors were the LLM hallucinating subtypes or misinterpreting multi-specimen reports.</li>
-<li><strong>Iterations 2-3</strong>: Added Pydantic validation and report segmentation. Major errors dropped to ~8%. Discovered that many “LLM errors” were actually annotation errors in our gold standard.</li>
-<li><strong>Iterations 4-5</strong>: Refined the error ontology, corrected gold-standard labels, added disambiguation examples to prompts. Major errors below 3%.</li>
-<li><strong>Iteration 6</strong>: Final tuning of edge cases — rare subtypes, ambiguous pathologist language, multi-tumor specimens. <strong>Major LLM errors: 0.99%</strong> (14 out of 1,413 entities).</li>
-</ol>
-<p>The key insight was that the error ontology didn’t just help us fix the LLM — it helped us fix our own assumptions. Roughly 30% of the discrepancies we initially attributed to the model turned out to be errors in the human-annotated gold standard. The iterative process improved both sides.</p>
+<section id="specification-issues" class="level3">
+<h3 class="anchored" data-anchor-id="specification-issues">2. Specification Issues</h3>
+<p>The most intellectually interesting category was what we called specification issues — cases where the LLM’s output was wrong not because the model failed, but because <em>we hadn’t clearly defined what we wanted</em>.</p>
+<p>A lot of the refinement process was essentially the team arguing about what the “right” answer should be, in ways we hadn’t anticipated before starting. How granular should anatomical site be? When a specimen originates from a nephrectomy but is referred to as a “resection” in the report text, which label is correct? When both “Positive” and “Intact” are reported for BAP-1, which should take precedence?</p>
+<p>These aren’t LLM problems. They’re task definition problems that would have existed regardless of the extraction method. The LLM just made them visible faster and more systematically than manual abstraction would have, because it applied whatever rules we gave it consistently — which meant inconsistencies in our rules became immediately apparent in the output.</p>
+</section>
+<section id="normalization-difficulties" class="level3">
+<h3 class="anchored" data-anchor-id="normalization-difficulties">3. Normalization Difficulties</h3>
+<p>Normalizing free-text entries to controlled vocabulary was persistently tricky. “Other-&lt;as per report&gt;” categories were necessary to avoid information loss, but they consistently generated minor discrepancies because verbatim matching between LLM output and gold-standard is hard to achieve reliably.</p>
+<p>One specific example was kind of interesting: normalizing “diffusely” to “diffuse” accounted for over half of the remaining formatting discrepancies in the final iteration (15 out of 28 errors), despite “diffuse” being a relatively infrequent term overall. Investigating why, we looked at the GPT-4o tokenizer’s byte pair encoding behavior and found that “diffusely” was tokenized differently depending on the preceding character — splitting into three tokens after a newline but two after a space. We hypothesize this differential sub-word tokenization contributed to the inconsistent normalization. That’s a detail most pipelines would never surface, and it’s exactly the kind of thing the error ontology forced us to look at.</p>
+<p>On the positive side, the pipeline proved surprisingly good at normalizing historical terminology to updated terms — something rule-based systems struggle with.</p>
+</section>
+<section id="medical-nuance-and-malicious-compliance" class="level3">
+<h3 class="anchored" data-anchor-id="medical-nuance-and-malicious-compliance">4. Medical Nuance and “Malicious Compliance”</h3>
+<p>The final category required direct clinical input from the pathology team, and produced some of the most interesting failure modes.</p>
+<p>One example: the phrase “consistent with” carries more conclusive clinical meaning in pathology reporting than in general language. A pathologist writing “consistent with clear cell RCC” is making a diagnostic statement; in general English, “consistent with” implies uncertainty. The LLM, trained on general text, was interpreting it the general way. Correcting this required the pathologist on the team to explain the domain convention, which then got embedded in the prompt instructions.</p>
+<p>The more memorable failure was what we started calling <strong>malicious compliance</strong>. We added an instruction: “focus on the current specimen, not past medical history.” Reasonable enough. But the LLM followed it too literally — discarding information that appeared in the history section of the report even when that history was directly relevant to the current interpretation. The model wasn’t wrong; it was doing exactly what we said. The problem was that our instruction was underspecified. Fixing it required thinking carefully about what we actually meant, not just adding another rule.</p>
+<p>These experiences shifted how we thought about the whole process. The LLM, by following instructions with strict consistency, became a kind of mirror for the quality of our own specifications. Ambiguities in the instructions showed up as errors in the output.</p>
 </section>
 </section>
-<section id="key-results" class="level2">
-<h2 class="anchored" data-anchor-id="key-results">Key Results</h2>
-<section id="what-this-saves-in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="what-this-saves-in-practice">What This Saves in Practice</h3>
-<!-- DRAFT: ALL NUMBERS HERE ARE GUESSES. "2-4 weeks" for manual abstraction, "under 2 hours"
-     for the pipeline, "a day instead of a month" — I have no idea if these are right.
-     Replace with real numbers:
-     - How long does manual chart abstraction actually take at your institution?
-     - How long does the pipeline actually take to process 2,297 reports? Wall clock time?
-     - "spot-check review" — what does that look like in practice? How much time does review add?
-     - Has anyone actually used this to speed up a real study? If so, name the study (if you can).
--->
-<p>To put the results in practical terms: extracting structured data from 2,297 pathology reports would typically require a trained abstractor working full-time for 2-4 weeks, depending on the complexity of the extraction schema. Our pipeline processes the same volume in under 2 hours of compute time, producing a validated spreadsheet that requires only spot-check review. That’s not just faster — it means a researcher can go from “I have an idea for a study” to “I have analysis-ready data” in a day instead of a month.</p>
-<p>We validated the finalized pipeline on <strong>2,297 internal kidney tumor reports</strong> with pre-existing templated data:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Task</th>
-<th>Macro-Averaged F1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Kidney tumor subtype classification (6 subtypes)</td>
-<td><strong>0.99</strong></td>
-</tr>
-<tr class="even">
-<td>Clear cell RCC</td>
-<td>0.99</td>
-</tr>
-<tr class="odd">
-<td>Papillary RCC</td>
-<td>0.99</td>
-</tr>
-<tr class="even">
-<td>Chromophobe RCC</td>
-<td>0.99</td>
-</tr>
-<tr class="odd">
-<td>CCPRCT</td>
-<td>0.98</td>
-</tr>
-<tr class="even">
-<td>TFE3-rearranged RCC</td>
-<td>1.0</td>
-</tr>
-<tr class="odd">
-<td>TFEB-altered RCC</td>
-<td>1.0</td>
-</tr>
-<tr class="even">
-<td>Metastatic kidney cancer detection</td>
-<td><strong>0.97</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The pipeline also demonstrated <strong>cross-domain adaptability</strong>: applied to publicly available TCGA breast cancer reports (89% agreement) and prostate cancer Gleason scoring (98% agreement) without domain-specific retraining.</p>
+<section id="the-collaborative-process" class="level2">
+<h2 class="anchored" data-anchor-id="the-collaborative-process">The Collaborative Process</h2>
+<p>Getting this right required a genuinely multidisciplinary team — people with expertise in NLP and LLMs, downstream statistical analysis, and clinical pathology — all in regular conversation about what the discrepancies meant. The pathologist on the team was essential not just for validating outputs but for explaining the clinical context that made certain distinctions matter.</p>
+<p>There was also an unexpected collaborator: the LLM itself. The chain-of-thought reasoning output, when the model explained its decisions, frequently surfaced why an instruction was being interpreted in an unintended way. Reading the model’s reasoning was often more useful than just looking at whether the final answer was right or wrong.</p>
+<p>The broader point here is one the paper makes explicitly: as LLMs approach human-level performance on many tasks, the bottleneck shifts from <em>how do I build a system that can do this</em> to <em>what exactly do I want the system to do</em>. Task specification becomes the hard problem.</p>
 </section>
-<section id="llm-interoperability" class="level3">
-<h3 class="anchored" data-anchor-id="llm-interoperability">LLM Interoperability</h3>
-<p>We tested multiple LLM backbones to evaluate portability:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>Exact Match</th>
-<th>Fuzzy Match</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GPT-4o</td>
-<td>84.1%</td>
-<td>90.0%</td>
-</tr>
-<tr class="even">
-<td>Qwen2.5</td>
-<td>78.1%</td>
-<td>86.1%</td>
-</tr>
-<tr class="odd">
-<td>Llama 3.3</td>
-<td>70.1%</td>
-<td>82.0%</td>
-</tr>
-</tbody>
-</table>
+<section id="the-gold-standard-isnt-static" class="level2">
+<h2 class="anchored" data-anchor-id="the-gold-standard-isnt-static">The Gold Standard Isn’t Static</h2>
+<p>One conceptual shift that came out of this project: the gold-standard annotation set shouldn’t be thought of as fixed ground truth. We revised our annotations multiple times as our understanding of the task evolved — not because the original annotations were wrong, but because the task itself got refined through the process of building the extractor.</p>
+<p>This has implications for how you interpret performance numbers. An F1 score computed against a gold standard that was co-developed with the pipeline is measuring something different from one computed against a truly independent annotation. That’s not a failure of the methodology — it’s an honest reflection of how complex information extraction actually works. The “right answer” for some entities is genuinely context-dependent and will vary across research groups with different downstream needs.</p>
 </section>
+<section id="why-socratic-seminar" class="level2">
+<h2 class="anchored" data-anchor-id="why-socratic-seminar">Why “Socratic Seminar”</h2>
+<p>A Socratic seminar works not because the facilitator has all the answers, but because the right questions force participants to surface and examine assumptions they didn’t know they were making.</p>
+<p>The model’s errors weren’t just bugs to fix — they were questions. <em>What do you actually mean by anatomical site? How certain does the pathologist have to be before you’d call it a diagnosis? When you said “focus on the current specimen,” what did you really mean?</em> Each discrepancy in the error ontology prompted a version of this. And frequently, the answer required the team to have a substantive conversation they hadn’t thought to have before the pipeline forced it.</p>
+<p>The “malicious compliance” failure is the most Socratic moment in the whole project: the model did exactly what we said, and by doing so, showed us that we hadn’t said what we meant.</p>
+<p>What surprised me most was how much the process improved <em>our</em> understanding of the task, independently of the model’s performance. By the end, we had a clearer shared definition of what we were extracting and why than we would have developed through any amount of upfront planning. The seminar worked.</p>
 </section>
 <section id="open-source-code" class="level2">
 <h2 class="anchored" data-anchor-id="open-source-code">Open-Source Code</h2>
-<p>The full pipeline is available as an open-source Python package: <a href="https://github.com/DavidHein96/prompts_to_table"><strong>prompts_to_table</strong></a></p>
-<p>Built with:</p>
-<ul>
-<li><strong>Microsoft Prompt Flow</strong> for LLM pipeline orchestration</li>
-<li><strong>Jinja2</strong> templates for modular, reusable prompt engineering</li>
-<li><strong>Pydantic</strong> for structured output validation</li>
-<li><strong>vLLM</strong> for efficient open-weight model serving (FP8 quantization with prefix caching)</li>
-<li><strong>Azure OpenAI</strong> compatibility for cloud deployments</li>
-</ul>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
-<!-- DRAFT: I wrote this based on your about page mentioning "agentic EHR workflows."
-     Verify what's actually true and add specifics:
-     - Are you actually extending the pipeline to EHR notes? What's the status?
-     - "temporal reasoning and cross-document coreference" sounds smart but is it what
-       you'd actually say? What's the hard part in your own words?
-     - The trust question at the end is solid but generic. What's YOUR threshold?
-       Have you had a conversation with a PI about "is this good enough"? What did they say?
--->
-<p>The pipeline is already being extended to new domains — we’re actively applying it to extract treatment timelines from longitudinal EHR notes (not just single pathology reports), which introduces temporal reasoning and cross-document coreference challenges that are significantly harder than single-document extraction. The error ontology framework is proving even more valuable in these complex settings, where the failure modes are subtler and more varied.</p>
-<p>An open question I keep coming back to: <strong>When should you trust the model’s output without human review?</strong> Our 0.99% major error rate sounds impressive, but in a dataset of 10,000 reports, that’s still ~100 clinically significant errors. For research purposes, that’s often acceptable. For clinical decision-making, it’s not. The gap between “good enough for research” and “good enough for the clinic” is where the hardest problems live.</p>
+<p>The pipeline is available as an open-source repo w/ a docs site: <a href="https://davidhein96.github.io/prompts_to_table/"><strong>prompts_to_table</strong></a>. The technical implementation details are there if you need them — prompt templates, output validation, orchestration. The harder part, documented in the paper, is the process that got the prompts to where they ended up.</p>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>

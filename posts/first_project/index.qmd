@@ -1,5 +1,5 @@
 ---
-title: "My First Paper: Trends and Associations in Rectal Cancer Treatment"
+title: "My First Paper: A Chemistry Major's Folly"
 author: "Dave Hein"
 date: "2023-06-11"
 categories: [R, Python, Oncology]
@@ -44,13 +44,9 @@ Figuring out what all the column codes actually meant was the real hurdle early 
 
 Looking at this cleaning code now, I can already see things I'd do differently. There's a *lot* of filtering and row-dropping — unknown treatment codes filtered out, ambiguous sequences excluded, complete case analysis at the end — without much consideration of whether missingness was random or whether the resulting sample was still representative. Heavy filtering can introduce selection bias that's genuinely hard to detect after the fact, and I don't think I was fully appreciating that at the time.
 
-I also did not use git for this project. Version control wasn't really on my radar yet. Recreating it here for the blog was partly an exercise in doing things more properly the second time around.
-
-Here's a link to the [abstract.](https://pubmed.ncbi.nlm.nih.gov/33710137/)
-
 ## Project Setup
 
-This blog was created with Quarto in R Studio, so to include Python versions of analysis and graphics I needed to specify an Anaconda environment in the setup chunk.
+When I first wrote this code (many years ago) I was very much an R guy. I wanted to learn python, so I decided to try running python from R Studio. The idea is that these code chunks would actually execute when the blog rendered to show the output. This would come back to bite me today, more on that later.
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(dplyr)
@@ -77,11 +73,11 @@ The original paper uses data from the National Cancer Database. This data is not
 
 I'll be honest: I ran this synthesis script a while ago and I don't fully remember every choice I made. I know I stratified by race/ethnicity and median income — and in retrospect that makes sense, since minority subgroups can get smoothed out in synthetic data without explicit stratification — but I apparently didn't write down why I made those specific choices at the time. That's the kind of thing that seems obvious in the moment and mysterious 4 years later. Lesson learned about documenting your decisions while you're making them.
 
-The approach uses the R package `synthpop`, which generates synthetic records using **classification and regression trees (CART)** with bootstrapping. CART models are fit sequentially to each variable, conditional on the previously synthesized variables. Bootstrapping (the `proper = TRUE` flag) adds an extra layer of uncertainty by resampling the original data before fitting each tree, which helps prevent overfitting to specific individuals. The quality of the synthetic data was evaluated using pairwise utility tables (comparing two-way contingency tables between real and synthetic data via pMSE), and all replicated rows — records that happened to exactly match an original patient — were removed.
+The approach uses the R package `synthpop`, which generates synthetic records using **classification and regression trees (CART)** with bootstrapping. CART models are fit sequentially to each variable, conditional on the previously synthesized variables. Bootstrapping (the `proper = TRUE` flag) adds an extra layer of uncertainty by resampling the original data before fitting each tree, which helps prevent overfitting to specific individuals. The quality of the synthetic data was apparently evaluated by comparing two-way contingency tables between real and synthetic data via pMSE. However, I have since lost these tables, and in fact lost the synthetic data tsv! So I can't really comment on the quality of the synthetic data...
 
 ### Clean and Prep Original Data
 
-First step was to clean and engineer variables as in the original paper. The source file is retained on a secure server and these code chunks were only ran once (`eval=FALSE`)
+The first step was to clean and engineer variables as in the original paper (this was done back when I still had access to the original data).
 
 ```{r, eval=FALSE, tidy=TRUE}
 # We will use synthpop to generate a synthetic data set
@@ -166,7 +162,7 @@ df2 <- mutate(across(!DX_DEFSURG_STARTED_DAYS, as.factor))
 
 ### Generate Synthetic Data
 
-I now use the package `synthpop` to create a synthetic data set using bootstrapping and classification and regression trees. I utilized stratification and changed the order of variables used in the synthesis process to create a data set with lower mean square error. Finally I remove all rows that happen to be identical to rows in the original data to ensure every row is synthetic.
+I now used the package `synthpop` to create a synthetic data set using bootstrapping and classification and regression trees. As an additional final step, I removed all rows that happen to be identical to rows in the original data to ensure every row is synthetic.
 
 ```{r, eval=FALSE, tidy=TRUE}
 # Make synthetic data using CART and bootstrapping
@@ -204,9 +200,11 @@ The core problem is **non-collapsibility of the odds ratio**. When you adjust fo
 
 What I'd do today: fit the same outcome model, but then use it to compute a **marginal estimand** via standardization (sometimes called g-computation). After fitting the model, create two copies of the dataset — one where everyone's exposure is set to 1, one where it's set to 0 — use the model to predict outcome probabilities for every individual under each scenario, then average those predictions across the sample. The difference between those averages is a risk difference: a number that actually means something. "Being treated at a community cancer program was associated with a 12 percentage point lower probability of receiving neoadjuvant therapy" is interpretable in a way that a conditional OR from a 10-variable logistic model isn't.
 
-That said, doing the side-by-side in R and Python was a useful exercise. R's `glm` formula interface is more natural for this kind of work — write the formula, factor encoding is handled automatically. Python's `statsmodels` requires wrapping each categorical with `C()`, which is more verbose but more explicit. For a first exploratory pass, I still tend to reach for R.
+That said, doing the side-by-side in R and Python was a useful exercise for myself at the time. R's `glm` formula interface is more natural for this kind of work — write the formula, factor encoding is handled automatically. Python's `statsmodels` requires wrapping each categorical with `C()`, which is more verbose but more explicit. For a first exploratory pass, I still tend to reach for R.
 
 The odds being calculated here are for receipt of neoadjuvant therapy, so the ORs are reversed in comparison to the original paper.
+
+As alluded to earlier, the idea back in the day was to execute these chunks when the blog renders. As I have since lost the original synthetic data, I had to have Claude figure out how to grab the frozen html.json from the commit history and inject the old code chunk execution outputs into the new blog post. I'm not sure how Claude actually did that...
 
 ::: panel-tabset
 #### Using R
