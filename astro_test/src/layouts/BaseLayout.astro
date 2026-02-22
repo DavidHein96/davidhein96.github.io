@@ -6,9 +6,12 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'Dave Hein — Data Scientist at UT Southwestern' } = Astro.props;
+const { title, description = 'Dave Hein — Data Scientist at UT Southwestern', ogImage } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = ogImage || new URL('/og-default.jpg', Astro.site).toString();
 ---
 
 <!DOCTYPE html>
@@ -18,6 +21,20 @@ const { title, description = 'Dave Hein — Data Scientist at UT Southwestern' }
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title} | Dave Hein</title>
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | Dave Hein`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | Dave Hein`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
