@@ -1,0 +1,1 @@
+const e=document.getElementById("menu-toggle"),t=document.getElementById("mobile-menu"),o=document.getElementById("icon-open"),s=document.getElementById("icon-close");e?.addEventListener("click",()=>{const n=!t?.classList.contains("hidden");t?.classList.toggle("hidden"),o?.classList.toggle("hidden"),s?.classList.toggle("hidden"),e.setAttribute("aria-expanded",String(!n))});
