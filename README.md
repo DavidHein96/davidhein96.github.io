@@ -1,6 +1,10 @@
 # davidhein96.github.io
 
 [![CI](https://github.com/davidhein96/davidhein96.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/davidhein96/davidhein96.github.io/actions/workflows/ci.yml)
+![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=fff)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=fff)
+![MDX](https://img.shields.io/badge/MDX-1B1F24?logo=mdx&logoColor=fff)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)
 
 Personal portfolio and technical blog — write-ups on research and engineering projects.
 

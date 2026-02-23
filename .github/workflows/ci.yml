@@ -47,17 +47,11 @@ jobs:
           name: docs
           path: docs/
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm add -g @lhci/cli
+      - run: npm install -g @lhci/cli
       - run: lhci autorun
 
   linkcheck:
@@ -76,8 +70,15 @@ jobs:
         with:
           args: >-
             --no-progress
-            --exclude-mail
             --exclude 'linkedin\.com'
             --exclude 'x\.com'
+            --exclude 'doi\.org'
+            --exclude 'scholar\.google\.com'
+            --exclude 'academic\.oup\.com'
+            --exclude 'drive\.google\.com'
+            --exclude 'orcid\.org'
+            --exclude 'fonts\.googleapis\.com'
+            --exclude 'fonts\.gstatic\.com'
+            --remap 'https://davidhein96\.github\.io/(.*) file://docs/$1'
             docs/**/*.html
           fail: true
