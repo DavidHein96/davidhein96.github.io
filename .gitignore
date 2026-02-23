@@ -33,7 +33,7 @@ __pycache__/
 
 # Conda (local envs)
 .conda/
-_environment/
+
 
 # -----------------------------
 # Quarto / RStudio
