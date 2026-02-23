@@ -70,6 +70,7 @@ jobs:
         with:
           args: >-
             --no-progress
+            --exclude '^/'
             --exclude 'linkedin\.com'
             --exclude 'x\.com'
             --exclude 'doi\.org'
@@ -79,6 +80,6 @@ jobs:
             --exclude 'orcid\.org'
             --exclude 'fonts\.googleapis\.com'
             --exclude 'fonts\.gstatic\.com'
-            --remap 'https://davidhein96\.github\.io/(.*) file://docs/$1'
+            --exclude 'davidhein96\.github\.io'
             docs/**/*.html
           fail: true
