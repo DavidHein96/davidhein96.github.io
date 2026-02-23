@@ -1,24 +1,35 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import type { ImageMetadata } from 'astro';
-import { getCollection } from 'astro:content';
-import PostLayout from '../../layouts/PostLayout.astro';
+import type { CollectionEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
+import { getCollection } from "astro:content";
+import PostLayout from "../../layouts/PostLayout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts', ({ data }) => !data.draft);
-  return posts.map(post => ({
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
 }
 
-interface Props { post: CollectionEntry<'posts'>; }
+interface Props {
+  post: CollectionEntry<"posts">;
+}
 
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
-const { title, date, categories, description, cover, coverPosition } = post.data;
+const { title, date, categories, description, cover, coverPosition } =
+  post.data;
 ---
 
-<PostLayout title={title} date={date} categories={categories} description={description} cover={cover as ImageMetadata} coverPosition={coverPosition} headings={headings}>
+<PostLayout
+  title={title}
+  date={date}
+  categories={categories}
+  description={description}
+  cover={cover as ImageMetadata}
+  coverPosition={coverPosition}
+  headings={headings}
+>
   <Content />
 </PostLayout>

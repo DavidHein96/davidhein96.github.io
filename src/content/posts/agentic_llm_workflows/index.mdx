@@ -20,7 +20,7 @@ I thought in this post I'd quickly showcase how our extraction approach evolved 
 
 The original setup was straightforward: craft a detailed system prompt telling the model exactly what fields you want and what format to use, then call `json.loads()` on the response. To handle complex reports — multiple specimens (say a lung biopsy and a lymph node biopsy in the same report), multiple IHC tests (sometimes the same test but with different results depending on the specimen) — we broke extraction into a multi-step chain: first prompt to organize raw test results, second to group by specimen, third to structure by individual test result. The outputs of each step fed into the next. Below is a **very** simplified version of the last prompt in that chain, note that this is based on a jinja template, so the double braces indicate where you would inject text into this template at runtime from python before sending it off to the LLM.
 
-````markdown
+```markdown
 system:
 You are a clinical data extraction assistant.
 Your task is to process text from electronic medical records
@@ -68,7 +68,7 @@ It is vital that the entirety of the returned text is a valid JSON.
 Finally, here is the text you will be working with:
 {{segmented_text}}
 """
-````
+```
 
 And then at the end, manually parsing the chained outputs into your final data structure. Please note the very obnoxious key creation with the underscores, I didn't want to do this. But what I found was that models of the day (early GPT-4) had tremendous issues with nested JSONs, so I had to rely on the keys containing multiple indicators, the specimen name and the test name.
 

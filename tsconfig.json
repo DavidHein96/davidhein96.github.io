@@ -1,4 +1,9 @@
 {
   "extends": "astro/tsconfigs/base",
-  "exclude": ["old_quarto_site_archive", "docs", "docs_quarto_backup", "node_modules"]
+  "exclude": [
+    "old_quarto_site_archive",
+    "docs",
+    "docs_quarto_backup",
+    "node_modules"
+  ]
 }

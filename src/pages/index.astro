@@ -7,38 +7,38 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   description="Dave Hein — Data Scientist at UT Southwestern"
 >
   <!-- Hero / Bio -->
-  <section class="max-w-5xl mx-auto px-6 pt-10 pb-10 md:pt-14 md:pb-12">
-    <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+  <section class="mx-auto max-w-5xl px-6 pb-10 pt-10 md:pb-12 md:pt-14">
+    <div class="flex flex-col items-center gap-10 md:flex-row md:items-start">
       <!-- Avatar -->
       <div class="shrink-0">
         <div
-          class="w-36 h-36 md:w-44 md:h-44 rounded-full bg-accent/10 ring-4 ring-accent/20 flex items-center justify-center shadow-sm overflow-hidden"
+          class="flex h-36 w-36 items-center justify-center overflow-hidden rounded-full bg-accent/10 shadow-sm ring-4 ring-accent/20 md:h-44 md:w-44"
         >
           <img
             src="/headshot.jpeg"
             alt="Dave Hein"
-            class="w-full h-full object-cover"
+            class="h-full w-full object-cover"
             onerror="this.style.display='none'; this.parentNode.querySelector('.initials').style.display='flex'"
           />
           <span
-            class="initials hidden w-full h-full items-center justify-center text-3xl font-bold text-accent"
+            class="initials hidden h-full w-full items-center justify-center text-3xl font-bold text-accent"
             >DH</span
           >
         </div>
       </div>
 
       <!-- Bio text -->
-      <div class="flex-1 max-w-2xl">
+      <div class="max-w-2xl flex-1">
         <h1
-          class="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight"
+          class="mb-1 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl"
         >
           Dave Hein
         </h1>
-        <p class="text-accent font-medium text-base mb-7">
+        <p class="mb-7 text-base font-medium text-accent">
           Data Scientist &middot; UT Southwestern Medical Center
         </p>
 
-        <div class="space-y-4 text-gray-700 leading-relaxed">
+        <div class="space-y-4 leading-relaxed text-gray-700">
           <p>Hi! Welcome to my site.</p>
           <p>
             I'm a data scientist working at the intersection of messy real-world
@@ -55,17 +55,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
 
         <!-- Links row -->
-        <div class="flex flex-wrap items-center gap-4 mt-8">
+        <div class="mt-8 flex flex-wrap items-center gap-4">
           <a href="/about" class="btn-primary">About me</a>
           <a
             href="https://orcid.org/0000-0002-8625-9528"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="ORCID"
-            class="text-gray-400 hover:text-[#a6ce39] transition-colors"
+            class="text-gray-400 transition-colors hover:text-[#a6ce39]"
           >
             <svg
-              class="w-5 h-5"
+              class="h-5 w-5"
               viewBox="0 0 256 256"
               fill="currentColor"
               aria-hidden="true"
@@ -80,10 +80,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Google Scholar"
-            class="text-gray-400 hover:text-[#4285F4] transition-colors"
+            class="text-gray-400 transition-colors hover:text-[#4285F4]"
           >
             <svg
-              class="w-5 h-5"
+              class="h-5 w-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -98,10 +98,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            class="text-gray-400 hover:text-[#333] transition-colors"
+            class="text-gray-400 transition-colors hover:text-[#333]"
           >
             <svg
-              class="w-5 h-5"
+              class="h-5 w-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -117,10 +117,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            class="text-gray-400 hover:text-[#0a66c2] transition-colors"
+            class="text-gray-400 transition-colors hover:text-[#0a66c2]"
           >
             <svg
-              class="w-5 h-5"
+              class="h-5 w-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -134,7 +134,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             href="https://drive.google.com/file/d/1-hG0LbWs_FAlrGV50Poghw5XS7he_vEL/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-xs font-medium text-gray-500 hover:text-accent transition-colors border border-gray-200 hover:border-accent px-3 py-1.5 rounded-md"
+            class="rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 transition-colors hover:border-accent hover:text-accent"
           >
             Resume (PDF)
           </a>
@@ -144,12 +144,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </section>
 
   <!-- Projects teaser -->
-  <section class="bg-gray-50 border-t border-gray-100 pt-10 pb-16">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-2xl font-bold text-gray-900 mb-3">
+  <section class="border-t border-gray-100 bg-gray-50 pb-16 pt-10">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="mb-3 text-2xl font-bold text-gray-900">
         Projects &amp; Writing
       </h2>
-      <p class="text-gray-600 leading-relaxed max-w-2xl mb-8">
+      <p class="mb-8 max-w-2xl leading-relaxed text-gray-600">
         Write-ups on research and engineering projects — the decisions,
         trade-offs, and an occasional sprinkling of philosophical takes.
       </p>

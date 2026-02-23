@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 interface Props {
   src: ImageMetadata;
@@ -9,10 +9,16 @@ interface Props {
   caption?: string;
 }
 
-const { src, alt, width = '100%', caption } = Astro.props;
+const { src, alt, width = "100%", caption } = Astro.props;
 ---
 
 <figure style={`width: ${width}; margin: 1.5rem auto;`}>
-  <Image src={src} alt={alt} class="rounded-lg w-full" />
-  {caption && <figcaption class="text-center text-sm text-gray-500 mt-2">{caption}</figcaption>}
+  <Image src={src} alt={alt} class="w-full rounded-lg" />
+  {
+    caption && (
+      <figcaption class="mt-2 text-center text-sm text-gray-500">
+        {caption}
+      </figcaption>
+    )
+  }
 </figure>

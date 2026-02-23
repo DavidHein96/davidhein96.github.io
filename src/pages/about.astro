@@ -71,7 +71,7 @@ const publications = [
   title="About"
   description="About Dave Hein — background, publications, and open source work"
 >
-  <div class="max-w-3xl mx-auto px-6 py-14">
+  <div class="mx-auto max-w-3xl px-6 py-14">
     <!-- Bio -->
     <section class="prose-body mb-2">
       <h2 class="!mt-0">Bio</h2>
@@ -168,7 +168,7 @@ const publications = [
     <!-- Publications -->
     <section class="mb-2">
       <h2
-        class="text-xl font-semibold text-gray-900 mt-10 mb-5 pb-2 border-b border-gray-100"
+        class="mb-5 mt-10 border-b border-gray-100 pb-2 text-xl font-semibold text-gray-900"
       >
         Publication Highlights
       </h2>
@@ -176,12 +176,12 @@ const publications = [
         {
           publications.map((pub) => (
             <div class="text-sm leading-relaxed">
-              <p class="text-gray-700 mb-0.5" set:html={pub.authors} />
-              <p class="text-gray-900 font-medium mb-0.5">{pub.title}</p>
+              <p class="mb-0.5 text-gray-700" set:html={pub.authors} />
+              <p class="mb-0.5 font-medium text-gray-900">{pub.title}</p>
               <p class="text-gray-500">
                 <em>{pub.journal}</em>
                 {pub.note && (
-                  <span class="ml-1 text-accent text-xs">({pub.note})</span>
+                  <span class="ml-1 text-xs text-accent">({pub.note})</span>
                 )}
                 &mdash; {pub.year}
               </p>
@@ -189,13 +189,13 @@ const publications = [
           ))
         }
       </div>
-      <p class="text-sm text-gray-700 mt-6">
+      <p class="mt-6 text-sm text-gray-700">
         Full record:
         <a
           href="https://orcid.org/0000-0002-8625-9528"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-accent hover:text-accent-dark transition-colors"
+          class="text-accent transition-colors hover:text-accent-dark"
         >
           <strong>ORCID 0000-0002-8625-9528</strong>
         </a>
@@ -204,7 +204,7 @@ const publications = [
           href="https://scholar.google.com/citations?user=o8hgAgMAAAAJ&hl=en"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-accent hover:text-accent-dark transition-colors"
+          class="text-accent transition-colors hover:text-accent-dark"
         >
           <strong>Google Scholar</strong>
         </a>

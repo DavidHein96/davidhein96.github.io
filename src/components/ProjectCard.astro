@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 interface Props {
   title: string;
@@ -12,65 +12,75 @@ interface Props {
   cover?: ImageMetadata;
 }
 
-const { title, date, categories, description, href, comingSoon = false, cover } = Astro.props;
-const Tag = href && !comingSoon ? 'a' : 'div';
+const {
+  title,
+  date,
+  categories,
+  description,
+  href,
+  comingSoon = false,
+  cover,
+} = Astro.props;
+const Tag = href && !comingSoon ? "a" : "div";
 ---
 
 <Tag
   href={href && !comingSoon ? href : undefined}
   class:list={[
-    "rounded-xl overflow-hidden shadow-sm transition-all duration-200 group block relative",
-    href && !comingSoon && "hover:shadow-lg cursor-pointer",
+    "group relative block overflow-hidden rounded-xl shadow-sm transition-all duration-200",
+    href && !comingSoon && "cursor-pointer hover:shadow-lg",
   ]}
 >
   {/* Cover image */}
-  {cover ? (
-    <div class="relative h-60">
-      <Image
-        src={cover}
-        alt={title}
-        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-      />
-      {/* Gradient overlay */}
-      <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+  {
+    cover ? (
+      <div class="relative h-60">
+        <Image
+          src={cover}
+          alt={title}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        {/* Gradient overlay */}
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
 
-      {/* Content over image */}
-      <div class="absolute inset-0 flex flex-col justify-end p-5">
+        {/* Content over image */}
+        <div class="absolute inset-0 flex flex-col justify-end p-5">
+          {comingSoon && (
+            <span class="mb-2 self-start rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
+              Draft
+            </span>
+          )}
+          <h2 class="mb-2 text-base font-semibold leading-snug text-white">
+            {title}
+          </h2>
+          <div class="mb-2 flex flex-wrap gap-1.5">
+            {categories.map((cat) => (
+              <span class="inline-block rounded-full bg-white/15 px-2 py-0.5 text-xs font-medium text-white/90 backdrop-blur-sm">
+                {cat}
+              </span>
+            ))}
+          </div>
+          <span class="text-xs text-white/60">{date}</span>
+        </div>
+      </div>
+    ) : (
+      /* Fallback: no cover image */
+      <div class="flex h-60 flex-col justify-end bg-gradient-to-br from-accent/20 to-accent/5 p-5">
         {comingSoon && (
-          <span class="self-start text-xs font-medium bg-white/20 backdrop-blur-sm text-white px-2.5 py-0.5 rounded-full mb-2">
+          <span class="mb-2 self-start rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-400">
             Draft
           </span>
         )}
-        <h2 class="text-base font-semibold text-white leading-snug mb-2">
+        <h2 class="mb-2 text-base font-semibold leading-snug text-gray-900">
           {title}
         </h2>
-        <div class="flex flex-wrap gap-1.5 mb-2">
-          {categories.map(cat => (
-            <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/90 backdrop-blur-sm">
-              {cat}
-            </span>
+        <div class="mb-2 flex flex-wrap gap-1.5">
+          {categories.map((cat) => (
+            <span class="tag">{cat}</span>
           ))}
         </div>
-        <span class="text-xs text-white/60">{date}</span>
+        <span class="text-xs text-gray-400">{date}</span>
       </div>
-    </div>
-  ) : (
-    /* Fallback: no cover image */
-    <div class="h-60 bg-gradient-to-br from-accent/20 to-accent/5 flex flex-col justify-end p-5">
-      {comingSoon && (
-        <span class="self-start text-xs font-medium bg-gray-100 text-gray-400 px-2.5 py-0.5 rounded-full mb-2">
-          Draft
-        </span>
-      )}
-      <h2 class="text-base font-semibold text-gray-900 leading-snug mb-2">
-        {title}
-      </h2>
-      <div class="flex flex-wrap gap-1.5 mb-2">
-        {categories.map(cat => (
-          <span class="tag">{cat}</span>
-        ))}
-      </div>
-      <span class="text-xs text-gray-400">{date}</span>
-    </div>
-  )}
+    )
+  }
 </Tag>

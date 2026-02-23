@@ -1,7 +1,7 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 const posts = defineCollection({
-  type: 'content',
+  type: "content",
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -9,7 +9,7 @@ const posts = defineCollection({
       categories: z.array(z.string()),
       description: z.string(),
       cover: image().optional(), // local image file, e.g. ./cover.jpg
-      coverPosition: z.string().optional().default('center'), // CSS object-position, e.g. "top", "center 30%"
+      coverPosition: z.string().optional().default("center"), // CSS object-position, e.g. "top", "center 30%"
       draft: z.boolean().optional().default(false),
     }),
 });

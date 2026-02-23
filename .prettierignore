@@ -1,0 +1,8 @@
+docs/
+dist/
+node_modules/
+pnpm-lock.yaml
+.astro/
+old_quarto_site_archive/
+_reference/
+*.mdx
