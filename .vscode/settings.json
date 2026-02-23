@@ -1,0 +1,14 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "prettier.documentSelectors": ["**/*.astro"],
+  "tailwindCSS.includeLanguages": {
+    "astro": "html"
+  },
+  "files.associations": {
+    "*.mdx": "mdx"
+  }
+}
