@@ -1,32 +1,59 @@
-/data_sets
-.Rproj.user
-_environment
-/.quarto/
-davidhein96.github.io.Rproj
+# -----------------------------
+# OS / Editor noise
+# -----------------------------
 .DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+
+# -----------------------------
+# Node / Astro
+# -----------------------------
+node_modules/
+dist/
+.astro/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# dotenv / local secrets
+.env
+.env.*
+!.env.example
+
+# -----------------------------
+# Python (if you use scripts/tools)
+# -----------------------------
+.venv/
+__pycache__/
+*.py[cod]
+
+# Conda (local envs)
+.conda/
+_environment/
+
+# -----------------------------
+# Quarto / RStudio
+# -----------------------------
+.quarto/
+.Rproj.user/
+*.Rproj
 .Rhistory
 .Rdata
-/data_sets/
+.Ruserdata
 
+# -----------------------------
+# Data / outputs (project-specific)
+# -----------------------------
+data_sets/
 *.tsv
-*.DS_Store
-posts/*DS_Store
-docs/.DS_Store
-posts/.DS_Store
-docs/*DS_Store
 
-.conda
-.conda/*
-beans
-beans/*
-.vscode
-posts/simple_conv/__pycache__
-posts/simple_conv/runs
-posts/simple_conv/*.th
-beans/*/*
-beans/*/*/*
-beans/*/*/*/*
-my_database.db
-**/*.quarto_ipynb
-_reference/*
-.venv/
+# Archives / references (project-specific)
+old_quarto_site_archive/
+_reference/
+
+# Lighthouse CI
+.lighthouseci/

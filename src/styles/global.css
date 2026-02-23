@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply text-gray-800 bg-white;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid theme('colors.accent.DEFAULT');
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+
+  /* Reusable prose styles for content-heavy pages */
+  .prose-body h2 {
+    @apply text-xl font-semibold text-gray-900 mt-10 mb-3 pb-2 border-b border-gray-100;
+  }
+
+  .prose-body h3 {
+    @apply text-base font-semibold text-gray-800 mt-5 mb-2;
+  }
+
+  .prose-body p {
+    @apply text-gray-700 leading-relaxed mb-4;
+  }
+
+  .prose-body ul {
+    @apply list-disc list-outside ml-5 text-gray-700 space-y-1 mb-4;
+  }
+
+  .prose-body li {
+    @apply leading-relaxed;
+  }
+
+  .prose-body a {
+    @apply text-accent hover:text-accent-dark transition-colors;
+  }
+
+  .prose-body strong {
+    @apply font-semibold text-gray-900;
+  }
+  .prose-body a strong {
+    color: inherit;
+  }
+
+  .prose-body em {
+    @apply italic;
+  }
+
+  .prose-body code {
+    @apply text-sm bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded font-mono;
+  }
+
+  .prose-body pre {
+    @apply bg-gray-900 text-gray-100 rounded-xl p-5 overflow-x-auto text-[13px] font-mono leading-snug my-6;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+
+  /* Visible scrollbar for code blocks */
+  .prose-body pre::-webkit-scrollbar {
+    height: 6px;
+  }
+  .prose-body pre::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+  .prose-body pre::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+  .prose-body pre::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .prose-body pre code {
+    @apply bg-transparent text-inherit p-0 rounded-none;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .prose-body blockquote {
+    @apply border-l-4 border-accent pl-5 italic text-gray-600 my-6;
+  }
+
+  .prose-body img {
+    @apply rounded-lg my-6 mx-auto;
+  }
+
+  /* Tables */
+  .prose-body table {
+    @apply w-full text-sm border-collapse my-6 rounded-xl;
+    border: 1px solid theme('colors.gray.200');
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
+  }
+  .prose-body thead {
+    @apply bg-accent/10;
+  }
+  .prose-body th {
+    @apply px-4 py-2.5 text-left text-xs font-semibold text-accent-dark uppercase tracking-wide;
+    white-space: nowrap;
+  }
+  .prose-body td {
+    @apply px-4 py-2 text-gray-700 border-t border-gray-100;
+  }
+  .prose-body tbody tr:hover {
+    @apply bg-gray-50;
+  }
+
+  /* Visible scrollbar for tables */
+  .prose-body table::-webkit-scrollbar {
+    height: 6px;
+  }
+  .prose-body table::-webkit-scrollbar-track {
+    background: theme('colors.gray.100');
+    border-radius: 3px;
+  }
+  .prose-body table::-webkit-scrollbar-thumb {
+    background: theme('colors.gray.300');
+    border-radius: 3px;
+  }
+  .prose-body table::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.gray.400');
+  }
+
+  /* Scroll hint wrapper for overflowing elements */
+  .scroll-hint {
+    position: relative;
+  }
+  .scroll-hint::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 48px;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
+  .scroll-hint.scrolled-end::after {
+    opacity: 0;
+  }
+  /* Light fade for tables */
+  .scroll-hint--light::after {
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.85));
+  }
+  /* Dark fade for code blocks */
+  .scroll-hint--dark::after {
+    background: linear-gradient(to right, transparent, rgba(17, 24, 39, 0.95));
+  }
+
+  .prose-body h1 {
+    @apply text-2xl font-bold text-gray-900 mt-12 mb-4;
+  }
+
+  /* Category / tag pill */
+  .tag {
+    @apply inline-block text-xs font-medium px-2.5 py-0.5 rounded-full bg-accent/10 text-accent-dark;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white rounded-lg font-medium hover:bg-accent-dark transition-colors text-sm;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 border border-accent text-accent rounded-lg font-medium hover:bg-accent/10 transition-colors text-sm;
+  }
+}
