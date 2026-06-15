@@ -44,6 +44,10 @@
     @apply mb-4 ml-5 list-outside list-disc space-y-1 text-gray-700;
   }
 
+  .prose-body ol {
+    @apply mb-4 ml-5 list-outside list-decimal space-y-1 text-gray-700;
+  }
+
   .prose-body li {
     @apply leading-relaxed;
   }

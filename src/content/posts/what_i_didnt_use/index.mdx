@@ -1,0 +1,376 @@
+---
+title: "What I Didn't Use, and Why — Building a Boring Clinical LLM Extraction Pipeline"
+date: "2026-06-14"
+categories: [Python, LLMs, "Clinical NLP"]
+description: "The boring architectural decisions behind my clinical LLM extraction pipeline"
+cover: ./frameworks.png
+---
+
+import Figure from '../../../components/Figure.astro';
+import reviewApp from './screenshot.png';
+
+## Where This Started
+
+I wish I could say this pipeline is on the cutting edge of resume-driven development. Agentic design with LangGraph, Airflow job orchestration, ETL with dbt, ELT with DLT, CBT with LPCs, and integration with Azure, AWS, GCP, Databricks, Snowflake, and Palantir.
+
+Unfortunately, most of those terms will not be coming up again.
+
+OncAI started as the replacement for [the workflow](https://github.com/DavidHein96/prompts_to_table) I used while writing my [paper on extracting structured data from pathology reports](https://doi.org/10.1038/s41746-025-01686-z). Ironically, in that paper I wrote:
+
+> Moreover, generative LLM technology is evolving rapidly; our prompt-based pipeline is more adaptable to both changes in clinical entities and new model upgrades than static, fine-tuned architectures.
+
+I was right about LLMs evolving rapidly. I was less right about the framework the pipeline depended on. [Promptflow's latest tagged release](https://github.com/microsoft/promptflow/releases) was in January 2025, and by the time the paper was published I was already working on its replacement.
+
+## The Constraints
+
+So what did I need to do? Well it boils down to about four things:
+
+1. I needed direct control & customization over backend-specific LLM features without waiting for a framework to expose them.
+2. The clinical data and durable pipeline state needed to live in ordinary files, with no secure networked database to maintain.
+3. Physicians had to review results without installing Python, learning my command-line interface, or opening a hosted application full of PHI.
+4. I am the only person starting workflows, and new raw data arrives in occasional large batches rather than a continuous stream.
+
+The resulting stack is mostly boring old Pydantic, JSONL, parquet, DuckDB, and Box.
+
+## My Love of Pydantic Is Incalculable
+
+However, I'd argue Pydantic is anything but boring. It is by far my favorite Python package. Thus, nearly everything in the extraction layer revolves around it.
+
+The extraction unit _is_ a Pydantic model. The same class provides the tool arguments the LLM sees, validates every returned tool call, defines the output shape, and documents the clinical meaning of each field.
+
+Every extraction event starts with a common base:
+
+```python
+class ExtractionEvent(_ToolArguments):
+    """Base class for extraction events."""
+
+    note_id: str = Field(
+        ...,
+        description="ID of the note this event was extracted from",
+    )
+    evidence: list[str] | str = Field(
+        default_factory=list,
+        description=(
+            "Exact source-note snippets supporting this extraction. "
+            "Should match text in the note for review purposes."
+        ),
+    )
+```
+
+Individual findings extend that class, while categorical fields use `StrEnum` values and small normalization helpers:
+
+```python
+class Grade(StrEnum):
+    GRADE_1 = "grade 1"
+    GRADE_2 = "grade 2"
+    GRADE_3 = "grade 3"
+    GRADE_4 = "grade 4"
+    HIGH_GRADE = "high grade"
+    LOW_GRADE = "low grade"
+    CANNOT_BE_ASSESSED = "cannot be assessed"
+    NOT_APPLICABLE = "not applicable"
+    NOT_SPECIFIED = "not specified"
+
+
+def normalize_grade(v: object) -> str:
+    return _normalize_against(v, _GRADE_LOOKUP, "grade")
+
+
+class RecordKidneyTumor(ExtractionEvent):
+    """Record details of one distinct kidney tumor."""
+
+    tumor_grade: Annotated[Grade, BeforeValidator(normalize_grade)] = Field(
+        Grade.NOT_SPECIFIED,
+        description=(
+            "Use 'grade 1'-'grade 4' when a numeric grade is reported. "
+            "Use 'high grade' or 'low grade' only when the report uses those "
+            "terms without a numeric grade."
+        ),
+    )
+```
+
+That's it. The docstring, field types, enums, and `description=` strings are simultaneously extraction instructions and documentation. There is still a system prompt, and each tool gets an explicit description when registered, but I no longer have separate schema, validation, and output definitions to keep synchronized by hand.
+
+### But Why Function Calling?
+
+The "tools" are incredibly simple. Most of them literally just parse arguments into a Pydantic model. If validation succeeds, the result is recorded. If validation fails, the model gets the Pydantic error and another chance to fix its call.
+
+Now why I didn't I just use structured output generation with a mega JSON schema? Well, a report might contain one tumor, three specimens, eight IHC results, or none of the above. So I took a bit of inspiration from 'composition over inheritance' making small individual data items as standalone functions that are called individually. The model can call `record_ihc_result` once per finding instead of filling one deeply nested mega-schema.
+
+Furthermore, I typically have helper functions that come before the discrete data items, things like, 'Plan specimens' where I give the model a chance first to organize its thoughts about what distinct specimens are in the report, and it allows for multiple reasoning turns to take place.
+
+A typical sequence looks something like:
+
+```text
+plan the specimens
+    → record histology and details for each specimen
+    → optionally flag the report for review
+    → finish
+```
+
+The review flag is also an event function, but with special treatment. It always comes with exact `review_anchor` snippets showing a physician why the report was flagged, and this helps fwd reports to review. Because when you have 8,000  reports, you cant review them all. 
+
+### Side Note: vLLM
+
+Pydantic normally places enum definitions in `$defs` and points to them with `$ref`:
+
+```json
+{
+  "histologic_type": {
+    "$ref": "#/$defs/HistologicType"
+  }
+}
+```
+
+Azure OpenAI's tool-calling layer handled this without trouble. Some of the open models I served through vLLM did not. The parser passed along the reference, but the model effectively never saw the enum options.
+
+I found this out because Gemma kept entering a validation loop:
+
+1. Gemma says `"Clear cell RCC"`.
+2. Pydantic rejects it and returns the allowed value with RCC spelled out.
+3. Gemma fixes it.
+4. Gemma says `"sarcomatoid present"`.
+5. Pydantic rejects it and returns the allowed status values.
+6. Gemma fixes it.
+7. Repeat.
+
+The fix was a small recursive schema transform to inline the enums:
+
+```python
+def _inline_refs(schema):
+    """Replace local $ref pointers with their actual enum schemas."""
+    defs = schema.pop("$defs", {})
+
+    def resolve(node):
+        ...
+
+    return resolve(schema)
+```
+
+That little patch fixed the problem, and I now use an FP8 quant of Gemma-4-31B-IT for many of the simpler workflows.
+
+Keeping the client layer thin makes backend-specific behavior visible. My Azure backend uses the Responses API; local vLLM backends can use Responses or Chat Completions and need their schemas adjusted. Given how small the loop is, Pydantic and a few backend adapters have been enough.
+
+## JSONL Became the Batch History
+
+The workload is simple: read a pathology report, make several function calls, and save the result. Reports are independent, and a batch is usually a few thousand of them. Nothing runs online or in real time.
+
+I need the batch runner to survive interruption, avoid repeating completed calls, and process several reports concurrently. For manually started, single-machine batches, I could not justify Airflow's operational footprint.
+
+Each completed report is appended to a working JSONL and flushed immediately:
+
+```python
+def _write_record(out_file, record):
+    line = json.dumps(record) + "\n"
+    with write_lock:
+        out_file.write(line)
+        out_file.flush()
+```
+
+If the process dies after report 3,000, those 3,000 lines are already on disk. Restarting reads the working file and skips completed `(note_id, source_content_hash)` pairs. Parallelism is a `ThreadPoolExecutor` plus the same write lock.
+
+The important change is what happens when the run finishes. A batch is now a folder of immutable, numbered segments:
+
+```text
+inbox/fc_extractions/kidney_v1/
+├── batch.json
+├── 001.jsonl
+├── 001_manifest.json
+├── 002.jsonl
+└── 002_manifest.json
+```
+
+The runner writes resumable scratch output under `fc_outputs/`. Only after the run completes does it promote the JSONL into the inbox as the next numbered segment, using a temporary file followed by an atomic rename. An interrupted run leaves scratch output to resume; it never leaves half a canonical segment.
+
+For each report, the highest-numbered segment containing that report wins. A correction in `002.jsonl` supersedes the same report in `001.jsonl`, while every untouched report from `001` remains.
+
+`batch.json` pins the definition, source table, and ID column. Reusing a batch name with a different definition or source fails instead of quietly combining unrelated records.
+
+This is still modest orchestration. It has no scheduler, alerting, distributed workers, or backfill UI. It does give me resumability, explicit ordering, immutable history, and a very obvious answer to "what changed in this batch?"
+
+## Incremental Extraction as a Build System
+
+LLM calls are slow enough and expensive enough that "just rerun the batch" gets old quickly. Pathology reports also change. An addendum can arrive days after the original report, and that report should run again without sending every unchanged report back through the model.
+
+Incremental extraction is now the default. Before starting a new segment, the runner reads the existing segments directly from the canonical inbox and compares them with the current source rows:
+
+- A report ID never seen in the batch is **new**.
+- A known ID with a different source hash is **changed**.
+- A matching report extracted under a different definition can be **definition-changed**.
+- IDs supplied explicitly can be **forced**.
+- Everything else is skipped.
+
+This resembles `make`: output depends on identifiable inputs, so changed inputs produce new work.
+
+The definition check is broader than the old prompt hash. Every record carries a `definition_hash` built from the system prompt plus every task tool's Pydantic JSON schema. Adding a field, renaming one, or changing an enum now changes the extraction contract even if the prose prompt stays untouched.
+
+```python
+payload = {
+    "system_prompt": system_prompt,
+    "tool_schemas": tool_schemas,
+}
+definition_hash = hashlib.sha256(
+    json.dumps(payload, sort_keys=True).encode()
+).hexdigest()[:16]
+```
+
+With `--reextract-on-prompt-change`, reports whose source text is unchanged but whose definition hash differs enter the next segment. The flag name is now slightly too narrow, but the behavior is what I wanted: changes to the schema count too.
+
+There is also a `--scratch` mode for prompt iteration. Scratch runs never create a batch descriptor, run log, or canonical segment. That lets me repeatedly test five difficult reports without polluting the real batch history.
+
+## The Inbox Is the Source of Truth
+
+This section changed the most while I was writing the post.
+
+The earlier design synchronized lake parquets between machines. That worked, but it meant two collaborators could each rebuild a whole parquet from different local inbox states and then push competing versions of the same derived file. I started writing a paragraph explaining why that was acceptable at my scale, realized I did not believe the paragraph, and changed the architecture instead.
+
+Only the inbox syncs now.
+
+```text
+Remote inbox
+    ↓ pull
+Local inbox (canonical, append-only)
+    ↓ ingest
+Local parquet lake (disposable projection)
+    ↓ build-db
+Local DuckDB (also disposable, has extra 'gold' projections)
+```
+
+The canonical artifacts are the things I cannot regenerate:
+
+- raw CSV drops,
+- extraction JSONL segments,
+- review packages and verdict logs,
+- batch-local SQL transforms,
+- run manifests,
+- cohort definitions,
+- tombstone events.
+
+Those files move through Box, a network share, `rclone`, `sshfs`, or anything else mounted as a filesystem path. OncAI contains no Box SDK, SFTP client, or cloud-storage abstraction. The operating system handles transport; OncAI copies files.
+
+Inbox synchronization is additive. Existing files are never overwritten. If the same relative path exists locally and remotely with different hashes, the operation stops and reports a conflict. Numbered extraction segments, unique run IDs, and uniquely named tombstone events make most normal writes additive instead of competitive.
+
+Parquet and DuckDB never leave the machine. Every collaborator rebuilds them from the same inbox. That removes whole-file parquet clobber and also makes the lake genuinely disposable: it is a projection, not a second source of truth.
+
+Raw pathology exports are replayed in date order. Each row gets a `key_hash` based on its identity and a `content_hash` based on its values. Re-ingesting the same export is a no-op; a later addendum with the same report ID and different content replaces the earlier row in the projection.
+
+Extraction segments follow the same idea. Ingest merges all numbered segments for a batch and keeps the highest segment per report. The final table is easy to query, while the underlying history remains a folder of ordinary JSONL files.
+
+### Deletion Is Also an Append
+
+An append-only inbox creates one awkward question: how do you delete something?
+
+Physically removing a local file is not enough. The remote copy would return on the next pull. Mirroring deletions with something like `rsync --delete` is worse; a fresh or misconfigured machine could erase the shared inbox.
+
+OncAI now uses tombstones:
+
+```json
+{
+  "kind": "fc_extractions",
+  "target": "old_batch",
+  "action": "forget",
+  "reason": "superseded by the corrected definition",
+  "actor": "dave"
+}
+```
+
+A tombstone is another append-only inbox event. It syncs like any other file, and every machine excludes the forgotten source on its next ingest. A later `revive` event reverses it. The original bytes remain available for audit until an explicit garbage-collection step removes them.
+
+This currently works for extraction batches, review batches, and cohorts. It is source-level deletion rather than row-level surgery, which matches how the rest of the inbox is organized.
+
+## Run Metadata Is Still a Dictionary
+
+Every extraction invocation writes its own uniquely named run manifest under `inbox/runs/`. It starts with `status="started"` and is atomically completed by the same process with results, errors, and duration. Because each run owns its own file, there is no shared log for two processes to overwrite.
+
+The manifest records the backend, model, sampling parameters, source, package version, system prompt, tool schemas, git commit, branch, and whether the working tree was dirty.
+
+```python
+return {
+    "backend": backend_name,
+    "model": model_name,
+    "git_commit": git_info["commit"],
+    "git_branch": git_info["branch"],
+    "git_dirty": git_info["dirty"],
+    "code_version": get_code_version(),
+    "system_prompt_hash": hash_string(system_prompt),
+}
+```
+
+The dirty flag matters. A commit hash is misleading when the code that actually ran included uncommitted edits. I have absolutely run experiments from a dirty working tree, and pretending otherwise would not improve the science.
+
+The individual JSON manifests are canonical and sync with the inbox. `oncai ingest runs` projects them into parquet and DuckDB for querying. `oncai runs list`, `show`, and `compare` read the manifests directly, including runs that have not been ingested yet.
+
+MLflow or Weights & Biases would make sense if I needed shared experiment dashboards, artifact management, or collaborative model comparison. Here, the important thing is that the complete run record travels beside the data it produced.
+
+## No Time for Entra
+
+The pipeline does not end when the model emits valid JSON. A clinician still has to decide whether the extraction is correct. Hosting an application full of PHI with proper authentication and institutional approval would be a serious undertaking, so the review app stays local.
+
+It uses `BaseHTTPRequestHandler`, static HTML, CSS, and vanilla JavaScript. `server.py` imports only the Python standard library, allowing PyInstaller to package it as a standalone executable.
+
+```python
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        ...
+
+    def do_POST(self):
+        ...
+```
+
+The handoff is a self-contained `*.review_pkg.json` containing source notes, extracted events, and a field schema derived from the same Pydantic models used for extraction. The reviewer sees enum dropdowns, numeric inputs, checkboxes, date controls, and highlighted evidence without needing DuckDB, the extraction repo, or a Python environment.
+
+<Figure src={reviewApp} alt="The local review app showing an extraction event with form fields and highlighted evidence." width="85%" />
+
+A normal run automatically creates a review package containing reports that called `flag_report_for_review`. I can also package every successful report or compare repeated runs and send only disagreements for review.
+
+The disagreement mode needed one more kind of hash. Two runs using different models or prompts may still be comparable if they share the same clinical output schema. Each package therefore carries an `adjudication_hash` based on the definition name, event fields, enum options, event identity fields, comparison fields, and normalization version. Model, prompt, git commit, and run date are deliberately excluded.
+
+That means GPT and Gemma outputs can be compared field by field when their adjudication contract matches. If I rename a field or change the enum options, the hash changes and the tool refuses to pretend those runs are directly comparable.
+
+The reviewer's verdicts are an append-only `*.reviews.jsonl` beside the package. Approvals, rejections, and edits are joined back to the original extraction events by a stable `event_key`; the latest verdict for a key wins.
+
+```text
+inbox/fc_reviews/kidney_v1/
+├── kidney_v1.001.review_pkg.json
+├── kidney_v1.001.reviews.jsonl
+├── kidney_v1.002.review_pkg.json
+└── kidney_v1.002.reviews.jsonl
+```
+
+`oncai ingest fc_reviews` validates that each package is complete, applies reviewer edits, excludes rejected events, and writes a sparse event-level silver parquet. DuckDB exposes it as `extractions_silver.<batch>`.
+
+An optional SQL file beside the review artifacts reshapes that silver table into dense, analysis-ready tables under `extractions_gold`. The review workflow is now:
+
+```text
+model output
+    → selective review package
+    → physician verdict log
+    → silver reviewed events
+    → optional SQL reshape
+    → gold analysis table
+```
+
+## Where These Choices Stop Working
+
+The newer architecture handles multiple readers and additive writers much better, but it still has a specific comfort zone.
+
+The batch runner is manually started. If I needed scheduled execution, distributed workers, automatic retries across machines, alerting, backfills, or SLAs, I would use an orchestrator. A JSONL file still does not page anybody when a nightly job fails.
+
+The inbox supports multiple people adding different immutable files, but it is not a distributed database. Two machines should not run the same batch name simultaneously: both could choose the same next segment number before either sees the other's output. A central scheduler or real transactional store would be the appropriate fix if concurrent batch writers became a requirement.
+
+The local parquet and DuckDB projection assumes the data fits comfortably on one machine and that each collaborator can rebuild locally. If the data or query concurrency outgrows that model, a shared warehouse earns its keep.
+
+Finally, the review app works well for packages sent to a small number of known physicians. If I had a rotating pool of reviewers, centralized assignments, access control, and live progress tracking would justify the institutional work of deploying a proper web application.
+
+## Final Note on Frameworks
+
+I have to confess that calling the custom function-calling layer "boring" was a... half-truth. For simple single-note reports, it is quite tame. I cannot even call it "agentic" with a straight face.
+
+The public code deliberately stops at one-report-in, one-set-of-findings-out. In the super secret internal version, I'm working on systems that process long patient trajectories containing dozens of progress notes, treatment lines, adverse events, imaging, surgeries, and a very high degree of temporal dependence. Extracting something like progression-free survival from that record needs a different state model and a much more deliberate set of context and function-calling strategies.
+
+There is a lot more to say about that, but this post is already long enough. It'll have to wait till next time.
+
+## Links
+
+- [**OncAI**](https://github.com/DavidHein96/OncAi)
+- [**Original npj Digital Medicine paper**](https://doi.org/10.1038/s41746-025-01686-z)

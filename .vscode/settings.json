@@ -10,5 +10,15 @@
   },
   "files.associations": {
     "*.mdx": "mdx"
-  }
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/pyproject.toml",
+  "ruff.configuration": "${workspaceFolder}/pyproject.toml",
+  "ruff.nativeServer": "on"
 }

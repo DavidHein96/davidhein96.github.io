@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="The boring architectural decisions behind my clinical LLM extraction pipeline"><title>What I Didn&#39;t Use, and Why — Building a Boring Clinical LLM Extraction Pipeline | Dave Hein</title><link rel="canonical" href="https://davidhein96.github.io/posts/what_i_didnt_use/"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://davidhein96.github.io/posts/what_i_didnt_use/"><meta property="og:title" content="What I Didn't Use, and Why — Building a Boring Clinical LLM Extraction Pipeline | Dave Hein"><meta property="og:description" content="The boring architectural decisions behind my clinical LLM extraction pipeline"><meta property="og:image" content="https://davidhein96.github.io/og-default.jpg"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="What I Didn't Use, and Why — Building a Boring Clinical LLM Extraction Pipeline | Dave Hein"><meta name="twitter:description" content="The boring architectural decisions behind my clinical LLM extraction pipeline"><meta name="twitter:image" content="https://davidhein96.github.io/og-default.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_slug_.BIqj9rXP.css"><script type="module" src="/_astro/hoisted.CzWnNbV0.js"></script></head> <body class="flex min-h-screen flex-col"> <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-accent-dark focus:shadow-md">
+Skip to content
+</a> <nav class="sticky top-0 z-50 border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm"> <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-6"> <!-- Brand --> <a href="/" class="text-base font-semibold text-gray-900 transition-colors hover:text-accent">
+Dave Hein
+</a> <!-- Desktop nav --> <div class="hidden items-center gap-5 md:flex"> <a href="/" class="text-sm font-medium transition-colors text-gray-500 hover:text-gray-900"> Home </a><a href="/about" class="text-sm font-medium transition-colors text-gray-500 hover:text-gray-900"> About </a><a href="/projects" class="text-sm font-medium transition-colors text-gray-500 hover:text-gray-900"> Projects </a> <span class="select-none text-gray-200">|</span> <a href="https://github.com/DavidHein96" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 transition-colors hover:text-[#333]"> <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.92.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path> </svg> </a> <a href="https://linkedin.com/in/david-hein-utsw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-gray-400 transition-colors hover:text-[#0a66c2]"> <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path> </svg> </a> </div> <!-- Mobile hamburger button --> <button id="menu-toggle" class="cursor-pointer text-gray-500 transition-colors hover:text-gray-900 md:hidden" aria-label="Toggle menu" aria-expanded="false"> <!-- Hamburger icon --> <svg id="icon-open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg> <!-- Close icon --> <svg id="icon-close" class="hidden h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path> </svg> </button> </div> <!-- Mobile menu panel --> <div id="mobile-menu" class="hidden border-t border-gray-100 bg-white/95 backdrop-blur-sm md:hidden"> <div class="space-y-1 px-6 py-5"> <a href="/" class="block rounded-lg px-3 py-2.5 text-base font-semibold transition-colors text-gray-700 hover:bg-gray-50 hover:text-gray-900"> Home </a><a href="/about" class="block rounded-lg px-3 py-2.5 text-base font-semibold transition-colors text-gray-700 hover:bg-gray-50 hover:text-gray-900"> About </a><a href="/projects" class="block rounded-lg px-3 py-2.5 text-base font-semibold transition-colors text-gray-700 hover:bg-gray-50 hover:text-gray-900"> Projects </a> <div class="flex items-center gap-4 border-t border-gray-100 pt-3"> <a href="https://github.com/DavidHein96" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 transition-colors hover:text-[#333]"> <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.92.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path> </svg> </a> <a href="https://linkedin.com/in/david-hein-utsw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-gray-400 transition-colors hover:text-[#0a66c2]"> <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path> </svg> </a> </div> </div> </div> </nav>  <main id="main-content" class="flex-1">  <div class="mx-auto max-w-7xl px-6 py-12 lg:flex lg:justify-center lg:gap-10"> <!-- Left spacer to keep article centered when TOC is present --> <div class="hidden shrink-0 lg:block lg:w-56 xl:w-64" aria-hidden="true"></div> <!-- Main article --> <article class="mx-auto w-full min-w-0 max-w-4xl lg:mx-0"> <!-- Breadcrumb --> <nav aria-label="Breadcrumb" class="mb-6 text-sm text-gray-400"> <a href="/projects" class="transition-colors hover:text-accent">&larr; All Projects</a> </nav> <!-- Cover image --> <div class="mb-10 overflow-hidden rounded-xl shadow-sm"> <img src="/_astro/frameworks.BjOYouUK_Z1rWogW.webp" alt="What I Didn't Use, and Why — Building a Boring Clinical LLM Extraction Pipeline" class="max-h-72 w-full object-cover" style="object-position: center" width="1254" height="1254" loading="lazy" decoding="async"> </div> <!-- Header --> <header class="mb-10"> <div class="mb-4 flex flex-wrap gap-1.5"> <span class="tag">Python</span><span class="tag">LLMs</span><span class="tag">Clinical NLP</span> </div> <h1 class="mb-3 text-3xl font-bold leading-tight text-gray-900"> What I Didn&#39;t Use, and Why — Building a Boring Clinical LLM Extraction Pipeline </h1> <p class="text-sm text-gray-400">June 2026</p> </header> <!-- Body --> <div class="prose-body">  <h2 id="where-this-started">Where This Started</h2>
+<p>I wish I could say this pipeline is on the cutting edge of resume-driven development. Agentic design with LangGraph, Airflow job orchestration, ETL with dbt, ELT with DLT, CBT with LPCs, and integration with Azure, AWS, GCP, Databricks, Snowflake, and Palantir.</p>
+<p>Unfortunately, most of those terms will not be coming up again.</p>
+<p>OncAI started as the replacement for <a href="https://github.com/DavidHein96/prompts_to_table">the workflow</a> I used while writing my <a href="https://doi.org/10.1038/s41746-025-01686-z">paper on extracting structured data from pathology reports</a>. Ironically, in that paper I wrote:</p>
+<blockquote>
+<p>Moreover, generative LLM technology is evolving rapidly; our prompt-based pipeline is more adaptable to both changes in clinical entities and new model upgrades than static, fine-tuned architectures.</p>
+</blockquote>
+<p>I was right about LLMs evolving rapidly. I was less right about the framework the pipeline depended on. <a href="https://github.com/microsoft/promptflow/releases">Promptflow’s latest tagged release</a> was in January 2025, and by the time the paper was published I was already working on its replacement.</p>
+<h2 id="the-constraints">The Constraints</h2>
+<p>So what did I need to do? Well it boils down to about four things:</p>
+<ol>
+<li>I needed direct control &amp; customization over backend-specific LLM features without waiting for a framework to expose them.</li>
+<li>The clinical data and durable pipeline state needed to live in ordinary files, with no secure networked database to maintain.</li>
+<li>Physicians had to review results without installing Python, learning my command-line interface, or opening a hosted application full of PHI.</li>
+<li>I am the only person starting workflows, and new raw data arrives in occasional large batches rather than a continuous stream.</li>
+</ol>
+<p>The resulting stack is mostly boring old Pydantic, JSONL, parquet, DuckDB, and Box.</p>
+<h2 id="my-love-of-pydantic-is-incalculable">My Love of Pydantic Is Incalculable</h2>
+<p>However, I’d argue Pydantic is anything but boring. It is by far my favorite Python package. Thus, nearly everything in the extraction layer revolves around it.</p>
+<p>The extraction unit <em>is</em> a Pydantic model. The same class provides the tool arguments the LLM sees, validates every returned tool call, defines the output shape, and documents the clinical meaning of each field.</p>
+<p>Every extraction event starts with a common base:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ExtractionEvent</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">_ToolArguments</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;Base class for extraction events.&quot;&quot;&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    note_id: </span><span style="color:#79B8FF">str</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Field(</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;ID of the note this event was extracted from&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"><span style="color:#E1E4E8">    evidence: list[</span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">|</span><span style="color:#79B8FF"> str</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Field(</span></span>
+<span class="line"><span style="color:#FFAB70">        default_factory</span><span style="color:#F97583">=</span><span style="color:#79B8FF">list</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;Exact source-note snippets supporting this extraction. &quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;Should match text in the note for review purposes.&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        ),</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span></code></pre>
+<p>Individual findings extend that class, while categorical fields use <code>StrEnum</code> values and small normalization helpers:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Grade</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">StrEnum</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">    GRADE_1</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;grade 1&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    GRADE_2</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;grade 2&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    GRADE_3</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;grade 3&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    GRADE_4</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;grade 4&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    HIGH_GRADE</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;high grade&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    LOW_GRADE</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;low grade&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    CANNOT_BE_ASSESSED</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;cannot be assessed&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    NOT_APPLICABLE</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;not applicable&quot;</span></span>
+<span class="line"><span style="color:#79B8FF">    NOT_SPECIFIED</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> &quot;not specified&quot;</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> normalize_grade</span><span style="color:#E1E4E8">(v: </span><span style="color:#79B8FF">object</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> _normalize_against(v, </span><span style="color:#79B8FF">_GRADE_LOOKUP</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;grade&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> RecordKidneyTumor</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">ExtractionEvent</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;Record details of one distinct kidney tumor.&quot;&quot;&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    tumor_grade: Annotated[Grade, BeforeValidator(normalize_grade)] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Field(</span></span>
+<span class="line"><span style="color:#E1E4E8">        Grade.</span><span style="color:#79B8FF">NOT_SPECIFIED</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;Use &#39;grade 1&#39;-&#39;grade 4&#39; when a numeric grade is reported. &quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;Use &#39;high grade&#39; or &#39;low grade&#39; only when the report uses those &quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;terms without a numeric grade.&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        ),</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span></code></pre>
+<p>That’s it. The docstring, field types, enums, and <code>description=</code> strings are simultaneously extraction instructions and documentation. There is still a system prompt, and each tool gets an explicit description when registered, but I no longer have separate schema, validation, and output definitions to keep synchronized by hand.</p>
+<h3 id="but-why-function-calling">But Why Function Calling?</h3>
+<p>The “tools” are incredibly simple. Most of them literally just parse arguments into a Pydantic model. If validation succeeds, the result is recorded. If validation fails, the model gets the Pydantic error and another chance to fix its call.</p>
+<p>Now why I didn’t I just use structured output generation with a mega JSON schema? Well, a report might contain one tumor, three specimens, eight IHC results, or none of the above. So I took a bit of inspiration from ‘composition over inheritance’ making small individual data items as standalone functions that are called individually. The model can call <code>record_ihc_result</code> once per finding instead of filling one deeply nested mega-schema.</p>
+<p>Furthermore, I typically have helper functions that come before the discrete data items, things like, ‘Plan specimens’ where I give the model a chance first to organize its thoughts about what distinct specimens are in the report, and it allows for multiple reasoning turns to take place.</p>
+<p>A typical sequence looks something like:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="text"><code><span class="line"><span>plan the specimens</span></span>
+<span class="line"><span>    → record histology and details for each specimen</span></span>
+<span class="line"><span>    → optionally flag the report for review</span></span>
+<span class="line"><span>    → finish</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The review flag is also an event function, but with special treatment. It always comes with exact <code>review_anchor</code> snippets showing a physician why the report was flagged, and this helps fwd reports to review. Because when you have 8,000  reports, you cant review them all.</p>
+<h3 id="side-note-vllm">Side Note: vLLM</h3>
+<p>Pydantic normally places enum definitions in <code>$defs</code> and points to them with <code>$ref</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;histologic_type&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;$ref&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;#/$defs/HistologicType&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Azure OpenAI’s tool-calling layer handled this without trouble. Some of the open models I served through vLLM did not. The parser passed along the reference, but the model effectively never saw the enum options.</p>
+<p>I found this out because Gemma kept entering a validation loop:</p>
+<ol>
+<li>Gemma says <code>&quot;Clear cell RCC&quot;</code>.</li>
+<li>Pydantic rejects it and returns the allowed value with RCC spelled out.</li>
+<li>Gemma fixes it.</li>
+<li>Gemma says <code>&quot;sarcomatoid present&quot;</code>.</li>
+<li>Pydantic rejects it and returns the allowed status values.</li>
+<li>Gemma fixes it.</li>
+<li>Repeat.</li>
+</ol>
+<p>The fix was a small recursive schema transform to inline the enums:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> _inline_refs</span><span style="color:#E1E4E8">(schema):</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;&quot;&quot;Replace local $ref pointers with their actual enum schemas.&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    defs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> schema.pop(</span><span style="color:#9ECBFF">&quot;$defs&quot;</span><span style="color:#E1E4E8">, {})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> resolve</span><span style="color:#E1E4E8">(node):</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> resolve(schema)</span></span>
+<span class="line"></span></code></pre>
+<p>That little patch fixed the problem, and I now use an FP8 quant of Gemma-4-31B-IT for many of the simpler workflows.</p>
+<p>Keeping the client layer thin makes backend-specific behavior visible. My Azure backend uses the Responses API; local vLLM backends can use Responses or Chat Completions and need their schemas adjusted. Given how small the loop is, Pydantic and a few backend adapters have been enough.</p>
+<h2 id="jsonl-became-the-batch-history">JSONL Became the Batch History</h2>
+<p>The workload is simple: read a pathology report, make several function calls, and save the result. Reports are independent, and a batch is usually a few thousand of them. Nothing runs online or in real time.</p>
+<p>I need the batch runner to survive interruption, avoid repeating completed calls, and process several reports concurrently. For manually started, single-machine batches, I could not justify Airflow’s operational footprint.</p>
+<p>Each completed report is appended to a working JSONL and flushed immediately:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> _write_record</span><span style="color:#E1E4E8">(out_file, record):</span></span>
+<span class="line"><span style="color:#E1E4E8">    line </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> json.dumps(record) </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> &quot;</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#F97583">    with</span><span style="color:#E1E4E8"> write_lock:</span></span>
+<span class="line"><span style="color:#E1E4E8">        out_file.write(line)</span></span>
+<span class="line"><span style="color:#E1E4E8">        out_file.flush()</span></span>
+<span class="line"></span></code></pre>
+<p>If the process dies after report 3,000, those 3,000 lines are already on disk. Restarting reads the working file and skips completed <code>(note_id, source_content_hash)</code> pairs. Parallelism is a <code>ThreadPoolExecutor</code> plus the same write lock.</p>
+<p>The important change is what happens when the run finishes. A batch is now a folder of immutable, numbered segments:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="text"><code><span class="line"><span>inbox/fc_extractions/kidney_v1/</span></span>
+<span class="line"><span>├── batch.json</span></span>
+<span class="line"><span>├── 001.jsonl</span></span>
+<span class="line"><span>├── 001_manifest.json</span></span>
+<span class="line"><span>├── 002.jsonl</span></span>
+<span class="line"><span>└── 002_manifest.json</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The runner writes resumable scratch output under <code>fc_outputs/</code>. Only after the run completes does it promote the JSONL into the inbox as the next numbered segment, using a temporary file followed by an atomic rename. An interrupted run leaves scratch output to resume; it never leaves half a canonical segment.</p>
+<p>For each report, the highest-numbered segment containing that report wins. A correction in <code>002.jsonl</code> supersedes the same report in <code>001.jsonl</code>, while every untouched report from <code>001</code> remains.</p>
+<p><code>batch.json</code> pins the definition, source table, and ID column. Reusing a batch name with a different definition or source fails instead of quietly combining unrelated records.</p>
+<p>This is still modest orchestration. It has no scheduler, alerting, distributed workers, or backfill UI. It does give me resumability, explicit ordering, immutable history, and a very obvious answer to “what changed in this batch?”</p>
+<h2 id="incremental-extraction-as-a-build-system">Incremental Extraction as a Build System</h2>
+<p>LLM calls are slow enough and expensive enough that “just rerun the batch” gets old quickly. Pathology reports also change. An addendum can arrive days after the original report, and that report should run again without sending every unchanged report back through the model.</p>
+<p>Incremental extraction is now the default. Before starting a new segment, the runner reads the existing segments directly from the canonical inbox and compares them with the current source rows:</p>
+<ul>
+<li>A report ID never seen in the batch is <strong>new</strong>.</li>
+<li>A known ID with a different source hash is <strong>changed</strong>.</li>
+<li>A matching report extracted under a different definition can be <strong>definition-changed</strong>.</li>
+<li>IDs supplied explicitly can be <strong>forced</strong>.</li>
+<li>Everything else is skipped.</li>
+</ul>
+<p>This resembles <code>make</code>: output depends on identifiable inputs, so changed inputs produce new work.</p>
+<p>The definition check is broader than the old prompt hash. Every record carries a <code>definition_hash</code> built from the system prompt plus every task tool’s Pydantic JSON schema. Adding a field, renaming one, or changing an enum now changes the extraction contract even if the prose prompt stays untouched.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#E1E4E8">payload </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;system_prompt&quot;</span><span style="color:#E1E4E8">: system_prompt,</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;tool_schemas&quot;</span><span style="color:#E1E4E8">: tool_schemas,</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">definition_hash </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> hashlib.sha256(</span></span>
+<span class="line"><span style="color:#E1E4E8">    json.dumps(payload, </span><span style="color:#FFAB70">sort_keys</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">).encode()</span></span>
+<span class="line"><span style="color:#E1E4E8">).hexdigest()[:</span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span></code></pre>
+<p>With <code>--reextract-on-prompt-change</code>, reports whose source text is unchanged but whose definition hash differs enter the next segment. The flag name is now slightly too narrow, but the behavior is what I wanted: changes to the schema count too.</p>
+<p>There is also a <code>--scratch</code> mode for prompt iteration. Scratch runs never create a batch descriptor, run log, or canonical segment. That lets me repeatedly test five difficult reports without polluting the real batch history.</p>
+<h2 id="the-inbox-is-the-source-of-truth">The Inbox Is the Source of Truth</h2>
+<p>This section changed the most while I was writing the post.</p>
+<p>The earlier design synchronized lake parquets between machines. That worked, but it meant two collaborators could each rebuild a whole parquet from different local inbox states and then push competing versions of the same derived file. I started writing a paragraph explaining why that was acceptable at my scale, realized I did not believe the paragraph, and changed the architecture instead.</p>
+<p>Only the inbox syncs now.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="text"><code><span class="line"><span>Remote inbox</span></span>
+<span class="line"><span>    ↓ pull</span></span>
+<span class="line"><span>Local inbox (canonical, append-only)</span></span>
+<span class="line"><span>    ↓ ingest</span></span>
+<span class="line"><span>Local parquet lake (disposable projection)</span></span>
+<span class="line"><span>    ↓ build-db</span></span>
+<span class="line"><span>Local DuckDB (also disposable, has extra &#39;gold&#39; projections)</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The canonical artifacts are the things I cannot regenerate:</p>
+<ul>
+<li>raw CSV drops,</li>
+<li>extraction JSONL segments,</li>
+<li>review packages and verdict logs,</li>
+<li>batch-local SQL transforms,</li>
+<li>run manifests,</li>
+<li>cohort definitions,</li>
+<li>tombstone events.</li>
+</ul>
+<p>Those files move through Box, a network share, <code>rclone</code>, <code>sshfs</code>, or anything else mounted as a filesystem path. OncAI contains no Box SDK, SFTP client, or cloud-storage abstraction. The operating system handles transport; OncAI copies files.</p>
+<p>Inbox synchronization is additive. Existing files are never overwritten. If the same relative path exists locally and remotely with different hashes, the operation stops and reports a conflict. Numbered extraction segments, unique run IDs, and uniquely named tombstone events make most normal writes additive instead of competitive.</p>
+<p>Parquet and DuckDB never leave the machine. Every collaborator rebuilds them from the same inbox. That removes whole-file parquet clobber and also makes the lake genuinely disposable: it is a projection, not a second source of truth.</p>
+<p>Raw pathology exports are replayed in date order. Each row gets a <code>key_hash</code> based on its identity and a <code>content_hash</code> based on its values. Re-ingesting the same export is a no-op; a later addendum with the same report ID and different content replaces the earlier row in the projection.</p>
+<p>Extraction segments follow the same idea. Ingest merges all numbered segments for a batch and keeps the highest segment per report. The final table is easy to query, while the underlying history remains a folder of ordinary JSONL files.</p>
+<h3 id="deletion-is-also-an-append">Deletion Is Also an Append</h3>
+<p>An append-only inbox creates one awkward question: how do you delete something?</p>
+<p>Physically removing a local file is not enough. The remote copy would return on the next pull. Mirroring deletions with something like <code>rsync --delete</code> is worse; a fresh or misconfigured machine could erase the shared inbox.</p>
+<p>OncAI now uses tombstones:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;kind&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;fc_extractions&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;target&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;old_batch&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;action&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;forget&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;reason&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;superseded by the corrected definition&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;actor&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;dave&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>A tombstone is another append-only inbox event. It syncs like any other file, and every machine excludes the forgotten source on its next ingest. A later <code>revive</code> event reverses it. The original bytes remain available for audit until an explicit garbage-collection step removes them.</p>
+<p>This currently works for extraction batches, review batches, and cohorts. It is source-level deletion rather than row-level surgery, which matches how the rest of the inbox is organized.</p>
+<h2 id="run-metadata-is-still-a-dictionary">Run Metadata Is Still a Dictionary</h2>
+<p>Every extraction invocation writes its own uniquely named run manifest under <code>inbox/runs/</code>. It starts with <code>status=&quot;started&quot;</code> and is atomically completed by the same process with results, errors, and duration. Because each run owns its own file, there is no shared log for two processes to overwrite.</p>
+<p>The manifest records the backend, model, sampling parameters, source, package version, system prompt, tool schemas, git commit, branch, and whether the working tree was dirty.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">return</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;backend&quot;</span><span style="color:#E1E4E8">: backend_name,</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;model&quot;</span><span style="color:#E1E4E8">: model_name,</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;git_commit&quot;</span><span style="color:#E1E4E8">: git_info[</span><span style="color:#9ECBFF">&quot;commit&quot;</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;git_branch&quot;</span><span style="color:#E1E4E8">: git_info[</span><span style="color:#9ECBFF">&quot;branch&quot;</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;git_dirty&quot;</span><span style="color:#E1E4E8">: git_info[</span><span style="color:#9ECBFF">&quot;dirty&quot;</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;code_version&quot;</span><span style="color:#E1E4E8">: get_code_version(),</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;system_prompt_hash&quot;</span><span style="color:#E1E4E8">: hash_string(system_prompt),</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>The dirty flag matters. A commit hash is misleading when the code that actually ran included uncommitted edits. I have absolutely run experiments from a dirty working tree, and pretending otherwise would not improve the science.</p>
+<p>The individual JSON manifests are canonical and sync with the inbox. <code>oncai ingest runs</code> projects them into parquet and DuckDB for querying. <code>oncai runs list</code>, <code>show</code>, and <code>compare</code> read the manifests directly, including runs that have not been ingested yet.</p>
+<p>MLflow or Weights &amp; Biases would make sense if I needed shared experiment dashboards, artifact management, or collaborative model comparison. Here, the important thing is that the complete run record travels beside the data it produced.</p>
+<h2 id="no-time-for-entra">No Time for Entra</h2>
+<p>The pipeline does not end when the model emits valid JSON. A clinician still has to decide whether the extraction is correct. Hosting an application full of PHI with proper authentication and institutional approval would be a serious undertaking, so the review app stays local.</p>
+<p>It uses <code>BaseHTTPRequestHandler</code>, static HTML, CSS, and vanilla JavaScript. <code>server.py</code> imports only the Python standard library, allowing PyInstaller to package it as a standalone executable.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Handler</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">BaseHTTPRequestHandler</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> do_GET</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> do_POST</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span></span>
+<span class="line"></span></code></pre>
+<p>The handoff is a self-contained <code>*.review_pkg.json</code> containing source notes, extracted events, and a field schema derived from the same Pydantic models used for extraction. The reviewer sees enum dropdowns, numeric inputs, checkboxes, date controls, and highlighted evidence without needing DuckDB, the extraction repo, or a Python environment.</p>
+<figure style="width: 85%; margin: 1.5rem auto;"> <img src="/_astro/screenshot.C2P9l9fx_2u6sjP.webp" alt="The local review app showing an extraction event with form fields and highlighted evidence." class="w-full rounded-lg" width="3000" height="1920" loading="lazy" decoding="async">  </figure>
+<p>A normal run automatically creates a review package containing reports that called <code>flag_report_for_review</code>. I can also package every successful report or compare repeated runs and send only disagreements for review.</p>
+<p>The disagreement mode needed one more kind of hash. Two runs using different models or prompts may still be comparable if they share the same clinical output schema. Each package therefore carries an <code>adjudication_hash</code> based on the definition name, event fields, enum options, event identity fields, comparison fields, and normalization version. Model, prompt, git commit, and run date are deliberately excluded.</p>
+<p>That means GPT and Gemma outputs can be compared field by field when their adjudication contract matches. If I rename a field or change the enum options, the hash changes and the tool refuses to pretend those runs are directly comparable.</p>
+<p>The reviewer’s verdicts are an append-only <code>*.reviews.jsonl</code> beside the package. Approvals, rejections, and edits are joined back to the original extraction events by a stable <code>event_key</code>; the latest verdict for a key wins.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="text"><code><span class="line"><span>inbox/fc_reviews/kidney_v1/</span></span>
+<span class="line"><span>├── kidney_v1.001.review_pkg.json</span></span>
+<span class="line"><span>├── kidney_v1.001.reviews.jsonl</span></span>
+<span class="line"><span>├── kidney_v1.002.review_pkg.json</span></span>
+<span class="line"><span>└── kidney_v1.002.reviews.jsonl</span></span>
+<span class="line"><span></span></span></code></pre>
+<p><code>oncai ingest fc_reviews</code> validates that each package is complete, applies reviewer edits, excludes rejected events, and writes a sparse event-level silver parquet. DuckDB exposes it as <code>extractions_silver.&lt;batch&gt;</code>.</p>
+<p>An optional SQL file beside the review artifacts reshapes that silver table into dense, analysis-ready tables under <code>extractions_gold</code>. The review workflow is now:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="text"><code><span class="line"><span>model output</span></span>
+<span class="line"><span>    → selective review package</span></span>
+<span class="line"><span>    → physician verdict log</span></span>
+<span class="line"><span>    → silver reviewed events</span></span>
+<span class="line"><span>    → optional SQL reshape</span></span>
+<span class="line"><span>    → gold analysis table</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="where-these-choices-stop-working">Where These Choices Stop Working</h2>
+<p>The newer architecture handles multiple readers and additive writers much better, but it still has a specific comfort zone.</p>
+<p>The batch runner is manually started. If I needed scheduled execution, distributed workers, automatic retries across machines, alerting, backfills, or SLAs, I would use an orchestrator. A JSONL file still does not page anybody when a nightly job fails.</p>
+<p>The inbox supports multiple people adding different immutable files, but it is not a distributed database. Two machines should not run the same batch name simultaneously: both could choose the same next segment number before either sees the other’s output. A central scheduler or real transactional store would be the appropriate fix if concurrent batch writers became a requirement.</p>
+<p>The local parquet and DuckDB projection assumes the data fits comfortably on one machine and that each collaborator can rebuild locally. If the data or query concurrency outgrows that model, a shared warehouse earns its keep.</p>
+<p>Finally, the review app works well for packages sent to a small number of known physicians. If I had a rotating pool of reviewers, centralized assignments, access control, and live progress tracking would justify the institutional work of deploying a proper web application.</p>
+<h2 id="final-note-on-frameworks">Final Note on Frameworks</h2>
+<p>I have to confess that calling the custom function-calling layer “boring” was a… half-truth. For simple single-note reports, it is quite tame. I cannot even call it “agentic” with a straight face.</p>
+<p>The public code deliberately stops at one-report-in, one-set-of-findings-out. In the super secret internal version, I’m working on systems that process long patient trajectories containing dozens of progress notes, treatment lines, adverse events, imaging, surgeries, and a very high degree of temporal dependence. Extracting something like progression-free survival from that record needs a different state model and a much more deliberate set of context and function-calling strategies.</p>
+<p>There is a lot more to say about that, but this post is already long enough. It’ll have to wait till next time.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://github.com/DavidHein96/OncAi"><strong>OncAI</strong></a></li>
+<li><a href="https://doi.org/10.1038/s41746-025-01686-z"><strong>Original npj Digital Medicine paper</strong></a></li>
+</ul>  </div> </article> <!-- TOC sidebar (desktop only) --> <nav aria-label="Table of contents" class="hidden shrink-0 lg:block lg:w-56 xl:w-64"> <div class="sticky top-24"> <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+On this page
+</p> <ul class="space-y-1 border-l border-gray-100 text-sm" id="toc-list"> <li> <a href="#where-this-started" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="where-this-started"> Where This Started </a>  </li><li> <a href="#the-constraints" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="the-constraints"> The Constraints </a>  </li><li> <a href="#my-love-of-pydantic-is-incalculable" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="my-love-of-pydantic-is-incalculable"> My Love of Pydantic Is Incalculable </a> <ul class="toc-children max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out" data-parent="my-love-of-pydantic-is-incalculable"> <li> <a href="#but-why-function-calling" class="toc-link toc-h3 -ml-px block border-l-2 border-transparent py-0.5 pl-6 text-xs text-gray-400 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="but-why-function-calling"> But Why Function Calling? </a> </li><li> <a href="#side-note-vllm" class="toc-link toc-h3 -ml-px block border-l-2 border-transparent py-0.5 pl-6 text-xs text-gray-400 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="side-note-vllm"> Side Note: vLLM </a> </li> </ul> </li><li> <a href="#jsonl-became-the-batch-history" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="jsonl-became-the-batch-history"> JSONL Became the Batch History </a>  </li><li> <a href="#incremental-extraction-as-a-build-system" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="incremental-extraction-as-a-build-system"> Incremental Extraction as a Build System </a>  </li><li> <a href="#the-inbox-is-the-source-of-truth" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="the-inbox-is-the-source-of-truth"> The Inbox Is the Source of Truth </a> <ul class="toc-children max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out" data-parent="the-inbox-is-the-source-of-truth"> <li> <a href="#deletion-is-also-an-append" class="toc-link toc-h3 -ml-px block border-l-2 border-transparent py-0.5 pl-6 text-xs text-gray-400 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="deletion-is-also-an-append"> Deletion Is Also an Append </a> </li> </ul> </li><li> <a href="#run-metadata-is-still-a-dictionary" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="run-metadata-is-still-a-dictionary"> Run Metadata Is Still a Dictionary </a>  </li><li> <a href="#no-time-for-entra" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="no-time-for-entra"> No Time for Entra </a>  </li><li> <a href="#where-these-choices-stop-working" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="where-these-choices-stop-working"> Where These Choices Stop Working </a>  </li><li> <a href="#final-note-on-frameworks" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="final-note-on-frameworks"> Final Note on Frameworks </a>  </li><li> <a href="#links" class="toc-link toc-h2 -ml-px block border-l-2 border-transparent py-0.5 pl-3 text-gray-600 transition-colors duration-150 hover:border-accent hover:text-accent" data-slug="links"> Links </a>  </li> </ul> </div> </nav> </div>      </main> <footer class="border-t border-gray-100 bg-gray-50 py-10"> <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 text-sm text-gray-500 sm:flex-row"> <p>Dave Hein &mdash; Data Scientist, UT Southwestern</p> <div class="flex items-center gap-5"> <a href="https://github.com/DavidHein96" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#333]">GitHub</a> <a href="https://linkedin.com/in/david-hein-utsw" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#0a66c2]">LinkedIn</a> <a href="https://orcid.org/0000-0002-8625-9528" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#a6ce39]">ORCID</a> <a href="https://scholar.google.com/citations?user=o8hgAgMAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[#4285F4]">Scholar</a> <a href="/David_Hein_cv.pdf" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">Resume</a> </div> </div> </footer> </body></html>
