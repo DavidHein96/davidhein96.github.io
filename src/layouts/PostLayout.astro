@@ -29,6 +29,8 @@ const {
   headings = [],
 } = Astro.props;
 
+const ogImage = cover ? new URL(cover.src, Astro.site).toString() : undefined;
+
 // Only show h2 and h3 in the TOC
 const tocItems = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
@@ -55,7 +57,7 @@ function formatDate(d: string): string {
 }
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage={ogImage}>
   <div class="mx-auto max-w-7xl px-6 py-12 lg:flex lg:justify-center lg:gap-10">
     <!-- Left spacer to keep article centered when TOC is present -->
     {
